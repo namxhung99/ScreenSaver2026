@@ -41,3 +41,4 @@ class MondrianSaverView: ScreenSaverView {
         super.stopAnimation()
     }
 }
+

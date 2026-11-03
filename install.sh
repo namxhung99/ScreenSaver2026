@@ -75,3 +75,4 @@ echo "======================================================"
 echo " Đã kích hoạt screensaver thành công!"
 echo " Bạn có thể chạy thử bằng lệnh: open -a ScreenSaverEngine"
 echo "======================================================"
+

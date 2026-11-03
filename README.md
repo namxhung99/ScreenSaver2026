@@ -53,3 +53,4 @@ Nếu bạn muốn tự compile ra file binary `.saver` độc lập:
 2. Thêm file `NativeSource/MondrianSaverView.swift` và kéo file `index.html` vào target.
 3. Trong `Info.plist` của target, đặt `Principal Class` là `MondrianSaverView`.
 4. Build và nhấn đúp vào file `.saver` kết quả để cài đặt.
+
