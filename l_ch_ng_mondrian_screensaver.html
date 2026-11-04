@@ -1,0 +1,3219 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dongho">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Á Đông Mondrian — Xin chào Nam Hùng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700..900;1,9..144,600..800&family=Playfair+Display:ital,wght@0,700..900;1,600..800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Fraunces"', '"Playfair Display"', 'Georgia', 'serif'],
+                        editorial: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg-paper: #F4F1EA;
+            --text-ink: #141413;
+            --border-ink: #1A1A19;
+            --block-yellow: #E5B524;
+            --block-yellow-text: #141413;
+            --block-red: #D63820;
+            --block-red-text: #FFFFFF;
+            --block-blue: #1835A8;
+            --block-blue-text: #FFFFFF;
+            --clock-color: #D63820;
+            --digit-h: clamp(2.8rem, 6.6vh, 5.2rem);
+            --shift-x: 0px;
+            --shift-y: 0px;
+        }
+
+        /* 1. Mondrian Cổ Điển (Chuẩn ảnh mẫu TV) */
+        html[data-theme="mondrian"] {
+            --bg-paper: #F4F1EA;
+            --text-ink: #141413;
+            --border-ink: #1A1A19;
+            --block-yellow: #E5B524;
+            --block-yellow-text: #141413;
+            --block-red: #D63820;
+            --block-red-text: #FFFFFF;
+            --block-blue: #1835A8;
+            --block-blue-text: #FFFFFF;
+            --clock-color: #D63820;
+        }
+
+        /* 2. Sơn Mài Hoàng Kim (OLED Dark Luxury) */
+        html[data-theme="lacquer"] {
+            --bg-paper: #0D0C0B;
+            --text-ink: #F4EFE6;
+            --border-ink: #3D352B;
+            --block-yellow: #C89B3C;
+            --block-yellow-text: #0D0C0B;
+            --block-red: #8B1E14;
+            --block-red-text: #F7F3EB;
+            --block-blue: #18242C;
+            --block-blue-text: #E6DEC8;
+            --clock-color: #E5B524;
+        }
+
+        /* 3. Gốm Chu Đậu (Men Lam Cổ Điển) */
+        html[data-theme="ceramic"] {
+            --bg-paper: #EEF2F5;
+            --text-ink: #102542;
+            --border-ink: #1B3B6F;
+            --block-yellow: #D8E2DC;
+            --block-yellow-text: #102542;
+            --block-red: #1B3B6F;
+            --block-red-text: #FFFFFF;
+            --block-blue: #274C77;
+            --block-blue-text: #FFFFFF;
+            --clock-color: #1B3B6F;
+        }
+
+        /* 4. Tranh Đông Hồ (Giấy Dó Mộc) */
+        html[data-theme="dongho"] {
+            --bg-paper: #EFE6D5;
+            --text-ink: #231F20;
+            --border-ink: #2C2623;
+            --block-yellow: #D99B26;
+            --block-yellow-text: #1E1916;
+            --block-red: #B83B2A;
+            --block-red-text: #FDFBF7;
+            --block-blue: #284B63;
+            --block-blue-text: #FDFBF7;
+            --clock-color: #B83B2A;
+        }
+
+        /* 5. Cyber Bến Thành (Neon Dark) */
+        html[data-theme="cyber"] {
+            --bg-paper: #090A10;
+            --text-ink: #E2E8F0;
+            --border-ink: #283048;
+            --block-yellow: #141E30;
+            --block-yellow-text: #38BDF8;
+            --block-red: #281224;
+            --block-red-text: #FB7185;
+            --block-blue: #131B2E;
+            --block-blue-text: #C084FC;
+            --clock-color: #FB7185;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-paper);
+            color: var(--text-ink);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.45s ease, color 0.45s ease;
+        }
+
+        /* Subtle Paper Texture Overlay */
+        .paper-grain {
+            background-image: radial-gradient(rgba(120, 120, 115, 0.07) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        /* Master 3-Row Mondrian Dashboard Layout */
+        .dashboard-shell {
+            width: 100%;
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: clamp(12px, 2.2vh, 28px) clamp(16px, 2.8vw, 44px);
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr) clamp(92px, 14.5vh, 130px);
+            gap: clamp(10px, 1.6vh, 18px);
+            height: 100vh;
+            overflow: hidden;
+            transform: translate(var(--shift-x), var(--shift-y));
+            transition: transform 2.5s ease-in-out;
+        }
+
+        /* Responsive fallback for smaller windows/tablets/phones so boxes NEVER crush */
+        @media (max-width: 1023px),
+        (max-height: 670px) {
+            .dashboard-shell {
+                height: auto;
+                min-height: 100vh;
+                overflow-y: auto;
+                grid-template-rows: auto auto auto;
+                padding: 16px;
+                gap: 14px;
+            }
+        }
+
+        /* Middle Bento Grid: 3 Columns matching photo (Yellow Calendar | Red Gold | Blue Fuel) */
+        .middle-bento-grid {
+            display: grid;
+            grid-template-columns: 5.4fr 3.3fr 3.3fr;
+            gap: clamp(12px, 1.4vw, 22px);
+            min-height: 0;
+        }
+
+        /* Bottom Bento Grid: 3 Columns matching photo (Red Framed | Yellow Quote | Blue News/Settings) */
+        .bottom-bento-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 1.15fr 1fr;
+            gap: clamp(12px, 1.4vw, 22px);
+            min-height: 0;
+        }
+
+        @media (max-width: 1023px) {
+
+            .middle-bento-grid,
+            .bottom-bento-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dynamic Theme Block Classes */
+        .theme-block-yellow {
+            background-color: var(--block-yellow);
+            color: var(--block-yellow-text);
+            transition: background-color 0.45s ease, color 0.45s ease;
+        }
+
+        .theme-block-red {
+            background-color: var(--block-red);
+            color: var(--block-red-text);
+            transition: background-color 0.45s ease, color 0.45s ease;
+        }
+
+        .theme-block-blue {
+            background-color: var(--block-blue);
+            color: var(--block-blue-text);
+            transition: background-color 0.45s ease, color 0.45s ease;
+        }
+
+        .theme-clock-text {
+            color: var(--clock-color);
+            transition: color 0.45s ease;
+        }
+
+        .theme-border {
+            border-color: var(--border-ink);
+        }
+
+        /* Mondrian Block Interactive Hover */
+        .mondrian-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, background-color 0.45s ease;
+        }
+
+        .mondrian-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.22);
+        }
+
+        /* Double Framed Block (Exact match to the bottom-left YouTube box in reference photo) */
+        .framed-block {
+            outline: 2.5px solid var(--text-ink);
+            outline-offset: 3px;
+            box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.85);
+        }
+
+        /* Vietnamese Traditional Tet Festive Animations */
+        @keyframes tetLanternSway {
+            0% { transform: rotate(-7deg); }
+            50% { transform: rotate(7deg); }
+            100% { transform: rotate(-7deg); }
+        }
+
+        @keyframes tetBlossomFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-4px) rotate(12deg) scale(1.08); }
+        }
+
+        @keyframes tetSparkle {
+            0%, 100% { opacity: 0.35; transform: scale(0.85); }
+            50% { opacity: 1; transform: scale(1.25); filter: drop-shadow(0 0 6px #FBBF24); }
+        }
+
+        @keyframes tetPetalDrift1 {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.9; }
+            80% { opacity: 0.9; }
+            100% { transform: translate(-38px, 26px) rotate(140deg); opacity: 0; }
+        }
+
+        @keyframes tetPetalDrift2 {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            25% { opacity: 0.85; }
+            75% { opacity: 0.85; }
+            100% { transform: translate(-44px, 30px) rotate(-160deg); opacity: 0; }
+        }
+
+        @keyframes tetBanhChungFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-3px) rotate(2.5deg); }
+        }
+
+        @keyframes tetFirecrackerSway {
+            0% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+            100% { transform: rotate(-5deg); }
+        }
+
+        .anim-lantern {
+            animation: tetLanternSway 3.6s ease-in-out infinite;
+            transform-origin: 50% 0%;
+        }
+
+        .anim-blossom {
+            animation: tetBlossomFloat 3.2s ease-in-out infinite;
+        }
+
+        .anim-sparkle {
+            animation: tetSparkle 1.8s ease-in-out infinite;
+        }
+
+        .anim-petal-1 {
+            animation: tetPetalDrift1 4.4s ease-in-out infinite;
+        }
+
+        .anim-petal-2 {
+            animation: tetPetalDrift2 5.4s ease-in-out infinite 1.8s;
+        }
+
+        .anim-banhchung {
+            animation: tetBanhChungFloat 4s ease-in-out infinite;
+        }
+
+        .anim-firecracker {
+            animation: tetFirecrackerSway 2.8s ease-in-out infinite;
+            transform-origin: 50% 0%;
+        }
+
+        /* Pixel-Perfect Rolling Split-Flap Clock Digits */
+        .digit-window {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            height: var(--digit-h);
+            line-height: var(--digit-h);
+            vertical-align: bottom;
+        }
+
+        .digit-ribbon {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.52s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: transform;
+        }
+
+        .digit-cell {
+            height: var(--digit-h);
+            line-height: var(--digit-h);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Calendar Grid Cell */
+        .cal-cell {
+            transition: background-color 0.15s ease, transform 0.15s ease;
+            cursor: pointer;
+            border-radius: 3px;
+            padding: 2.5px 2px;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 2px;
+            line-height: 1.15;
+        }
+
+        .cal-cell:hover:not(.cal-active) {
+            background-color: rgba(0, 0, 0, 0.12);
+        }
+
+        .cal-active {
+            background-color: #141413 !important;
+            color: #FFFFFF !important;
+            font-weight: 800;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        html[data-theme="cyber"] .cal-active {
+            background-color: #38BDF8 !important;
+            color: #090A10 !important;
+        }
+
+        /* Hide cursor in idle screensaver mode */
+        body.cursor-hidden,
+        body.cursor-hidden * {
+            cursor: none !important;
+        }
+
+        /* Quote & News Smooth Fade */
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-animate {
+            animation: fadeSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* Live Pulse Indicator */
+        @keyframes softPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(1.25);
+            }
+        }
+
+        .live-dot {
+            animation: softPulse 2.2s infinite ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="paper-grain select-none">
+
+    <!-- Subtle Floating Ambient Dust Canvas -->
+    <canvas id="ambientCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-55"></canvas>
+
+    <!-- Top Floating HUD Toast for Theme / Audio / Shortcut feedback -->
+    <div id="hudToast"
+        class="fixed top-4 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 -translate-y-3 transition-all duration-300 bg-[#141413] text-[#F4F1EA] border border-white/15 px-4 py-2 rounded-full shadow-xl flex items-center gap-2 text-xs sm:text-sm font-bold">
+        <span id="hudToastIcon">🎨</span>
+        <span id="hudToastText">Theme: Mondrian Cổ Điển</span>
+    </div>
+
+    <!-- ==================== MASTER 3-ROW MONDRIAN CONTAINER ==================== -->
+    <main id="appContainer" class="dashboard-shell relative z-10">
+
+        <!-- ==================== ROW 1: HEADER BAR + GIANT DAY & ROLLING CLOCK ==================== -->
+        <div class="flex flex-col justify-between">
+            <!-- Top Thin Header Bar (Exact match to "Xin chào..." + right circular icons in photo) -->
+            <header class="w-full border-b-[2px] theme-border pb-2 flex flex-wrap items-center justify-between gap-2">
+                <!-- Left: Greeting + Live Weather & AQI + Lunar Year -->
+                <div class="flex items-center flex-wrap gap-2 sm:gap-3.5">
+                    <h2 id="greetingText" onclick="openSettingsModal()" title="Nhấn để đổi lời chào"
+                        class="cursor-pointer text-base sm:text-lg lg:text-xl font-bold tracking-tight hover:opacity-75 transition">
+                        Xin chào Nam Hùng
+                    </h2>
+
+                    <span class="hidden sm:inline-block opacity-30">|</span>
+
+                    <!-- Live Weather + AQI Pill (Unified Theme Switcher Pill Style) -->
+                    <button onclick="openSettingsModal()" title="Thời tiết trực tiếp (Nhấn để đổi tỉnh/thành)"
+                        class="h-8 sm:h-9 px-2.5 rounded-full border-[1.8px] border-current flex items-center gap-1.5 hover:bg-black/10 transition">
+                        <span id="weatherIcon" class="flex items-center justify-center shrink-0 w-4 h-4 text-current">
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </span>
+                        <span id="weatherCity" class="text-xs font-bold">Biên Hòa</span>
+                        <span id="weatherTemp" class="font-mono font-extrabold text-xs">29°C</span>
+                        <span id="weatherAqiBadge"
+                            class="hidden md:inline-block text-[10px] font-extrabold px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-800">
+                            AQI 42
+                        </span>
+                    </button>
+
+                    <!-- Lunar Year & Solar Term Badge -->
+                    <div class="hidden xl:flex items-center gap-2 text-xs font-semibold opacity-80">
+                        <span id="headerLunarYear" class="px-2 py-0.5 rounded bg-black/10 font-bold">Năm Bính Ngọ</span>
+                        <span id="headerTietKhi" class="italic">Tiết Lập Đông</span>
+                    </div>
+                </div>
+
+                <!-- Right: Pomodoro + Theme Studio + Audio + Wi-Fi Sync + Settings + Fullscreen -->
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    <!-- Pomodoro 25:00 Pill -->
+                    <button onclick="togglePomodoro()"
+                        title="Bộ đếm tập trung Pomodoro 25 phút + Chuông Tây Tạng (Phím P)"
+                        class="hidden sm:flex items-center gap-1.5 text-xs font-bold h-8 sm:h-9 px-2.5 rounded-full border-[1.8px] border-current hover:bg-black/10 transition">
+                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="13" r="8" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4l2.5 2.5M10 2h4M12 2v3" />
+                        </svg>
+                        <span id="pomoLabel" class="font-mono">25:00</span>
+                    </button>
+
+                    <!-- Theme Switcher Icon (Matches palette icon in reference photo) -->
+                    <button onclick="cycleArtTheme()" title="Đổi Theme Nghệ Thuật (Phím T)"
+                        class="h-8 sm:h-9 px-2.5 rounded-full border-[1.8px] border-current flex items-center gap-1.5 hover:bg-black/10 transition">
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c1.38 0 2.5-1.12 2.5-2.5 0-.61-.23-1.2-.64-1.67-.08-.1-.13-.21-.13-.33 0-.28.22-.5.5-.5H16c3.31 0 6-2.69 6-6 0-4.96-4.49-9-10-9zM6.5 11.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm3-4a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm3 4a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
+                        </svg>
+                        <span id="currentThemeName" class="text-xs font-extrabold hidden md:inline">Đông Hồ</span>
+                    </button>
+
+                    <!-- Ambient Sound Icon -->
+                    <button onclick="cycleAmbientSound()" title="Bật/Tắt nhạc thư giãn Á Đông (Phím M)"
+                        class="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-[1.8px] border-current flex items-center justify-center hover:bg-black/10 transition relative">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                        </svg>
+                        <span id="audioPlayingBadge"
+                            class="hidden absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#D63820] rounded-full live-dot"></span>
+                    </button>
+
+                    <!-- Live API Sync Wi-Fi Icon (Matches Wi-Fi icon in reference photo) -->
+                    <button onclick="refreshAllMarketData(true)"
+                        title="Cập nhật trực tiếp Giá Vàng, Xăng Dầu, Thời Tiết & Tin Vắn"
+                        class="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-[1.8px] border-current flex items-center justify-center hover:bg-black/10 transition relative">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+                        </svg>
+                        <span class="absolute top-0 right-0 w-2 h-2 bg-emerald-500 rounded-full live-dot"></span>
+                    </button>
+
+                    <!-- Settings Button (Unified Style) -->
+                    <button onclick="openSettingsModal()" title="Cài đặt hệ thống, chứng khoán & âm nhạc"
+                        class="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-[1.8px] border-current flex items-center justify-center hover:bg-black/10 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </button>
+
+                    <!-- Fullscreen Icon -->
+                    <button onclick="toggleFullScreen()" title="Toàn màn hình làm Screensaver (Phím F)"
+                        class="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-[1.8px] border-current flex items-center justify-center hover:bg-black/10 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Hero Row: Giant Day of Week ("Thứ Sáu") on Left + Giant Rolling Clock ("16:00:04") on Right -->
+            <div class="w-full pt-1.5 sm:pt-2 flex flex-wrap items-baseline justify-between gap-2">
+                <h1 id="heroDayOfWeek"
+                    class="font-serif font-black tracking-tight text-[clamp(2.8rem,7.6vh,5.8rem)] leading-[0.94]">
+                    Thứ Ba
+                </h1>
+
+                <!-- Pixel-Perfect Split-Flap Rolling Clock -->
+                <div class="theme-clock-text font-serif font-black text-[clamp(2.6rem,6.6vh,5rem)] leading-none tracking-tight flex items-center"
+                    aria-label="Đồng hồ trực tiếp">
+                    <div id="clockH1" class="digit-window"></div>
+                    <div id="clockH2" class="digit-window"></div>
+                    <span class="mx-0.5 sm:mx-1 -translate-y-[0.06em]">:</span>
+                    <div id="clockM1" class="digit-window"></div>
+                    <div id="clockM2" class="digit-window"></div>
+                    <span class="mx-0.5 sm:mx-1 -translate-y-[0.06em]">:</span>
+                    <div id="clockS1" class="digit-window"></div>
+                    <div id="clockS2" class="digit-window"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== ROW 2: MIDDLE 3-BLOCK MONDRIAN BENTO ==================== -->
+        <section class="middle-bento-grid">
+
+            <!-- BLOCK 1: YELLOW CALENDAR & HOURLY WEATHER BLOCK (Lịch Dương + Âm Lịch + Timeline Thời Tiết) -->
+            <div
+                class="mondrian-card theme-block-yellow p-4 sm:p-5 lg:px-6 lg:py-4 flex flex-col sm:flex-row justify-between gap-4 lg:gap-5 overflow-hidden">
+
+                <!-- Left Column inside Yellow Block: Solar Date + Chi Tiết Can Chi / Hoàng Đạo + Black Lunar Box -->
+                <div
+                    class="flex sm:flex-col justify-between items-start sm:w-[32%] sm:min-w-[170px] sm:max-w-[220px] border-b sm:border-b-0 sm:border-r border-current/20 pb-3 sm:pb-0 sm:pr-4">
+                    <!-- Top: Solar Big Number & Month -->
+                    <div>
+                        <div id="bigSolarDate"
+                            class="font-serif font-black text-[clamp(3.2rem,6.8vh,5rem)] leading-[0.88] tracking-tighter">
+                            03
+                        </div>
+                        <div id="bigMonthYear"
+                            class="mt-1 text-sm sm:text-base font-extrabold tracking-tight">
+                            tháng 11, 2026
+                        </div>
+                        <div id="lunarCanChiText"
+                            class="mt-0.5 text-[11px] sm:text-xs font-semibold opacity-85 leading-snug">
+                            Ngày Giáp Tý • Tháng Mậu Tuất
+                        </div>
+                    </div>
+
+                    <!-- Middle: Traditional Lunar Insights & Auspicious Hours (Fills empty space elegantly) -->
+                    <div class="my-auto py-2.5 border-y border-current/20 w-full space-y-1.5 text-xs hidden sm:block">
+                        <div class="flex items-center justify-between">
+                            <span id="calendarTietKhiBadge" class="font-bold opacity-90 text-[11px] sm:text-xs">Tiết Lập Đông</span>
+                            <span id="calendarHoangDaoBadge" class="px-1.5 py-0.5 rounded bg-black/10 font-bold text-[10px] tracking-tight uppercase">Hoàng Đạo</span>
+                        </div>
+                        <div class="text-[11px] leading-snug">
+                            <span class="opacity-70 font-semibold block text-[10px] uppercase tracking-wider">Giờ hoàng đạo hôm nay:</span>
+                            <span id="calendarAuspiciousHours" class="font-bold opacity-90 line-clamp-2">Sửu, Thìn, Tỵ, Mùi, Tuất, Hợi</span>
+                        </div>
+                        <div class="flex items-center justify-between text-[10px] opacity-75 pt-1 border-t border-current/10 font-medium">
+                            <span id="calendarWeekNumber">Tuần 45 / 52</span>
+                            <span id="calendarXuatHanh">Tài: Đông Nam</span>
+                        </div>
+                    </div>
+
+                    <!-- Bottom: Iconic Black Box for Lunar Date (Matches Mondrian reference) -->
+                    <div onclick="showDayDetailModal()" title="Nhấn để xem chi tiết Giờ Hoàng Đạo & Can Chi"
+                        class="cursor-pointer bg-[#141413] text-[#F4F1EA] px-3.5 py-2 sm:px-4 sm:py-2.5 inline-flex flex-col items-start justify-center shadow-md hover:scale-105 transition w-full sm:w-auto">
+                        <div id="bigLunarDate"
+                            class="font-serif font-bold text-xl sm:text-2xl lg:text-[1.75rem] leading-none tracking-tight">
+                            25/9
+                        </div>
+                        <div
+                            class="font-serif italic text-[11px] sm:text-xs text-[#E5B524] mt-1 flex items-center gap-1">
+                            <span>âm lịch</span>
+                            <span id="lunarLeapBadge"
+                                class="hidden not-italic text-[9px] bg-[#D63820] text-white px-1 rounded">Nhuận</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column inside Yellow Block: Calendar Grid (Top) + Realtime Weather Timeline (Bottom) -->
+                <div class="flex-1 flex flex-col justify-between min-w-0">
+                    <!-- TOP HALF: Monthly Calendar Grid -->
+                    <div class="flex flex-col min-w-0">
+                        <!-- Month Navigation Controls -->
+                        <div class="flex items-center justify-between mb-1">
+                            <span id="selectedDayPreview"
+                                class="text-[11px] font-extrabold uppercase tracking-wider opacity-75 truncate">
+                                Lịch Tháng (Dương / Âm)
+                            </span>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <button onclick="changeCalendarMonth(-1)" title="Tháng trước"
+                                    class="px-2 py-0.5 text-xs font-extrabold rounded bg-black/10 hover:bg-black/20 transition">‹</button>
+                                <button onclick="resetCalendarToToday()" title="Về hôm nay"
+                                    class="px-2 py-0.5 text-[11px] font-bold rounded bg-black/10 hover:bg-black/20 transition">Hôm
+                                    nay</button>
+                                <button onclick="changeCalendarMonth(1)" title="Tháng sau"
+                                    class="px-2 py-0.5 text-xs font-extrabold rounded bg-black/10 hover:bg-black/20 transition">›</button>
+                            </div>
+                        </div>
+
+                        <!-- Weekday Headers (T2 -> CN) -->
+                        <div
+                            class="grid grid-cols-7 gap-0.5 text-center text-[11px] sm:text-xs font-extrabold tracking-wide pb-1 border-b border-current/20">
+                            <div>T2</div>
+                            <div>T3</div>
+                            <div>T4</div>
+                            <div>T5</div>
+                            <div>T6</div>
+                            <div>T7</div>
+                            <div class="underline decoration-dotted">CN</div>
+                        </div>
+
+                        <!-- Calendar Days Grid (Clear, nicely proportioned cells) -->
+                        <div id="calendarGrid"
+                            class="grid grid-cols-7 gap-y-1 gap-x-0.5 py-1 text-center items-center">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Tranh Đông Hồ "Đám cưới chuột" (Hiển thị trọn vẹn 100% không bị cắt, kích thước to rõ, khung viền ôm sát) -->
+                    <div class="flex-1 my-1 sm:my-2 w-full flex items-center justify-center min-h-[180px] sm:min-h-0 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/namxhung99/ScreenSaver2026/main/Damcuoichuot.png"
+                             onerror="this.onerror=null; this.src='Damcuoichuot.png';"
+                             alt="Tranh Đông Hồ — Đám cưới chuột"
+                             class="max-h-[245px] sm:max-h-[285px] lg:max-h-[330px] xl:max-h-[365px] w-auto max-w-full h-full object-contain rounded border-[2.2px] sm:border-[2.8px] border-current shadow-md transition-transform hover:scale-[1.01]" />
+                    </div>
+
+                    <!-- BOTTOM HALF: Realtime Hourly Weather Timeline & Rain Probability (POPs) -->
+                    <div class="border-t-[1.5px] border-current/30 pt-2 mt-2">
+                        <div class="flex items-center justify-between mb-1.5 text-xs">
+                            <div class="flex items-center gap-1.5 min-w-0">
+                                <svg class="w-4 h-4 shrink-0 text-current" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z" />
+                                </svg>
+                                <span class="font-extrabold tracking-wide uppercase text-[10px] sm:text-[11px] opacity-85 truncate">
+                                    Dự báo thời tiết & Khả năng mưa theo giờ
+                                </span>
+                            </div>
+                            <span id="weatherTimelineSummary" class="text-[10px] sm:text-[11px] font-bold opacity-80 truncate text-right">
+                                Đang tải dự báo...
+                            </span>
+                        </div>
+
+                        <!-- 6-Slot Timeline Cards -->
+                        <div id="weatherTimelineList" class="grid grid-cols-6 gap-1 sm:gap-1.5">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK 2: RED MARKET BLOCK (Giá Vàng + BTC + VN30 + Cổ phiếu Realtime) -->
+            <div id="marketCardBlock"
+                class="mondrian-card theme-block-red p-4 sm:p-5 lg:px-6 lg:py-4 flex flex-col justify-between relative overflow-hidden group select-none h-full">
+                <!-- Header: Tiêu đề + Trực tuyến + Điều khiển Tab & Nút Sync/Cài đặt -->
+                <div class="shrink-0 pb-1">
+                    <div class="flex items-start justify-between gap-2">
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2">
+                                <h3
+                                    class="font-editorial italic font-bold text-[clamp(1.45rem,2.8vh,2.1rem)] leading-tight truncate">
+                                    Thị trường & Vàng
+                                </h3>
+                                <span id="marketLivePulse"
+                                    class="w-2.5 h-2.5 rounded-full bg-emerald-300 live-dot shrink-0"
+                                    title="Đang kết nối Realtime"></span>
+                            </div>
+                            <p class="text-[11px] sm:text-xs opacity-90 font-medium mt-0.5 tracking-tight truncate">
+                                VN30 • Cổ phiếu • BTC/USD • Vàng SJC
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <!-- Quick Sync button (Unified Icon Style) -->
+                            <button onclick="event.stopPropagation(); fetchLiveMarketAPI(true)"
+                                title="Đồng bộ ngay dữ liệu thị trường mới nhất"
+                                class="w-8 h-8 rounded-full border-[1.8px] border-current hover:bg-black/20 flex items-center justify-center transition active:scale-90">
+                                <svg id="marketSyncIcon" class="w-4 h-4 shrink-0 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                            </button>
+                            <!-- Settings button (Unified Icon Style) -->
+                            <button onclick="event.stopPropagation(); openSettingsModal()"
+                                title="Cài đặt danh mục cổ phiếu & giá vàng"
+                                class="w-8 h-8 rounded-full border-[1.8px] border-current hover:bg-black/20 flex items-center justify-center transition active:scale-90">
+                                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mini Navigation Switcher Tabs (Clean Mondrian Pills) -->
+                    <div
+                        class="flex items-center gap-1.5 mt-2 pb-1 border-b border-current/30 text-xs sm:text-[13px] font-bold">
+                        <button onclick="event.stopPropagation(); switchMarketTab('stocks', true)" id="tabMarketStocks"
+                            class="market-tab-pill px-3 py-0.5 rounded-full bg-white text-[#D63820] shadow-sm transition font-black">
+                            VN30 & CP
+                        </button>
+                        <button onclick="event.stopPropagation(); switchMarketTab('all', true)" id="tabMarketAll"
+                            class="market-tab-pill px-3 py-0.5 rounded-full bg-black/20 hover:bg-black/30 transition opacity-80 font-bold">
+                            Tổng hợp
+                        </button>
+                        <button onclick="event.stopPropagation(); switchMarketTab('gold_btc', true)"
+                            id="tabMarketGoldBtc"
+                            class="market-tab-pill px-3 py-0.5 rounded-full bg-black/20 hover:bg-black/30 transition opacity-80 font-bold">
+                            Vàng & BTC
+                        </button>
+                        <button onclick="event.stopPropagation(); toggleMarketAutoCycle()" id="btnMarketAutoCycle"
+                            title="Bật/tắt tự động đổi view mỗi 12s"
+                            class="ml-auto px-2 py-0.5 rounded text-[10px] uppercase font-black bg-black/20 hover:bg-black/35 transition flex items-center gap-1 opacity-75">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                            Auto
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MAIN DISPLAY AREA (SWITCHABLE PANELS - EXPANDS TO FIT FULL CARD HEIGHT) -->
+                <div class="flex-1 flex flex-col justify-between py-1 min-h-0 overflow-hidden">
+
+                    <!-- VIEW 3: VN30 & CỔ PHIẾU (Chuyên sâu, Font lớn, Trải dài trọn vẹn khung đỏ, Không cuộn) -->
+                    <div id="marketViewStocks" class="h-full flex-1 flex flex-col justify-between min-h-0">
+                        <!-- Row 1: VN30 -->
+                        <div
+                            class="border-t-[1.5px] border-current/75 py-2 flex items-baseline justify-between gap-3 shrink-0">
+                            <div>
+                                <div class="font-bold text-sm sm:text-base lg:text-lg tracking-tight">VN30 INDEX</div>
+                                <div id="vn30DescDetail"
+                                    class="text-xs sm:text-sm font-extrabold text-emerald-300 mt-0.5">
+                                    ▲ Tăng +2.19 (+0.12%)
+                                </div>
+                            </div>
+                            <div id="vn30IndexDetail"
+                                class="font-serif font-black text-[clamp(2.1rem,4.2vh,3.2rem)] leading-none tracking-tight">
+                                1,815.60
+                            </div>
+                        </div>
+
+                        <!-- Row 2: VN-INDEX -->
+                        <div
+                            class="border-t-[1.5px] border-current/75 py-2 flex items-baseline justify-between gap-3 shrink-0">
+                            <div>
+                                <div class="font-bold text-sm sm:text-base lg:text-lg tracking-tight">VN-INDEX</div>
+                                <div id="vnindexDescDetail"
+                                    class="text-xs sm:text-sm font-extrabold text-rose-300 mt-0.5">
+                                    ▼ Giảm -11.10 (-0.65%)
+                                </div>
+                            </div>
+                            <div id="vnindexDetail"
+                                class="font-serif font-black text-[clamp(2.1rem,4.2vh,3.2rem)] leading-none tracking-tight">
+                                1,699.62
+                            </div>
+                        </div>
+
+                        <!-- Row 3: Bảng Cổ phiếu theo dõi (4 hàng trải đều trọn vẹn chiều cao) -->
+                        <div
+                            class="border-t-[1.5px] border-current/75 pt-1.5 flex-1 flex flex-col justify-between min-h-0">
+                            <div
+                                class="flex items-center justify-between text-xs font-bold uppercase tracking-wider opacity-85 pb-0.5 shrink-0">
+                                <span>Cổ phiếu tâm điểm (x1,000đ)</span>
+                                <span class="font-mono text-[10px] opacity-75">HOSE • Realtime</span>
+                            </div>
+                            <div id="stocksDetailedList" class="flex-1 flex flex-col justify-around py-0.5 min-h-0">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VIEW 1: TỔNG HỢP (All-in-One Pure Mondrian Layout) -->
+                    <div id="marketViewAll" class="hidden h-full flex-1 flex flex-col justify-between min-h-0">
+                        <!-- SJC & Nhẫn Row -->
+                        <div
+                            class="border-t-[1.5px] border-current/75 py-1.5 flex items-baseline justify-between gap-4">
+                            <div class="flex-1 min-w-0">
+                                <div class="text-xs font-bold opacity-80 uppercase tracking-tight">SJC (Bán)</div>
+                                <div class="flex items-baseline justify-between gap-1 mt-0.5">
+                                    <span id="goldSjcSell"
+                                        class="font-serif font-black text-2xl sm:text-3xl leading-none">142,0</span>
+                                    <span class="text-[11px] opacity-80 font-mono">Mua: <span id="goldSjcBuyInline"
+                                            class="font-bold">139,0</span></span>
+                                </div>
+                            </div>
+                            <div class="w-px h-9 bg-current/25"></div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-xs font-bold opacity-80 uppercase tracking-tight">Nhẫn 999.9</div>
+                                <div class="flex items-baseline justify-between gap-1 mt-0.5">
+                                    <span id="goldRingSell"
+                                        class="font-serif font-black text-2xl sm:text-3xl leading-none">141,0</span>
+                                    <span class="text-[11px] opacity-80 font-mono">Mua: <span id="goldRingBuyInline"
+                                            class="font-bold">138,0</span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BTC Row -->
+                        <div
+                            class="border-t-[1.5px] border-current/75 py-1.5 flex items-center justify-between gap-2 font-mono">
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="w-5 h-5 rounded-full bg-amber-500 text-black text-xs font-black flex items-center justify-center shrink-0">₿</span>
+                                <span class="font-bold text-sm tracking-tight">BTC/USD</span>
+                                <span id="btcPriceAll" class="font-serif font-black text-lg sm:text-xl">$77,035</span>
+                            </div>
+                            <div id="btcBadgeAll"
+                                class="text-xs font-black px-2 py-0.5 rounded bg-black/25 text-rose-300 border border-current/25">
+                                ▼ Giảm -1.26%
+                            </div>
+                        </div>
+
+                        <!-- VN30 & VN-INDEX Row -->
+                        <div
+                            class="border-t-[1.5px] border-current/75 py-1.5 flex items-baseline justify-between gap-4">
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-baseline justify-between">
+                                    <span class="text-xs font-bold uppercase opacity-85">VN30</span>
+                                    <span id="vn30IndexValAll"
+                                        class="font-serif font-black text-lg sm:text-xl">1,815.60</span>
+                                </div>
+                                <div id="vn30BadgeAll" class="text-xs font-bold text-emerald-300 mt-0.5">
+                                    ▲ +0.12% (+2.19)
+                                </div>
+                            </div>
+                            <div class="w-px h-9 bg-current/25"></div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-baseline justify-between">
+                                    <span class="text-xs font-bold uppercase opacity-85">VN-INDEX</span>
+                                    <span id="vnindexValAll"
+                                        class="font-serif font-black text-lg sm:text-xl">1,699.62</span>
+                                </div>
+                                <div id="vnindexBadgeAll" class="text-xs font-bold text-rose-300 mt-0.5">
+                                    ▼ -0.65% (-11.10)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Watchlist Stock Mini Grid -->
+                        <div
+                            class="border-t-[1.5px] border-current/75 pt-1.5 flex-1 flex flex-col justify-around min-h-0">
+                            <div
+                                class="flex items-center justify-between text-xs uppercase font-extrabold opacity-80 pb-0.5">
+                                <span>Cổ phiếu tâm điểm (x1,000đ)</span>
+                                <span class="font-mono text-[10px] opacity-75">HOSE • Realtime</span>
+                            </div>
+                            <div id="stocksMiniGridAll" class="grid grid-cols-2 gap-x-3 gap-y-1 py-0.5">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VIEW 2: VÀNG & CRYPTO (Pure Mondrian Style - Spans Full Height) -->
+                    <div id="marketViewGoldBtc" class="hidden h-full flex-1 flex flex-col justify-between min-h-0">
+                        <!-- SJC Row -->
+                        <div
+                            class="border-t-[1.5px] border-current/75 py-2.5 flex items-baseline justify-between gap-3">
+                            <div>
+                                <span class="font-bold text-base sm:text-lg tracking-tight">SJC (Bán ra)</span>
+                                <div id="goldSjcBuyDetail" class="text-xs sm:text-sm opacity-80 font-mono mt-0.5">Mua
+                                    vào 139,0 tr/lượng</div>
+                            </div>
+                            <span id="goldSjcDetail"
+                                class="font-serif font-black text-[clamp(2.2rem,4.6vh,3.5rem)] leading-none tracking-tight">
+                                142,0
+                            </span>
+                        </div>
+
+                        <!-- Nhẫn 999.9 Row -->
+                        <div
+                            class="border-t-[1.5px] border-current/75 py-2.5 flex items-baseline justify-between gap-3">
+                            <div>
+                                <span class="font-bold text-base sm:text-lg tracking-tight">Nhẫn 999.9 (Bán)</span>
+                                <div id="goldRingBuyDetail" class="text-xs sm:text-sm opacity-80 font-mono mt-0.5">Mua
+                                    vào 138,0 tr/lượng</div>
+                            </div>
+                            <span id="goldRingDetail"
+                                class="font-serif font-black text-[clamp(2.2rem,4.6vh,3.5rem)] leading-none tracking-tight">
+                                141,0
+                            </span>
+                        </div>
+
+                        <!-- Bitcoin Row -->
+                        <div
+                            class="border-t-[1.5px] border-current/75 py-2.5 flex items-baseline justify-between gap-3">
+                            <div>
+                                <div class="font-bold text-base sm:text-lg tracking-tight flex items-center gap-1.5">
+                                    <span
+                                        class="w-4 h-4 rounded-full bg-amber-500 text-black text-[10px] font-black flex items-center justify-center">₿</span>
+                                    Bitcoin (BTC)
+                                </div>
+                                <div id="btcChangeDescDetail"
+                                    class="text-xs sm:text-sm font-extrabold text-rose-300 font-mono mt-0.5">
+                                    ▼ Giảm -1.26% (-$983)
+                                </div>
+                            </div>
+                            <div id="btcPriceDetail"
+                                class="font-serif font-black text-[clamp(1.9rem,3.8vh,2.8rem)] leading-none tracking-tight">
+                                $77,035
+                            </div>
+                        </div>
+
+                        <!-- Spot Gold World -->
+                        <div
+                            class="border-t-[1.5px] border-current/75 pt-2 flex items-center justify-between text-xs sm:text-sm opacity-90">
+                            <span class="font-medium">Vàng thế giới (Spot XAU/USD):</span>
+                            <span id="spotGoldWorldVal" class="font-mono font-black text-sm sm:text-base">$3,908.7 /
+                                oz</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer: Updated time + USD/VND + Note -->
+                <div
+                    class="pt-1.5 border-t border-current/25 flex items-center justify-between text-xs opacity-85 font-mono shrink-0">
+                    <span id="marketUpdatedTime" class="truncate">Cập nhật: 17:13:38</span>
+                    <span id="liveUsdVnd" class="font-bold">USD/VND: 25.744</span>
+                </div>
+            </div>
+
+            <!-- BLOCK 3: BLUE FUEL BLOCK ("Xăng dầu" Petrolimex vùng 1) -->
+            <div onclick="openSettingsModal()" title="Nhấn để tùy chỉnh giá Xăng Dầu"
+                class="mondrian-card theme-block-blue cursor-pointer p-4 sm:p-5 lg:px-6 lg:py-4 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-start justify-between gap-2">
+                        <h3 class="font-editorial italic font-bold text-[clamp(1.45rem,3vh,2.1rem)] leading-tight">
+                            Xăng dầu
+                        </h3>
+                        <span
+                            class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-black/25 shrink-0">
+                            Vùng 1
+                        </span>
+                    </div>
+                    <p class="text-[11px] sm:text-xs opacity-90 font-medium mt-0.5">
+                        đồng mỗi lít, Petrolimex vùng 1
+                    </p>
+                </div>
+
+                <!-- 3 Fuel Price Rows -->
+                <div class="my-auto py-0.5 flex flex-col justify-center">
+                    <div class="border-t-[1.5px] border-current/75 py-1.5 flex items-baseline justify-between gap-2">
+                        <span class="font-bold text-xs sm:text-sm lg:text-base">E10 RON95</span>
+                        <span id="oilPrice1"
+                            class="font-serif font-black text-[clamp(1.55rem,3.2vh,2.35rem)] leading-none tracking-tight">
+                            28.250
+                        </span>
+                    </div>
+
+                    <div class="border-t-[1.5px] border-current/75 py-1.5 flex items-baseline justify-between gap-2">
+                        <span class="font-bold text-xs sm:text-sm lg:text-base">E5 RON92</span>
+                        <span id="oilPrice2"
+                            class="font-serif font-black text-[clamp(1.55rem,3.2vh,2.35rem)] leading-none tracking-tight">
+                            27.700
+                        </span>
+                    </div>
+
+                    <div class="border-t-[1.5px] border-current/75 pt-1.5 flex items-baseline justify-between gap-2">
+                        <span class="font-bold text-xs sm:text-sm lg:text-base">Dầu DO</span>
+                        <span id="oilPrice3"
+                            class="font-serif font-black text-[clamp(1.55rem,3.2vh,2.35rem)] leading-none tracking-tight">
+                            29.120
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Bottom Note -->
+                <div
+                    class="pt-1 border-t border-current/25 flex items-center justify-between text-[11px] opacity-85 font-medium">
+                    <span>Petrolimex niêm yết</span>
+                    <span class="underline">Cập nhật ›</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ==================== ROW 3: BOTTOM 3-BLOCK MONDRIAN BAR ==================== -->
+        <section class="bottom-bento-grid">
+
+            <!-- BOTTOM 1: RED FRAMED BLOCK (Đếm ngược Tết Âm Lịch + Đại Tiệc Animation Tết Cổ Truyền Việt Nam) -->
+            <div
+                class="mondrian-card framed-block theme-block-red px-4 py-2.5 sm:px-5 sm:py-3 flex items-center justify-between gap-3 relative overflow-hidden group select-none">
+
+                <!-- Floating Traditional Tet Decorations (Lồng đèn Hội An, Bánh Chưng Xanh, Dưa Hấu Đỏ, Cành Mai, Pháo Tép) -->
+                <div class="pointer-events-none absolute inset-0 overflow-hidden select-none">
+                    <!-- Lồng đèn đỏ phố cổ Hội An đung đưa theo gió xuân -->
+                    <div class="anim-lantern absolute -top-1 right-12 sm:right-16 w-8 h-14 opacity-90 drop-shadow-md">
+                        <svg viewBox="0 0 32 56" class="w-full h-full">
+                            <line x1="16" y1="0" x2="16" y2="8" stroke="#FBBF24" stroke-width="1.8" />
+                            <rect x="10" y="8" width="12" height="3" rx="1" fill="#FBBF24" />
+                            <ellipse cx="16" cy="24" rx="12" ry="14" fill="#DC2626" stroke="#991B1B" stroke-width="1" />
+                            <ellipse cx="16" cy="24" rx="6" ry="14" fill="none" stroke="#FDE047" stroke-width="1" opacity="0.85" />
+                            <line x1="16" y1="10" x2="16" y2="38" stroke="#FDE047" stroke-width="1.2" opacity="0.85" />
+                            <rect x="11" y="38" width="10" height="2.5" rx="1" fill="#FBBF24" />
+                            <path d="M16 40.5 L16 53 M13.5 41.5 L12 52 M18.5 41.5 L20 52" stroke="#F59E0B" stroke-width="1.3" stroke-linecap="round" />
+                        </svg>
+                    </div>
+
+                    <!-- Cành Mai Vàng 5 Cánh & Hoa Đào Hồng Nở Rộ -->
+                    <div class="anim-blossom absolute top-1.5 right-24 sm:right-32 w-8 h-8 opacity-90 hidden sm:block">
+                        <svg viewBox="0 0 44 44" class="w-full h-full drop-shadow-sm">
+                            <!-- Nhành cây nâu uốn lượn -->
+                            <path d="M4 38 Q 20 28 36 10" stroke="#78350F" stroke-width="2.2" stroke-linecap="round" fill="none" />
+                            <!-- Hoa Mai vàng 5 cánh -->
+                            <g transform="translate(14, 20)">
+                                <circle cx="0" cy="-6" r="4.2" fill="#FBBF24" />
+                                <circle cx="5.8" cy="-1.8" r="4.2" fill="#FBBF24" />
+                                <circle cx="3.6" cy="5" r="4.2" fill="#FBBF24" />
+                                <circle cx="-3.6" cy="5" r="4.2" fill="#FBBF24" />
+                                <circle cx="-5.8" cy="-1.8" r="4.2" fill="#FBBF24" />
+                                <circle cx="0" cy="0" r="2.8" fill="#EA580C" />
+                                <circle cx="0" cy="0" r="1.2" fill="#FEF08A" />
+                            </g>
+                            <!-- Nụ hoa đào hồng phớt -->
+                            <circle cx="34" cy="12" r="3.2" fill="#F472B6" />
+                            <circle cx="28" cy="18" r="2.5" fill="#FBBF24" />
+                        </svg>
+                    </div>
+
+                    <!-- Cặp Bánh Chưng Xanh & Dưa Hấu Đỏ Tết Cổ Truyền -->
+                    <div class="anim-banhchung absolute bottom-1 right-12 sm:right-16 w-11 h-9 opacity-95 hidden sm:block">
+                        <svg viewBox="0 0 52 42" class="w-full h-full drop-shadow-sm">
+                            <!-- Bánh chưng xanh lá dong vuông vức -->
+                            <rect x="4" y="10" width="24" height="24" rx="2" fill="#15803D" stroke="#166534" stroke-width="1.2" />
+                            <!-- Dây lạt giang vàng buộc chữ thập -->
+                            <line x1="16" y1="10" x2="16" y2="34" stroke="#FDE047" stroke-width="1.8" />
+                            <line x1="4" y1="22" x2="28" y2="22" stroke="#FDE047" stroke-width="1.8" />
+                            <!-- Miếng dưa hấu đỏ may mắn -->
+                            <path d="M30 32 A 16 16 0 0 1 48 32 Z" fill="#DC2626" stroke="#15803D" stroke-width="1.8" />
+                            <!-- Hạt dưa đen -->
+                            <circle cx="36" cy="27" r="0.9" fill="#141413" />
+                            <circle cx="42" cy="27" r="0.9" fill="#141413" />
+                            <circle cx="39" cy="24" r="0.9" fill="#141413" />
+                        </svg>
+                    </div>
+
+                    <!-- Dây Pháo Tép Đỏ Lắc Lư & Tia Lửa Pháo Hoa -->
+                    <div class="anim-firecracker absolute top-0.5 right-[86px] sm:right-[112px] w-6 h-12 opacity-85">
+                        <svg viewBox="0 0 24 48" class="w-full h-full drop-shadow-xs">
+                            <!-- Dây pháo -->
+                            <line x1="12" y1="0" x2="12" y2="40" stroke="#78350F" stroke-width="1.2" />
+                            <!-- Từng quả pháo tép đỏ đan so le -->
+                            <rect x="4" y="6" width="7" height="3" rx="0.5" fill="#DC2626" stroke="#991B1B" stroke-width="0.5" />
+                            <rect x="13" y="11" width="7" height="3" rx="0.5" fill="#DC2626" stroke="#991B1B" stroke-width="0.5" />
+                            <rect x="4" y="16" width="7" height="3" rx="0.5" fill="#DC2626" stroke="#991B1B" stroke-width="0.5" />
+                            <rect x="13" y="21" width="7" height="3" rx="0.5" fill="#DC2626" stroke="#991B1B" stroke-width="0.5" />
+                            <rect x="4" y="26" width="7" height="3" rx="0.5" fill="#DC2626" stroke="#991B1B" stroke-width="0.5" />
+                            <rect x="13" y="31" width="7" height="3" rx="0.5" fill="#DC2626" stroke="#991B1B" stroke-width="0.5" />
+                            <!-- Đầu ngòi nổ phát sáng -->
+                            <circle cx="12" cy="42" r="2" fill="#FBBF24" />
+                        </svg>
+                    </div>
+
+                    <!-- Tia Pháo Hoa Lấp Lánh May Mắn -->
+                    <div class="anim-sparkle absolute bottom-2 right-28 sm:right-36 w-5 h-5 text-amber-300 opacity-85">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0L14 9L23 12L14 15L12 24L10 15L1 12L10 9Z" />
+                        </svg>
+                    </div>
+
+                    <!-- Mưa Cánh Hoa Mai & Hoa Đào Rơi Lơ Lửng Trong Gió Xuân -->
+                    <div class="anim-petal-1 absolute top-1 right-20 w-2.5 h-2.5 bg-[#FBBF24] rounded-full opacity-0 shadow-xs"></div>
+                    <div class="anim-petal-2 absolute top-3 right-14 w-2 h-2 bg-[#F472B6] rounded-full opacity-0 shadow-xs"></div>
+                    <div class="anim-petal-1 absolute top-2 right-28 w-2 h-2 bg-[#FDE047] rounded-full opacity-0 shadow-xs" style="animation-delay: 2.2s;"></div>
+                </div>
+
+                <!-- Nội dung đếm ngược ngày Tết (Typography to rõ, nổi bật sắc xuân) -->
+                <div onclick="showDayDetailModal()" class="cursor-pointer flex-1 min-w-0 z-10 relative py-0.5">
+                    <div class="flex items-center gap-2 sm:gap-2.5">
+                        <span
+                            class="inline-flex items-center gap-1.5 px-3 py-0.5 text-xs sm:text-[13px] font-extrabold uppercase tracking-wider bg-black/35 text-[#FDE047] rounded-full border border-amber-400/40 shadow-xs">
+                            <svg class="w-3.5 h-3.5 text-amber-400 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="7" r="3.5" fill="#FBBF24" />
+                                <circle cx="16.5" cy="10.5" r="3.5" fill="#FBBF24" />
+                                <circle cx="15" cy="16" r="3.5" fill="#FBBF24" />
+                                <circle cx="9" cy="16" r="3.5" fill="#FBBF24" />
+                                <circle cx="7.5" cy="10.5" r="3.5" fill="#FBBF24" />
+                                <circle cx="12" cy="12" r="2" fill="#DC2626" />
+                            </svg>
+                            <span>Tết Cổ Truyền</span>
+                        </span>
+                        <span id="tetTargetTitle" class="text-sm sm:text-base font-extrabold opacity-95 truncate text-white">
+                            Tết Đinh Mùi 2027
+                        </span>
+                    </div>
+
+                    <div class="mt-1.5 flex items-baseline gap-2.5 sm:gap-3">
+                        <div class="flex items-baseline gap-1.5">
+                            <span id="tetDaysLeft"
+                                class="font-serif font-black text-3xl sm:text-4xl lg:text-[2.65rem] leading-none text-[#FFFDF8] drop-shadow-md">95</span>
+                            <span class="text-sm sm:text-base font-extrabold opacity-95 text-[#FDE047]">ngày</span>
+                        </div>
+                        <span class="opacity-50 text-white font-bold text-base">•</span>
+                        <div id="tetHMSLeft" class="font-mono font-extrabold text-sm sm:text-base lg:text-lg tracking-wider opacity-95 text-white drop-shadow-xs">
+                            09:24:18
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nút YouTube thu bé lại đặt gọn gàng ở góc trên bên phải khung -->
+                <button onclick="openYoutubeModal()" title="Mở YouTube & Không gian âm nhạc thư giãn"
+                    class="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/30 hover:bg-[#D63820] text-white flex items-center justify-center border border-white/20 shadow-xs transition hover:scale-110 active:scale-95 group/yt">
+                    <svg class="w-3.5 h-3.5 fill-current text-white/90 group-hover/yt:text-white" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- BOTTOM 2: YELLOW QUOTE BLOCK (Danh ngôn Danh nhân Việt Nam) -->
+            <div onclick="nextQuote(true)" title="Nhấn để đổi câu danh ngôn Việt Nam (Phím Space)"
+                class="mondrian-card theme-block-yellow cursor-pointer px-4 py-2.5 sm:px-5 sm:py-3 flex items-center justify-between gap-3 group">
+                <div class="flex items-center gap-3 min-w-0 flex-1">
+                    <div
+                        class="shrink-0 w-9 h-9 rounded bg-[#141413] text-[#E5B524] flex items-center justify-center font-serif font-black text-xl shadow-sm group-hover:rotate-6 transition">
+                        “
+                    </div>
+                    <div id="quoteWrapper" class="min-w-0 flex-1 fade-animate">
+                        <p id="quoteContent"
+                            class="font-editorial italic font-bold text-xs sm:text-sm lg:text-[15px] leading-snug line-clamp-2">
+                            “Không có gì quý hơn độc lập, tự do.”
+                        </p>
+                        <div class="mt-0.5 flex items-center justify-between gap-2">
+                            <span id="quoteAuthor"
+                                class="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider opacity-80 truncate">
+                                — Chủ tịch Hồ Chí Minh
+                            </span>
+                            <span class="text-[10px] font-bold opacity-60 group-hover:opacity-100 shrink-0">
+                                Đổi câu ↻
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTTOM 3: BLUE NEWS WIDGET & SETTINGS BLOCK (Tin vắn VnExpress + Cài đặt) -->
+            <div class="mondrian-card theme-block-blue px-4 py-2.5 sm:px-5 sm:py-3 flex flex-col justify-between">
+                <div class="flex items-center justify-between gap-2">
+                    <button onclick="openNewsModal()" class="flex items-center gap-1.5 hover:opacity-85 transition">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 live-dot"></span>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider">Tin vắn VnExpress</span>
+                    </button>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="cycleWidgetNews()" title="Tin tiếp theo"
+                            class="text-xs px-2 py-0.5 rounded bg-black/20 hover:bg-black/35 font-bold">›</button>
+                        <button onclick="openNewsModal()" title="Mở bảng đọc báo (Phím N)"
+                            class="text-[11px] px-2 py-0.5 rounded bg-black/20 hover:bg-black/35 font-bold">Đọc
+                            báo</button>
+                        <button onclick="openSettingsModal()" title="Mở Cài đặt & Theme Studio"
+                            class="h-7 px-2.5 rounded-full border-[1.8px] border-current hover:bg-black/15 font-extrabold flex items-center gap-1.5 text-[11px] transition">
+                            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span>Cài đặt</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Cycling News Headline -->
+                <div onclick="openNewsModal()" title="Nhấn để đọc chi tiết các tin nóng trong ngày"
+                    class="cursor-pointer group my-auto pt-1">
+                    <p id="widgetNewsTitle"
+                        class="font-serif font-bold text-xs sm:text-sm leading-snug line-clamp-2 group-hover:underline fade-animate">
+                        Giá vàng nhẫn và SJC duy trì ở vùng đỉnh lịch sử, giao dịch sôi động tại các đô thị lớn.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ==================== MODAL 1: THEME STUDIO & CÀI ĐẶT ==================== -->
+    <div id="settingsModal"
+        class="fixed inset-0 z-50 hidden bg-black/65 backdrop-blur-sm flex items-center justify-center p-4">
+        <div
+            class="bg-[#F4F1EA] text-[#141413] border-2 border-[#141413] w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl p-6 sm:p-8">
+            <div class="flex items-center justify-between border-b-2 border-[#141413] pb-4">
+                <div>
+                    <h3 class="font-serif font-black text-2xl sm:text-3xl">Theme Studio & Cài đặt</h3>
+                    <p class="text-xs sm:text-sm opacity-75 mt-0.5">Đổi bảng màu nghệ thuật, lời chào, tỉnh thành & cấu
+                        hình giá Vàng / Xăng dầu</p>
+                </div>
+                <button onclick="closeSettingsModal()"
+                    class="w-9 h-9 rounded-full border-2 border-[#141413] flex items-center justify-center font-bold hover:bg-[#D63820] hover:text-white transition">✕</button>
+            </div>
+
+            <div class="space-y-5 mt-5 text-sm">
+                <!-- 1. 5 Art Themes -->
+                <div>
+                    <label class="block font-extrabold uppercase tracking-wider text-xs mb-2">1. Bộ Sưu Tập 5 Theme Nghệ
+                        Thuật (Phím tắt: T)</label>
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                        <button type="button" onclick="applyArtTheme('mondrian')"
+                            class="p-2.5 border-2 border-[#141413] bg-[#F4F1EA] text-[#141413] text-left hover:scale-[1.02] transition">
+                            <div class="flex gap-1 mb-1">
+                                <span class="w-3.5 h-3.5 bg-[#E5B524] border border-black/20"></span>
+                                <span class="w-3.5 h-3.5 bg-[#D63820] border border-black/20"></span>
+                                <span class="w-3.5 h-3.5 bg-[#1835A8] border border-black/20"></span>
+                            </div>
+                            <div class="font-bold text-xs">Mondrian</div>
+                            <div class="text-[10px] opacity-70">Chuẩn ảnh gốc</div>
+                        </button>
+
+                        <button type="button" onclick="applyArtTheme('lacquer')"
+                            class="p-2.5 border-2 border-[#141413] bg-[#0D0C0B] text-[#F4EFE6] text-left hover:scale-[1.02] transition">
+                            <div class="flex gap-1 mb-1">
+                                <span class="w-3.5 h-3.5 bg-[#C89B3C]"></span>
+                                <span class="w-3.5 h-3.5 bg-[#8B1E14]"></span>
+                                <span class="w-3.5 h-3.5 bg-[#18242C]"></span>
+                            </div>
+                            <div class="font-bold text-xs text-[#E5B524]">Sơn Mài</div>
+                            <div class="text-[10px] opacity-75">Đen OLED</div>
+                        </button>
+
+                        <button type="button" onclick="applyArtTheme('ceramic')"
+                            class="p-2.5 border-2 border-[#141413] bg-[#EEF2F5] text-[#102542] text-left hover:scale-[1.02] transition">
+                            <div class="flex gap-1 mb-1">
+                                <span class="w-3.5 h-3.5 bg-[#D8E2DC] border border-black/20"></span>
+                                <span class="w-3.5 h-3.5 bg-[#1B3B6F]"></span>
+                                <span class="w-3.5 h-3.5 bg-[#274C77]"></span>
+                            </div>
+                            <div class="font-bold text-xs">Gốm Chu Đậu</div>
+                            <div class="text-[10px] opacity-75">Men Lam Cổ</div>
+                        </button>
+
+                        <button type="button" onclick="applyArtTheme('dongho')"
+                            class="p-2.5 border-2 border-[#141413] bg-[#EFE6D5] text-[#231F20] text-left hover:scale-[1.02] transition">
+                            <div class="flex gap-1 mb-1">
+                                <span class="w-3.5 h-3.5 bg-[#D99B26]"></span>
+                                <span class="w-3.5 h-3.5 bg-[#B83B2A]"></span>
+                                <span class="w-3.5 h-3.5 bg-[#284B63]"></span>
+                            </div>
+                            <div class="font-bold text-xs">Đông Hồ</div>
+                            <div class="text-[10px] opacity-75">Giấy Dó Mộc</div>
+                        </button>
+
+                        <button type="button" onclick="applyArtTheme('cyber')"
+                            class="p-2.5 border-2 border-[#141413] bg-[#090A10] text-[#38BDF8] text-left hover:scale-[1.02] transition">
+                            <div class="flex gap-1 mb-1">
+                                <span class="w-3.5 h-3.5 bg-[#38BDF8]"></span>
+                                <span class="w-3.5 h-3.5 bg-[#FB7185]"></span>
+                                <span class="w-3.5 h-3.5 bg-[#C084FC]"></span>
+                            </div>
+                            <div class="font-bold text-xs">Cyber Đêm</div>
+                            <div class="text-[10px] text-white/70">Neon Sài Gòn</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. Greeting & Weather Location -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold mb-1">Lời chào trên màn hình</label>
+                        <input id="inputGreeting" type="text" value="Xin chào Nam Hùng"
+                            class="w-full px-3 py-2 bg-white border-2 border-[#141413] font-semibold focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">Thành phố (Thời tiết & AQI)</label>
+                        <select id="selectCity"
+                            class="w-full px-3 py-2 bg-white border-2 border-[#141413] font-semibold focus:outline-none">
+                            <option value="10.9574,106.8427,Biên Hòa">Biên Hòa, Đồng Nai</option>
+                            <option value="10.8231,106.6297,TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                            <option value="21.0285,105.8542,Hà Nội">Hà Nội</option>
+                            <option value="16.0544,108.2022,Đà Nẵng">Đà Nẵng</option>
+                            <option value="10.0452,105.7469,Cần Thơ">Cần Thơ</option>
+                            <option value="11.9404,108.4583,Đà Lạt">Đà Lạt</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 3. Gold & Fuel Configuration -->
+                <div class="p-4 bg-[#E5B524]/20 border-l-4 border-[#141413] space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="font-extrabold">Giá Vàng SJC / Nhẫn & Xăng Dầu Petrolimex</span>
+                        <button type="button" onclick="fetchLiveMarketAPI(true)"
+                            class="px-3 py-1 bg-[#D63820] text-white text-xs font-bold rounded hover:opacity-90 transition">
+                            Đồng bộ API ngay ↻
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">SJC Bán ra</label>
+                            <input id="inputSjcSell" type="text"
+                                class="w-full px-2.5 py-1.5 bg-white border border-[#141413] font-mono font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Nhẫn 999.9 Bán</label>
+                            <input id="inputRingSell" type="text"
+                                class="w-full px-2.5 py-1.5 bg-white border border-[#141413] font-mono font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">SJC Mua vào</label>
+                            <input id="inputSjcBuy" type="text"
+                                class="w-full px-2.5 py-1.5 bg-white border border-[#141413] font-mono font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Nhẫn 999.9 Mua</label>
+                            <input id="inputRingBuy" type="text"
+                                class="w-full px-2.5 py-1.5 bg-white border border-[#141413] font-mono font-bold">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2.5">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">E10 RON95 (đ/lít)</label>
+                            <input id="inputOil1" type="text"
+                                class="w-full px-2.5 py-1.5 bg-white border border-[#141413] font-mono font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">E5 RON92 (đ/lít)</label>
+                            <input id="inputOil2" type="text"
+                                class="w-full px-2.5 py-1.5 bg-white border border-[#141413] font-mono font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Dầu DO (đ/lít)</label>
+                            <input id="inputOil3" type="text"
+                                class="w-full px-2.5 py-1.5 bg-white border border-[#141413] font-mono font-bold">
+                        </div>
+                    </div>
+
+                    <!-- Watchlist Cổ phiếu & Tự động xoay Widget -->
+                    <div class="border-t border-[#141413]/20 pt-3 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="block text-xs font-extrabold">Danh mục Cổ phiếu theo dõi (Watchlist)</label>
+                            <span class="text-[11px] opacity-75">Cách nhau bởi dấu phẩy</span>
+                        </div>
+                        <input id="inputStockWatchlist" type="text" placeholder="CTG, HPG, VCB, SSI, MWG, VHM"
+                            class="w-full px-2.5 py-1.5 bg-white border border-[#141413] font-mono font-bold text-xs uppercase tracking-wider">
+                        <div class="flex items-center justify-between text-xs pt-0.5">
+                            <label class="flex items-center gap-2 cursor-pointer font-bold select-none">
+                                <input id="chkMarketAutoCycle" type="checkbox" class="w-4 h-4 accent-[#D63820]">
+                                <span>Tự động xoay vòng chế độ xem Widget (Tổng hợp ⇄ Vàng & BTC ⇄ VN30 & CP)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Screensaver Protection -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label
+                        class="flex items-center gap-2.5 p-2.5 border border-[#141413]/30 cursor-pointer bg-white/50">
+                        <input id="chkPixelShift" type="checkbox" checked class="w-4 h-4 accent-[#D63820]">
+                        <div>
+                            <div class="font-bold text-xs">Chống lưu ảnh OLED (Pixel Shift)</div>
+                            <div class="text-[11px] opacity-70">Dịch chuyển nhẹ 2px mỗi phút bảo vệ màn hình</div>
+                        </div>
+                    </label>
+                    <label
+                        class="flex items-center gap-2.5 p-2.5 border border-[#141413]/30 cursor-pointer bg-white/50">
+                        <input id="chkParticles" type="checkbox" checked class="w-4 h-4 accent-[#D63820]">
+                        <div>
+                            <div class="font-bold text-xs">Hạt bụi nắng lơ lửng (Ambient Dust)</div>
+                            <div class="text-[11px] opacity-70">Hiệu ứng hạt sáng chuyển động nhẹ nhàng</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-[#141413]/20 flex items-center justify-end gap-3">
+                <button onclick="resetDefaultSettings()"
+                    class="px-4 py-2 text-xs font-bold uppercase tracking-wider border border-[#141413] hover:bg-black/5 transition">
+                    Khôi phục gốc
+                </button>
+                <button onclick="saveSettings()"
+                    class="px-6 py-2 bg-[#1835A8] text-white font-bold text-sm hover:opacity-95 transition shadow-md">
+                    Lưu thay đổi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 2: BẢNG ĐỌC TIN VẮN VNEXPRESS ==================== -->
+    <div id="newsModal"
+        class="fixed inset-0 z-50 hidden bg-black/65 backdrop-blur-sm flex items-center justify-center p-4">
+        <div
+            class="bg-[#F4F1EA] text-[#141413] border-2 border-[#141413] w-full max-w-3xl max-h-[86vh] flex flex-col shadow-2xl">
+            <div class="p-5 border-b-2 border-[#141413] flex items-center justify-between bg-[#E5B524]">
+                <div>
+                    <span
+                        class="px-2 py-0.5 bg-[#141413] text-[#E5B524] text-[10px] font-extrabold uppercase tracking-widest">VnExpress
+                        RSS Trực Tiếp</span>
+                    <h3 class="font-serif font-black text-2xl sm:text-3xl mt-1">Điểm Tin Thời Sự & Kinh Tế</h3>
+                </div>
+                <button onclick="closeNewsModal()"
+                    class="w-9 h-9 rounded-full border-2 border-[#141413] flex items-center justify-center font-bold hover:bg-[#141413] hover:text-[#E5B524] transition">✕</button>
+            </div>
+
+            <div class="px-5 py-2.5 border-b border-[#141413]/20 flex items-center gap-2 bg-black/5 overflow-x-auto">
+                <button onclick="switchNewsCategory('tin-moi-nhat', this)"
+                    class="news-tab-btn px-3 py-1 text-xs font-extrabold uppercase tracking-wider bg-[#141413] text-white rounded-sm">Tin
+                    mới nhất</button>
+                <button onclick="switchNewsCategory('kinh-doanh', this)"
+                    class="news-tab-btn px-3 py-1 text-xs font-bold uppercase tracking-wider hover:bg-black/10 rounded-sm">Kinh
+                    doanh & Vàng</button>
+                <button onclick="switchNewsCategory('so-hoa', this)"
+                    class="news-tab-btn px-3 py-1 text-xs font-bold uppercase tracking-wider hover:bg-black/10 rounded-sm">Công
+                    nghệ & AI</button>
+                <button onclick="switchNewsCategory('the-gioi', this)"
+                    class="news-tab-btn px-3 py-1 text-xs font-bold uppercase tracking-wider hover:bg-black/10 rounded-sm">Thế
+                    giới</button>
+            </div>
+
+            <div id="newsListContainer" class="p-5 overflow-y-auto space-y-4 divide-y divide-[#141413]/15 flex-1">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 3: CHI TIẾT NGÀY ÂM LỊCH & GIỜ HOÀNG ĐẠO ==================== -->
+    <div id="dayDetailModal"
+        class="fixed inset-0 z-50 hidden bg-black/65 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-[#E5B524] text-[#141413] border-2 border-[#141413] w-full max-w-lg p-6 shadow-2xl">
+            <div class="flex items-start justify-between border-b-2 border-[#141413] pb-3">
+                <div>
+                    <span
+                        class="text-xs font-extrabold uppercase tracking-widest bg-[#141413] text-[#E5B524] px-2 py-0.5">Chi
+                        tiết Lịch Á Đông</span>
+                    <h3 id="modalSolarTitle" class="font-serif font-black text-2xl sm:text-3xl mt-1">Thứ Ba, 03/11/2026
+                    </h3>
+                </div>
+                <button onclick="closeDayDetailModal()"
+                    class="w-8 h-8 rounded-full border-2 border-[#141413] flex items-center justify-center font-bold hover:bg-[#141413] hover:text-[#E5B524] transition">✕</button>
+            </div>
+
+            <div class="my-4 space-y-4">
+                <div class="flex items-center gap-4 bg-[#141413] text-[#F4F1EA] p-4">
+                    <div id="modalLunarBig" class="font-serif font-black text-4xl sm:text-5xl text-[#E5B524] shrink-0">
+                        25/9</div>
+                    <div class="text-xs sm:text-sm space-y-1">
+                        <div id="modalCanChiFull" class="font-bold text-base text-white">Năm Bính Ngọ • Tháng Mậu Tuất •
+                            Ngày Giáp Tý</div>
+                        <div id="modalTietKhi" class="opacity-85">Tiết khí: Lập Đông</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-xs font-extrabold uppercase tracking-wider opacity-75 mb-1">Giờ Hoàng Đạo (Giờ tốt
+                        trong ngày):</div>
+                    <div id="modalHoangDao" class="font-semibold text-sm bg-black/10 p-3 leading-relaxed">
+                        Tý (23h-1h), Sửu (1h-3h), Mão (5h-7h), Ngọ (11h-13h), Thân (15h-17h), Dậu (17h-19h)
+                    </div>
+                </div>
+
+                <div class="border-t-2 border-[#141413]/20 pt-3">
+                    <div class="text-xs font-bold uppercase opacity-75">Hướng tới Tết Nguyên Đán tiếp theo:</div>
+                    <div id="modalTetSummary" class="font-serif font-black text-lg">Tết Đinh Mùi (06/02/2027 Dương lịch)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 4: YOUTUBE & ĐÀI PHÁT ÂM THANH THIÊN NHIÊN ==================== -->
+    <div id="youtubeModal"
+        class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-[#D63820] text-white border-2 border-white w-full max-w-xl p-6 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-white/30 pb-3">
+                <div class="flex items-center gap-2.5">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                    <h3 class="font-serif font-black text-2xl">Không gian Âm nhạc & Thiền định</h3>
+                </div>
+                <button onclick="closeYoutubeModal()"
+                    class="w-8 h-8 rounded-full border border-white flex items-center justify-center font-bold hover:bg-white hover:text-[#D63820] transition">✕</button>
+            </div>
+
+            <div class="my-4 space-y-4">
+                <div class="bg-black/25 p-4 rounded space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-bold text-sm">Đài phát Âm thanh Nền & Nhạc Thư Giãn (Loop)</div>
+                            <div id="ambientStatusText" class="text-xs text-white/75">Đang tắt — Chọn hiệu ứng bên dưới
+                            </div>
+                        </div>
+                        <button onclick="playTibetanBowlChime()"
+                            class="px-3 py-1.5 bg-white/15 hover:bg-white/25 rounded text-xs font-bold">
+                            🔔 Thử Chuông Thiền
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                        <button onclick="setAmbientMode('music')"
+                            class="px-3 py-2 bg-[#E5B524] text-[#141413] font-extrabold text-xs rounded shadow hover:opacity-95 transition flex items-center justify-center gap-1.5">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                            </svg>
+                            <span>Nhạc thư giãn ↻</span>
+                        </button>
+                        <button onclick="setAmbientMode('rain')"
+                            class="px-3 py-2 bg-sky-600 text-white font-extrabold text-xs rounded shadow hover:opacity-95 transition">
+                            🌧️ Mưa đêm ấm
+                        </button>
+                        <button onclick="setAmbientMode('fire')"
+                            class="px-3 py-2 bg-amber-600 text-white font-extrabold text-xs rounded shadow hover:opacity-95 transition">
+                            🔥 Lửa trại
+                        </button>
+                        <button onclick="setAmbientMode('off')"
+                            class="px-3 py-2 bg-black/40 text-white font-bold text-xs rounded hover:bg-black/60 transition">
+                            ⏹ Tắt âm
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-bold">
+                    <a href="https://www.youtube.com/results?search_query=lofi+chill+vietnam" target="_blank"
+                        rel="noopener noreferrer"
+                        class="p-3 bg-white/15 hover:bg-white/25 rounded flex items-center justify-between transition">
+                        <span>🎵 Nhạc Lofi Chill Việt Nam</span>
+                        <span>↗</span>
+                    </a>
+                    <a href="https://www.youtube.com/results?search_query=nhac+xuan+tet+khong+loi" target="_blank"
+                        rel="noopener noreferrer"
+                        class="p-3 bg-white/15 hover:bg-white/25 rounded flex items-center justify-between transition">
+                        <span>🌸 Hòa tấu Xuân & Tết Á Đông</span>
+                        <span>↗</span>
+                    </a>
+                    <a href="https://www.youtube.com/results?search_query=nhac+trinh+cong+son+acoustic" target="_blank"
+                        rel="noopener noreferrer"
+                        class="p-3 bg-white/15 hover:bg-white/25 rounded flex items-center justify-between transition">
+                        <span>🎸 Acoustic Trịnh Công Sơn</span>
+                        <span>↗</span>
+                    </a>
+                    <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer"
+                        class="p-3 bg-white text-[#D63820] hover:opacity-90 rounded flex items-center justify-between transition">
+                        <span>▶ Mở trang chủ YouTube</span>
+                        <span>↗</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT ENGINE ==================== -->
+    <script>
+        /********************************************************************
+         * 1. THUẬT TOÁN ÂM LỊCH VIỆT NAM (HỒ NGỌC ĐỨC - MÚI GIỜ GMT+7)
+         ********************************************************************/
+        const PI = Math.PI;
+        function INT(d) { return Math.floor(d); }
+
+        function jdFromDate(dd, mm, yy) {
+            const a = INT((14 - mm) / 12);
+            const y = yy + 4800 - a;
+            const m = mm + 12 * a - 3;
+            let jd = dd + INT((153 * m + 2) / 5) + 365 * y + INT(y / 4) - INT(y / 100) + INT(y / 400) - 32045;
+            if (jd < 2299161) {
+                jd = dd + INT((153 * m + 2) / 5) + 365 * y + INT(y / 4) - 32083;
+            }
+            return jd;
+        }
+
+        function getNewMoonDay(k, timeZone) {
+            const T = k / 1236.85;
+            const T2 = T * T;
+            const T3 = T2 * T;
+            const dr = PI / 180;
+            let Jd1 = 2415020.75933 + 29.53058868 * k + 0.0001178 * T2 - 0.000000155 * T3;
+            Jd1 = Jd1 + 0.00033 * Math.sin((166.56 + 132.87 * T - 0.009173 * T2) * dr);
+            const M = 359.2242 + 29.10535608 * k - 0.0000333 * T2 - 0.00000347 * T3;
+            const Mpr = 306.0253 + 385.81691806 * k + 0.0107306 * T2 + 0.00001236 * T3;
+            const F = 21.2964 + 390.67050646 * k - 0.0016528 * T2 - 0.00000239 * T3;
+            let C1 = (0.1734 - 0.000393 * T) * Math.sin(M * dr) + 0.0021 * Math.sin(2 * dr * M);
+            C1 = C1 - 0.4068 * Math.sin(Mpr * dr) + 0.0161 * Math.sin(dr * 2 * Mpr);
+            C1 = C1 - 0.0004 * Math.sin(dr * 3 * Mpr);
+            C1 = C1 + 0.0104 * Math.sin(dr * 2 * F) - 0.0051 * Math.sin(dr * (M + Mpr));
+            C1 = C1 - 0.0074 * Math.sin(dr * (M - Mpr)) + 0.0004 * Math.sin(dr * (2 * F + M));
+            C1 = C1 - 0.0004 * Math.sin(dr * (2 * F - M)) - 0.0006 * Math.sin(dr * (2 * F + Mpr));
+            C1 = C1 + 0.0010 * Math.sin(dr * (2 * F - Mpr)) + 0.0005 * Math.sin(dr * (2 * Mpr + M));
+            let deltat;
+            if (T < -11) {
+                deltat = 0.001 + 0.000839 * T + 0.0002261 * T2 - 0.00000845 * T3 - 0.000000081 * T * T3;
+            } else {
+                deltat = -0.000278 + 0.000265 * T + 0.000262 * T2;
+            }
+            const JdNew = Jd1 + C1 - deltat;
+            return INT(JdNew + 0.5 + timeZone / 24);
+        }
+
+        function getSunLongitude(jdn, timeZone) {
+            const T = (jdn - 2451545.5 - timeZone / 24) / 36525;
+            const T2 = T * T;
+            const dr = PI / 180;
+            const M = 357.52910 + 35999.05030 * T - 0.0001559 * T2 - 0.00000048 * T * T2;
+            const L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T2;
+            let DL = (1.914600 - 0.004817 * T - 0.000014 * T2) * Math.sin(dr * M);
+            DL = DL + (0.019993 - 0.000101 * T) * Math.sin(dr * 2 * M) + 0.000290 * Math.sin(dr * 3 * M);
+            let L = L0 + DL;
+            L = L * dr;
+            L = L - PI * 2 * (INT(L / (PI * 2)));
+            return INT(L / PI * 6);
+        }
+
+        function getLunarMonth11(yy, timeZone) {
+            const off = jdFromDate(31, 12, yy) - 2415021;
+            const k = INT(off / 29.530588853);
+            let nm = getNewMoonDay(k, timeZone);
+            const sunLong = getSunLongitude(nm, timeZone);
+            if (sunLong >= 9) {
+                nm = getNewMoonDay(k - 1, timeZone);
+            }
+            return nm;
+        }
+
+        function getLeapMonthOffset(a11, timeZone) {
+            const k = INT((a11 - 2415021.076998695) / 29.530588853 + 0.5);
+            let last = 0;
+            let i = 1;
+            let arc = getSunLongitude(getNewMoonDay(k + i, timeZone), timeZone);
+            do {
+                last = arc;
+                i++;
+                arc = getSunLongitude(getNewMoonDay(k + i, timeZone), timeZone);
+            } while (arc !== last && i < 14);
+            return i - 1;
+        }
+
+        function convertSolar2Lunar(dd, mm, yy, timeZone = 7) {
+            const dayNumber = jdFromDate(dd, mm, yy);
+            const k = INT((dayNumber - 2415021.076998695) / 29.530588853);
+            let monthStart = getNewMoonDay(k + 1, timeZone);
+            if (monthStart > dayNumber) {
+                monthStart = getNewMoonDay(k, timeZone);
+            }
+            let a11 = getLunarMonth11(yy, timeZone);
+            let b11 = a11;
+            let lunarYear;
+            if (a11 >= monthStart) {
+                lunarYear = yy;
+                a11 = getLunarMonth11(yy - 1, timeZone);
+            } else {
+                lunarYear = yy + 1;
+                b11 = getLunarMonth11(yy + 1, timeZone);
+            }
+            const lunarDay = dayNumber - monthStart + 1;
+            const diff = INT((monthStart - a11) / 29);
+            let lunarLeap = 0;
+            let lunarMonth = diff + 11;
+            if (b11 - a11 > 365) {
+                const leapMonthDiff = getLeapMonthOffset(a11, timeZone);
+                if (diff >= leapMonthDiff) {
+                    lunarMonth = diff + 10;
+                    if (diff === leapMonthDiff) {
+                        lunarLeap = 1;
+                    }
+                }
+            }
+            if (lunarMonth > 12) {
+                lunarMonth = lunarMonth - 12;
+            }
+            if (lunarMonth >= 11 && diff < 4) {
+                lunarYear -= 1;
+            }
+            return { day: lunarDay, month: lunarMonth, year: lunarYear, leap: lunarLeap, jd: dayNumber };
+        }
+
+        const CAN = ["Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ", "Canh", "Tân", "Nhâm", "Quý"];
+        const CHI = ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
+
+        function getCanChiInfo(lunarObj) {
+            const yearCan = CAN[(lunarObj.year + 6) % 10];
+            const yearChi = CHI[(lunarObj.year + 8) % 12];
+            const monthCan = CAN[(lunarObj.year * 12 + lunarObj.month + 3) % 10];
+            const monthChi = CHI[(lunarObj.month + 1) % 12];
+            const dayCan = CAN[(lunarObj.jd + 9) % 10];
+            const dayChiIdx = (lunarObj.jd + 1) % 12;
+            const dayChi = CHI[dayChiIdx];
+
+            const hoangDaoMap = [
+                "Tý (23h-1h), Sửu (1h-3h), Mão (5h-7h), Ngọ (11h-13h), Thân (15h-17h), Dậu (17h-19h)",
+                "Dần (3h-5h), Mão (5h-7h), Tỵ (9h-11h), Thân (15h-17h), Tuất (19h-21h), Hợi (21h-23h)",
+                "Tý (23h-1h), Dần (3h-5h), Mão (5h-7h), Ngọ (11h-13h), Mùi (13h-15h), Dậu (17h-19h)",
+                "Sửu (1h-3h), Thìn (7h-9h), Ngọ (11h-13h), Mùi (13h-15h), Tuất (19h-21h), Hợi (21h-23h)",
+                "Tý (23h-1h), Sửu (1h-3h), Thìn (7h-9h), Tỵ (9h-11h), Mùi (13h-15h), Tuất (19h-21h)",
+                "Dần (3h-5h), Thìn (7h-9h), Tỵ (9h-11h), Thân (15h-17h), Dậu (17h-19h), Hợi (21h-23h)"
+            ];
+
+            return {
+                year: `${yearCan} ${yearChi}`,
+                month: `${monthCan} ${monthChi}`,
+                day: `${dayCan} ${dayChi}`,
+                hoangDao: hoangDaoMap[dayChiIdx % 6]
+            };
+        }
+
+        function getSolarTermName(dd, mm) {
+            const code = mm * 100 + dd;
+            if (code >= 204 && code < 219) return "Tiết Lập Xuân";
+            if (code >= 219 && code < 305) return "Tiết Vũ Thủy";
+            if (code >= 305 && code < 321) return "Tiết Kinh Trập";
+            if (code >= 321 && code < 405) return "Tiết Xuân Phân";
+            if (code >= 405 && code < 420) return "Tiết Thanh Minh";
+            if (code >= 420 && code < 505) return "Tiết Cốc Vũ";
+            if (code >= 505 && code < 521) return "Tiết Lập Hạ";
+            if (code >= 521 && code < 606) return "Tiết Tiểu Mãn";
+            if (code >= 606 && code < 621) return "Tiết Mang Chủng";
+            if (code >= 621 && code < 707) return "Tiết Hạ Chí";
+            if (code >= 707 && code < 723) return "Tiết Tiểu Thử";
+            if (code >= 723 && code < 807) return "Tiết Đại Thử";
+            if (code >= 807 && code < 823) return "Tiết Lập Thu";
+            if (code >= 823 && code < 908) return "Tiết Xử Thử";
+            if (code >= 908 && code < 923) return "Tiết Bạch Lộ";
+            if (code >= 923 && code < 1008) return "Tiết Thu Phân";
+            if (code >= 1008 && code < 1023) return "Tiết Hàn Lộ";
+            if (code >= 1023 && code < 1107) return "Tiết Sương Giáng";
+            if (code >= 1107 && code < 1122) return "Tiết Lập Đông";
+            if (code >= 1122 && code < 1207) return "Tiết Tiểu Tuyết";
+            if (code >= 1207 && code < 1222) return "Tiết Đại Tuyết";
+            if (code >= 1222 || code < 106) return "Tiết Đông Chí";
+            if (code >= 106 && code < 120) return "Tiết Tiểu Hàn";
+            return "Tiết Đại Hàn";
+        }
+
+        /********************************************************************
+         * 2. KHO TÀNG DANH NGÔN VIỆT NAM & TRÍ TUỆ Á ĐÔNG (50+ CÂU & API QUOTE)
+         ********************************************************************/
+        const VIETNAMESE_QUOTES = [
+            // 1-10: Tư tưởng Bác Hồ & Danh nhân lịch sử Việt Nam
+            { text: "“Không có gì quý hơn độc lập, tự do.”", author: "Chủ tịch Hồ Chí Minh" },
+            { text: "“Vì lợi ích mười năm thì phải trồng cây, vì lợi ích trăm năm thì phải trồng người.”", author: "Chủ tịch Hồ Chí Minh" },
+            { text: "“Dĩ bất biến, ứng vạn biến — Lấy cái không thể thay đổi để ứng phó với muôn sự thay đổi.”", author: "Chủ tịch Hồ Chí Minh" },
+            { text: "“Đoàn kết, đoàn kết, đại đoàn kết. Thành công, thành công, đại thành công.”", author: "Chủ tịch Hồ Chí Minh" },
+            { text: "“Việc nhân nghĩa cốt ở yên dân, Quân điếu phạt trước lo trừ bạo.”", author: "Nguyễn Trãi — Bình Ngô Đại Cáo" },
+            { text: "“Khoan thư sức dân để làm kế sâu rễ bền gốc, đó là thượng sách giữ nước.”", author: "Hưng Đạo Đại Vương Trần Quốc Tuấn" },
+            { text: "“Ta thà làm ma nước Nam, chứ không thèm làm vương đất Bắc.”", author: "Bảo Nghĩa Vương Trần Bình Trọng" },
+            { text: "“Nam quốc sơn hà Nam đế cư, Tiệt nhiên định phận tại thiên thư.”", author: "Lý Thường Kiệt" },
+            { text: "“Hiền tài là nguyên khí của quốc gia, nguyên khí thịnh thì thế nước mạnh mà hưng thịnh.”", author: "Thân Nhân Trung — Bia Văn Miếu" },
+            { text: "“Đạo học có sáng thì người mới tốt, người tốt thì triều đình mới thịnh.”", author: "Vạn Thế Sư Biểu Chu Văn An" },
+
+            // 11-20: Thơ ca, Văn học & Nghệ thuật
+            { text: "“Thiện căn ở tại lòng ta, Chữ tâm kia mới bằng ba chữ tài.”", author: "Đại thi hào Nguyễn Du — Truyện Kiều" },
+            { text: "“Hoa cười ngọc thốt đoan trang, Mây thua nước tóc tuyết nhường màu da.”", author: "Đại thi hào Nguyễn Du" },
+            { text: "“Sống trong đời sống cần có một tấm lòng. Để làm gì em biết không? Để gió cuốn đi...”", author: "Nhạc sĩ Trịnh Công Sơn" },
+            { text: "“Mỗi ngày tôi chọn một niềm vui, chọn những bông hoa và những nụ cười.”", author: "Nhạc sĩ Trịnh Công Sơn" },
+            { text: "“Cảm ơn đời mỗi sớm mai thức dậy, cho ta thêm ngày nữa để yêu thương.”", author: "Kahlil Gibran / Trịnh Công Sơn" },
+            { text: "“Bàn tay ta làm nên tất cả, có sức người sỏi đá cũng thành cơm.”", author: "Nhà thơ Hoàng Trung Thông" },
+            { text: "“Sống là cho, đâu chỉ nhận riêng mình.”", author: "Nhà thơ Tố Hữu — Một Khúc Ca Xuân" },
+            { text: "“Nếu là con chim, chiếc lá, thì con chim phải hót, chiếc lá phải xanh.”", author: "Nhà thơ Tố Hữu" },
+            { text: "“Kẻ mạnh không phải là kẻ giẫm lên vai người khác, mà là kẻ giúp đỡ người khác trên đôi vai mình.”", author: "Nhà văn Nam Cao — Đời Thừa" },
+            { text: "“Xuân đang tới, nghĩa là xuân đang qua. Xuân còn non, nghĩa là xuân sẽ già.”", author: "Nhà thơ Xuân Diệu — Vội Vàng" },
+
+            // 21-30: Thiền định, Bình an & Tỉnh thức (Thích Nhất Hạnh & Cổ nhân)
+            { text: "“Thở vào tâm tĩnh lặng, thở ra miệng mỉm cười. An trú trong hiện tại, giờ phút đẹp tuyệt vời.”", author: "Thiền sư Thích Nhất Hạnh" },
+            { text: "“Không có con đường đi đến hạnh phúc, hạnh phúc chính là con đường.”", author: "Thiền sư Thích Nhất Hạnh" },
+            { text: "“Thấu hiểu người khác là nguồn cội của tình yêu thương đích thực.”", author: "Thiền sư Thích Nhất Hạnh" },
+            { text: "“Nụ cười của bạn đem lại niềm vui cho bạn, và còn có thể làm bừng sáng cả một ngày của ai đó.”", author: "Thiền sư Thích Nhất Hạnh" },
+            { text: "“Tâm bất biến giữa dòng đời vạn biến.”", author: "Triết lý Phật giáo Á Đông" },
+            { text: "“Tâm an vạn sự an, tâm bình thế giới bình.”", author: "Thiền ngữ Á Đông" },
+            { text: "“Sông sâu tĩnh lặng, lúa chín cúi đầu.”", author: "Tục ngữ & Trí tuệ Á Đông" },
+            { text: "“Nước sâu chảy chậm, người khôn nói ít, tâm tĩnh trí minh.”", author: "Cổ nhân" },
+            { text: "“Hãy sống như một đóa sen, gần bùn mà chẳng hôi tanh mùi bùn.”", author: "Ca dao Việt Nam" },
+            { text: "“Bình yên nơi đáy lòng mới là phúc phần lớn nhất của đời người.”", author: "Trí tuệ Á Đông" },
+
+            // 31-40: Trí tuệ Lão Tử, Khổng Tử & Cổ học tinh hoa
+            { text: "“Hành trình vạn dặm bắt đầu từ một bước chân nhỏ bé.”", author: "Lão Tử — Đạo Đức Kinh" },
+            { text: "“Biết người là trí, tự biết mình là sáng. Thắng người là có sức, tự thắng mình mới là kiên cường.”", author: "Lão Tử — Đạo Đức Kinh" },
+            { text: "“Nước là thứ nhu hòa nhất trần đời, nhưng không đá tảng nào ngăn nổi dòng chảy của nó.”", author: "Lão Tử" },
+            { text: "“Người có lòng nhân thì không lo âu, người có trí tuệ thì không bối rối, người có dũng cảm thì không sợ hãi.”", author: "Khổng Tử — Luận Ngữ" },
+            { text: "“Ngọc bất trác, bất thành khí; nhân bất học, bất tri đạo.”", author: "Cổ học tinh hoa" },
+            { text: "“Sự học như thuyền ngược nước, không tiến ắt phải lùi.”", author: "Cổ học tinh hoa" },
+            { text: "“Người thấy việc nghĩa mà không làm là không có dũng khí.”", author: "Khổng Tử" },
+            { text: "“Có công mài sắt, có ngày nên kim.”", author: "Tục ngữ Việt Nam" },
+            { text: "“Uống nước nhớ nguồn, ăn quả nhớ kẻ trồng cây.”", author: "Tục ngữ Việt Nam" },
+            { text: "“Gió tầng nào sẽ gặp mây tầng đó. Muốn gặp người xuất sắc, trước hết hãy hoàn thiện chính mình.”", author: "Cổ nhân" },
+
+            // 41-51: Triết lý nhân sinh, Động lực & Tinh thần hiện đại
+            { text: "“Thời gian của bạn là có hạn, đừng lãng phí nó để sống cuộc đời của người khác.”", author: "Steve Jobs" },
+            { text: "“Sự giản đơn là đỉnh cao của sự tinh tế.”", author: "Leonardo da Vinci" },
+            { text: "“Đừng thở dài, hãy vươn vai mà sống. Bùn dưới chân nhưng nắng ở trên đầu.”", author: "Khuyết danh" },
+            { text: "“Khi một cánh cửa khép lại, một cánh cửa khác sẽ mở ra cho những ai kiên trì.”", author: "Trí tuệ nhân sinh" },
+            { text: "“Kỷ luật là cầu nối giữa ước mơ và hiện thực.”", author: "Jim Rohn" },
+            { text: "“Người không biết đủ, giàu cũng hóa nghèo; người biết đủ, nghèo cũng là giàu.”", author: "Lão Tử" },
+            { text: "“Mỗi buổi sáng thức dậy là một cơ hội mới để bạn viết nên một trang đời rực rỡ.”", author: "Khuyết danh" },
+            { text: "“Đêm tối càng sâu, ánh sao càng sáng. Thử thách càng lớn, thành tựu càng vẻ vang.”", author: "Khuyết danh" },
+            { text: "“Lòng biết ơn là chìa khóa mở cánh cửa bình an và đủ đầy trong tâm thức.”", author: "Thiền quán" },
+            { text: "“Gieo hành động gặt thói quen, gieo thói quen gặt tính cách, gieo tính cách gặt số phận.”", author: "William James" },
+            { text: "“Hạnh phúc không phải là có tất cả những gì ta muốn, mà là biết trân trọng những gì ta đang có.”", author: "Trí tuệ sống" }
+        ];
+        let currentQuoteIdx = 0;
+
+        async function fetchOnlineQuote() {
+            try {
+                const res = await fetch('https://dummyjson.com/quotes/random');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.quote) {
+                        VIETNAMESE_QUOTES.push({
+                            text: `“${data.quote}”`,
+                            author: `${data.author} (API Global)`
+                        });
+                    }
+                }
+            } catch (_) { }
+        }
+
+        function nextQuote(showToast = false) {
+            currentQuoteIdx = (currentQuoteIdx + 1) % VIETNAMESE_QUOTES.length;
+            const wrapper = document.getElementById('quoteWrapper');
+            if (wrapper) {
+                wrapper.classList.remove('fade-animate');
+                void wrapper.offsetWidth;
+                wrapper.classList.add('fade-animate');
+            }
+
+            const cur = VIETNAMESE_QUOTES[currentQuoteIdx];
+            const contentEl = document.getElementById('quoteContent');
+            const authorEl = document.getElementById('quoteAuthor');
+            if (contentEl) contentEl.textContent = cur.text;
+            if (authorEl) authorEl.textContent = `— ${cur.author}`;
+            if (showToast) showHudToast('📜', `Danh ngôn [${currentQuoteIdx + 1}/${VIETNAMESE_QUOTES.length}]: ${cur.author}`);
+        }
+
+        /********************************************************************
+         * 3. TRẠNG THÁI ỨNG DỤNG (STATE) & 5 THEME NGHỆ THUẬT
+         ********************************************************************/
+        const ART_THEMES = [
+            { id: 'mondrian', name: 'Mondrian Cổ Điển' },
+            { id: 'lacquer', name: 'Sơn Mài Hoàng Kim' },
+            { id: 'ceramic', name: 'Gốm Chu Đậu' },
+            { id: 'dongho', name: 'Tranh Đông Hồ' },
+            { id: 'cyber', name: 'Cyber Bến Thành' }
+        ];
+
+        const DEFAULT_STATE = {
+            greeting: "Xin chào Nam Hùng",
+            city: "10.9574,106.8427,Biên Hòa",
+            theme: "dongho",
+            gold: {
+                sjcSell: "142,0",
+                ringSell: "141,0",
+                sjcBuy: "139,0",
+                ringBuy: "138,0",
+                updatedAt: "15:28"
+            },
+            oil: {
+                price1: "28.250",
+                price2: "27.700",
+                price3: "29.120"
+            },
+            market: {
+                watchlist: ["CTG", "HPG", "VCB", "SSI", "MWG", "VHM"],
+                activeTab: "stocks",
+                autoCycle: false
+            },
+            marketDataCache: {
+                btc: { price: 77052, change: -1079, percent: -1.38, high: 78254, low: 76388 },
+                vn30: { price: 1815.60, change: 2.19, percent: 0.12 },
+                vnindex: { price: 1699.62, change: -11.10, percent: -0.65 },
+                spotGold: 3908.80,
+                stocks: {
+                    "CTG": { price: 50.40, change: 0.20, percent: 0.40 },
+                    "HPG": { price: 21.25, change: 0.85, percent: 4.17 },
+                    "VCB": { price: 53.50, change: -0.10, percent: -0.19 },
+                    "SSI": { price: 19.15, change: 0.30, percent: 1.59 },
+                    "MWG": { price: 72.30, change: -0.10, percent: -0.14 },
+                    "VHM": { price: 61.90, change: -0.10, percent: -0.16 }
+                },
+                updatedAt: "16:48:00"
+            },
+            pixelShift: true,
+            particles: true
+        };
+
+        let appState = Object.assign({}, JSON.parse(JSON.stringify(DEFAULT_STATE)), JSON.parse(localStorage.getItem('namhung_mondrian_v3') || '{}'));
+
+        function saveStateToStorage() {
+            localStorage.setItem('namhung_mondrian_v3', JSON.stringify(appState));
+        }
+
+        let toastTimer = null;
+        function showHudToast(icon, text) {
+            const toast = document.getElementById('hudToast');
+            document.getElementById('hudToastIcon').textContent = icon;
+            document.getElementById('hudToastText').textContent = text;
+            toast.classList.remove('opacity-0', '-translate-y-3');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-3');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 2200);
+        }
+
+        function applyArtTheme(themeId, notify = true) {
+            appState.theme = themeId;
+            document.documentElement.setAttribute('data-theme', themeId);
+            const found = ART_THEMES.find(t => t.id === themeId) || ART_THEMES[0];
+            const labelEl = document.getElementById('currentThemeName');
+            if (labelEl) {
+                labelEl.textContent = (found.id === 'dongho') ? 'Đông Hồ' : found.name.split(' ')[0];
+            }
+            saveStateToStorage();
+            if (notify) showHudToast('🎨', `Theme: ${found.name}`);
+        }
+
+        function cycleArtTheme() {
+            const idx = ART_THEMES.findIndex(t => t.id === appState.theme);
+            const next = ART_THEMES[(idx + 1) % ART_THEMES.length];
+            applyArtTheme(next.id, true);
+        }
+
+        /********************************************************************
+         * 4. ĐỒNG HỒ SỐ TRƯỢT DỌC CHUẨN PIXEL & BỘ ĐẾM POMODORO
+         ********************************************************************/
+        const clockSlots = ['clockH1', 'clockH2', 'clockM1', 'clockM2', 'clockS1', 'clockS2'];
+
+        function initRollingClock() {
+            clockSlots.forEach(id => {
+                const container = document.getElementById(id);
+                const ribbon = document.createElement('div');
+                ribbon.className = 'digit-ribbon';
+                for (let d = 0; d <= 9; d++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'digit-cell';
+                    cell.textContent = d;
+                    ribbon.appendChild(cell);
+                }
+                container.innerHTML = '';
+                container.appendChild(ribbon);
+            });
+        }
+
+        function setDigitValue(slotId, digitVal) {
+            const slot = document.getElementById(slotId);
+            if (!slot || !slot.firstElementChild) return;
+            const num = parseInt(digitVal, 10) || 0;
+            slot.firstElementChild.style.transform = `translateY(calc(-${num} * var(--digit-h)))`;
+        }
+
+        let pomoRunning = false;
+        let pomoSeconds = 25 * 60;
+
+        function togglePomodoro() {
+            pomoRunning = !pomoRunning;
+            playTibetanBowlChime();
+            if (pomoRunning) {
+                showHudToast('🍅', 'Đã bật Pomodoro 25 phút tập trung');
+            } else {
+                pomoSeconds = 25 * 60;
+                document.getElementById('pomoLabel').textContent = '25:00';
+                showHudToast('🍅', 'Đã dừng Pomodoro');
+            }
+        }
+
+        const VIET_DAYS = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
+        let lastDateRendered = -1;
+
+        function updateLiveClock() {
+            const now = new Date();
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            const ss = String(now.getSeconds()).padStart(2, '0');
+
+            setDigitValue('clockH1', hh[0]);
+            setDigitValue('clockH2', hh[1]);
+            setDigitValue('clockM1', mm[0]);
+            setDigitValue('clockM2', mm[1]);
+            setDigitValue('clockS1', ss[0]);
+            setDigitValue('clockS2', ss[1]);
+
+            if (pomoRunning) {
+                if (pomoSeconds > 0) {
+                    pomoSeconds--;
+                    const pm = String(Math.floor(pomoSeconds / 60)).padStart(2, '0');
+                    const ps = String(pomoSeconds % 60).padStart(2, '0');
+                    document.getElementById('pomoLabel').textContent = `${pm}:${ps}`;
+                } else {
+                    pomoRunning = false;
+                    pomoSeconds = 25 * 60;
+                    playTibetanBowlChime();
+                    showHudToast('🔔', 'Hoàn thành phiên tập trung 25 phút!');
+                }
+            }
+
+            if (now.getDate() !== lastDateRendered) {
+                lastDateRendered = now.getDate();
+                document.getElementById('heroDayOfWeek').textContent = VIET_DAYS[now.getDay()];
+                renderCalendar(viewYear, viewMonth, selectedDay);
+            }
+
+            updateTetCountdown(now);
+        }
+
+        /********************************************************************
+         * 5. LỊCH THÁNG (DƯƠNG + ÂM) & CHI TIẾT NGÀY
+         ********************************************************************/
+        const todayInit = new Date();
+        let viewYear = todayInit.getFullYear();
+        let viewMonth = todayInit.getMonth() + 1;
+        let selectedDay = todayInit.getDate();
+
+        function renderCalendar(yy, mm, activeDay) {
+            const lunarSelected = convertSolar2Lunar(activeDay, mm, yy);
+            const canChi = getCanChiInfo(lunarSelected);
+            const tietKhi = getSolarTermName(activeDay, mm);
+
+            document.getElementById('bigSolarDate').textContent = activeDay;
+            document.getElementById('bigMonthYear').textContent = `tháng ${mm}, ${yy}`;
+            document.getElementById('bigLunarDate').textContent = `${lunarSelected.day}/${lunarSelected.month}`;
+            document.getElementById('lunarCanChiText').textContent = `Ngày ${canChi.day} • Tháng ${canChi.month}`;
+            document.getElementById('headerLunarYear').textContent = `Năm ${canChi.year}`;
+            document.getElementById('headerTietKhi').textContent = tietKhi;
+
+            // Fill Block 1 Left Column details (Auspicious hours, Solar term, Week number)
+            const selDateObj = new Date(yy, mm - 1, activeDay);
+            const weekDate = new Date(Date.UTC(yy, mm - 1, activeDay));
+            weekDate.setUTCDate(weekDate.getUTCDate() + 4 - (weekDate.getUTCDay() || 7));
+            const yearStart = new Date(Date.UTC(weekDate.getUTCFullYear(), 0, 1));
+            const weekNumber = Math.ceil((((weekDate - yearStart) / 86400000) + 1) / 7);
+
+            if (document.getElementById('calendarTietKhiBadge')) {
+                document.getElementById('calendarTietKhiBadge').textContent = tietKhi;
+            }
+            if (document.getElementById('calendarHoangDaoBadge')) {
+                const hoangDaoNames = ["Kim Quỹ", "Bảo Quang", "Ngọc Đường", "Tư Mệnh", "Thanh Long", "Minh Đường"];
+                const hdName = hoangDaoNames[lunarSelected.jd % hoangDaoNames.length] || "Hoàng Đạo";
+                document.getElementById('calendarHoangDaoBadge').textContent = `${hdName} (Tốt)`;
+            }
+            if (document.getElementById('calendarAuspiciousHours')) {
+                const shortHours = canChi.hoangDao.replace(/\([^\)]+\)/g, '').replace(/,\s*/g, ' • ');
+                document.getElementById('calendarAuspiciousHours').textContent = shortHours;
+                document.getElementById('calendarAuspiciousHours').title = canChi.hoangDao;
+            }
+            if (document.getElementById('calendarWeekNumber')) {
+                document.getElementById('calendarWeekNumber').textContent = `Tuần ${weekNumber}/52`;
+            }
+            if (document.getElementById('calendarXuatHanh')) {
+                const huongList = ["Hỷ: Tây Nam", "Tài: Đông Nam", "Hỷ: Chính Nam", "Tài: Chính Đông", "Hỷ: Đông Bắc"];
+                document.getElementById('calendarXuatHanh').textContent = huongList[lunarSelected.jd % huongList.length];
+            }
+
+            const leapBadge = document.getElementById('lunarLeapBadge');
+            if (lunarSelected.leap) leapBadge.classList.remove('hidden');
+            else leapBadge.classList.add('hidden');
+
+            const dayName = VIET_DAYS[selDateObj.getDay()];
+            document.getElementById('modalSolarTitle').textContent = `${dayName}, ${String(activeDay).padStart(2, '0')}/${String(mm).padStart(2, '0')}/${yy}`;
+            document.getElementById('modalLunarBig').textContent = `${lunarSelected.day}/${lunarSelected.month}`;
+            document.getElementById('modalCanChiFull').textContent = `Năm ${canChi.year} • Tháng ${canChi.month} • Ngày ${canChi.day}`;
+            document.getElementById('modalTietKhi').textContent = `${tietKhi} — Tiết khí truyền thống Á Đông`;
+            document.getElementById('modalHoangDao').textContent = canChi.hoangDao;
+
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            const firstDayJS = new Date(yy, mm - 1, 1).getDay();
+            const offset = (firstDayJS + 6) % 7; // Monday = 0
+            const daysInMonth = new Date(yy, mm, 0).getDate();
+
+            for (let i = 0; i < offset; i++) {
+                const empty = document.createElement('div');
+                empty.className = 'p-1';
+                grid.appendChild(empty);
+            }
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const l = convertSolar2Lunar(d, mm, yy);
+                const cell = document.createElement('div');
+                const isSelected = (d === activeDay);
+
+                cell.className = `cal-cell ${isSelected ? 'cal-active' : ''}`;
+                const lunarSub = (l.day === 1 || d === 1) ? `${l.day}/${l.month}` : `${l.day}`;
+
+                cell.innerHTML = `
+                    <span class="font-bold text-xs sm:text-[13px] leading-tight">${d}</span>
+                    <span class="text-[9px] sm:text-[10px] font-medium leading-tight ${isSelected ? 'opacity-90 text-[#E5B524]' : 'opacity-65'}">${lunarSub}</span>
+                `;
+
+                cell.onclick = () => {
+                    selectedDay = d;
+                    renderCalendar(viewYear, viewMonth, selectedDay);
+                };
+                grid.appendChild(cell);
+            }
+        }
+
+        function changeCalendarMonth(delta) {
+            viewMonth += delta;
+            if (viewMonth > 12) { viewMonth = 1; viewYear++; }
+            else if (viewMonth < 1) { viewMonth = 12; viewYear--; }
+            const maxDays = new Date(viewYear, viewMonth, 0).getDate();
+            if (selectedDay > maxDays) selectedDay = maxDays;
+            renderCalendar(viewYear, viewMonth, selectedDay);
+        }
+
+        function resetCalendarToToday() {
+            const now = new Date();
+            viewYear = now.getFullYear();
+            viewMonth = now.getMonth() + 1;
+            selectedDay = now.getDate();
+            renderCalendar(viewYear, viewMonth, selectedDay);
+        }
+
+        /********************************************************************
+         * 6. ĐẾM NGƯỢC TẾT NGUYÊN ĐÁN TỰ ĐỘNG
+         ********************************************************************/
+        let cachedNextTet = null;
+
+        function findNextLunarNewYear(now) {
+            if (cachedNextTet && cachedNextTet.date > now) return cachedNextTet;
+            const startYear = now.getFullYear();
+            for (let y = startYear; y <= startYear + 2; y++) {
+                for (let m = 1; m <= 2; m++) {
+                    const daysInM = new Date(y, m, 0).getDate();
+                    for (let d = 1; d <= daysInM; d++) {
+                        const l = convertSolar2Lunar(d, m, y);
+                        if (l.month === 1 && l.day === 1 && l.leap === 0) {
+                            const tetDate = new Date(y, m - 1, d, 0, 0, 0);
+                            if (tetDate > now) {
+                                const cc = getCanChiInfo(l);
+                                cachedNextTet = {
+                                    date: tetDate,
+                                    title: `Tết ${cc.year} ${y}`,
+                                    solarStr: `${String(d).padStart(2, '0')}/${String(m).padStart(2, '0')}/${y}`
+                                };
+                                return cachedNextTet;
+                            }
+                        }
+                    }
+                }
+            }
+            return { date: new Date(now.getFullYear() + 1, 1, 6), title: "Tết Âm Lịch", solarStr: "06/02/2027" };
+        }
+
+        function updateTetCountdown(now) {
+            const tet = findNextLunarNewYear(now);
+            const diffMs = Math.max(0, tet.date - now);
+            const totalSeconds = Math.floor(diffMs / 1000);
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = String(Math.floor((totalSeconds % 86400) / 3600)).padStart(2, '0');
+            const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+            const secs = String(totalSeconds % 60).padStart(2, '0');
+
+            document.getElementById('tetTargetTitle').textContent = tet.title;
+            document.getElementById('tetDaysLeft').textContent = days;
+            document.getElementById('tetHMSLeft').textContent = `${hours}:${mins}:${secs}`;
+            document.getElementById('modalTetSummary').textContent = `${tet.title} (Mùng 1 Tết: ${tet.solarStr} Dương lịch — Còn ${days} ngày)`;
+        }
+
+        /********************************************************************
+         * 7. API GIÁ VÀNG, CRYPTO (BTC), VN30, CHỨNG KHOÁN & THỜI TIẾT REALTIME
+         ********************************************************************/
+        let currentMarketTab = 'all';
+        let marketAutoCycleInterval = null;
+
+        function formatMarketBadge(change, percent, isPoints = false, isDollar = false) {
+            const numChg = Number(change) || 0;
+            const numPct = Number(percent) || 0;
+            const isUp = numChg > 0.0001;
+            const isDown = numChg < -0.0001;
+            const arrow = isUp ? '▲' : isDown ? '▼' : '●';
+            const label = isUp ? 'Tăng' : isDown ? 'Giảm' : 'Tham chiếu';
+            const sign = isUp ? '+' : '';
+
+            let chgStr = '';
+            if (isDollar) {
+                chgStr = `${sign}$${Math.abs(Math.round(numChg)).toLocaleString('en-US')}`;
+            } else if (isPoints) {
+                chgStr = `${sign}${numChg.toFixed(2)}đ`;
+            } else {
+                chgStr = `${sign}${numChg.toFixed(2)}`;
+            }
+            const pctStr = `${sign}${numPct.toFixed(2)}%`;
+
+            const colorClass = isUp
+                ? 'bg-emerald-500/25 text-emerald-300 border border-emerald-400/35'
+                : isDown
+                    ? 'bg-rose-500/25 text-rose-300 border border-rose-400/35'
+                    : 'bg-amber-500/20 text-amber-200 border border-amber-400/35';
+
+            const textColor = isUp ? 'text-emerald-300' : isDown ? 'text-rose-300' : 'text-amber-200';
+
+            return {
+                isUp,
+                isDown,
+                arrow,
+                label,
+                chgStr,
+                pctStr,
+                colorClass,
+                textColor,
+                shortBadge: `${arrow} ${pctStr}`,
+                fullBadge: `${arrow} ${label} ${pctStr} (${chgStr})`,
+                desc: `${arrow} ${label} ${pctStr}`
+            };
+        }
+
+        function switchMarketTab(tab, userAction = false) {
+            currentMarketTab = tab;
+            if (userAction) {
+                if (!appState.market) appState.market = {};
+                appState.market.activeTab = tab;
+                saveStateToStorage();
+            }
+
+            const viewAll = document.getElementById('marketViewAll');
+            const viewGoldBtc = document.getElementById('marketViewGoldBtc');
+            const viewStocks = document.getElementById('marketViewStocks');
+
+            if (viewAll) viewAll.classList.toggle('hidden', tab !== 'all');
+            if (viewGoldBtc) viewGoldBtc.classList.toggle('hidden', tab !== 'gold_btc');
+            if (viewStocks) viewStocks.classList.toggle('hidden', tab !== 'stocks');
+
+            const pillAll = document.getElementById('tabMarketAll');
+            const pillGoldBtc = document.getElementById('tabMarketGoldBtc');
+            const pillStocks = document.getElementById('tabMarketStocks');
+
+            const activeClass = 'market-tab-pill px-3 py-0.5 rounded-full bg-white text-[#D63820] shadow-sm transition font-black';
+            const inactiveClass = 'market-tab-pill px-3 py-0.5 rounded-full bg-black/20 hover:bg-black/30 transition opacity-80 font-bold';
+
+            if (pillAll) pillAll.className = tab === 'all' ? activeClass : inactiveClass;
+            if (pillGoldBtc) pillGoldBtc.className = tab === 'gold_btc' ? activeClass : inactiveClass;
+            if (pillStocks) pillStocks.className = tab === 'stocks' ? activeClass : inactiveClass;
+        }
+
+        function cycleMarketTab() {
+            const tabs = ['all', 'gold_btc', 'stocks'];
+            const nextIdx = (tabs.indexOf(currentMarketTab) + 1) % tabs.length;
+            switchMarketTab(tabs[nextIdx]);
+        }
+
+        function toggleMarketAutoCycle() {
+            if (!appState.market) appState.market = {};
+            appState.market.autoCycle = !appState.market.autoCycle;
+            saveStateToStorage();
+            updateMarketAutoCycleState();
+            showHudToast('🔄', appState.market.autoCycle ? 'Đã bật tự động xoay Widget' : 'Đã khóa cố định tab Widget');
+        }
+
+        function updateMarketAutoCycleState() {
+            const btn = document.getElementById('btnMarketAutoCycle');
+            if (marketAutoCycleInterval) {
+                clearInterval(marketAutoCycleInterval);
+                marketAutoCycleInterval = null;
+            }
+            const isAuto = appState.market?.autoCycle ?? true;
+            if (btn) {
+                if (isAuto) {
+                    btn.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-300 live-dot"></span> Auto`;
+                    btn.classList.add('opacity-90');
+                    btn.classList.remove('opacity-50');
+                } else {
+                    btn.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Cố định`;
+                    btn.classList.add('opacity-50');
+                    btn.classList.remove('opacity-90');
+                }
+            }
+            if (isAuto) {
+                marketAutoCycleInterval = setInterval(cycleMarketTab, 12000);
+            }
+        }
+
+        function renderMarketUI() {
+            document.getElementById('greetingText').textContent = appState.greeting;
+
+            // 1. SJC & Nhẫn 999.9 (Triệu đồng/lượng)
+            const sjcSell = appState.gold.sjcSell || "142,0";
+            const ringSell = appState.gold.ringSell || "141,0";
+            const sjcBuy = appState.gold.sjcBuy || "139,0";
+            const ringBuy = appState.gold.ringBuy || "138,0";
+
+            if (document.getElementById('goldSjcSell')) document.getElementById('goldSjcSell').textContent = sjcSell;
+            if (document.getElementById('goldRingSell')) document.getElementById('goldRingSell').textContent = ringSell;
+            if (document.getElementById('goldSjcBuyInline')) document.getElementById('goldSjcBuyInline').textContent = sjcBuy;
+            if (document.getElementById('goldRingBuyInline')) document.getElementById('goldRingBuyInline').textContent = ringBuy;
+
+            if (document.getElementById('goldSjcDetail')) document.getElementById('goldSjcDetail').textContent = sjcSell;
+            if (document.getElementById('goldRingDetail')) document.getElementById('goldRingDetail').textContent = ringSell;
+            if (document.getElementById('goldSjcBuyDetail')) document.getElementById('goldSjcBuyDetail').textContent = `Mua vào ${sjcBuy} tr/lượng`;
+            if (document.getElementById('goldRingBuyDetail')) document.getElementById('goldRingBuyDetail').textContent = `Mua vào ${ringBuy} tr/lượng`;
+
+            // 2. Xăng dầu Petrolimex
+            if (document.getElementById('oilPrice1')) document.getElementById('oilPrice1').textContent = appState.oil.price1;
+            if (document.getElementById('oilPrice2')) document.getElementById('oilPrice2').textContent = appState.oil.price2;
+            if (document.getElementById('oilPrice3')) document.getElementById('oilPrice3').textContent = appState.oil.price3;
+
+            const cache = appState.marketDataCache || {};
+
+            // 3. BTC / USDT
+            const btc = cache.btc || { price: 77052, change: -1079, percent: -1.38, high: 78254, low: 76388 };
+            const btcBadge = formatMarketBadge(btc.change, btc.percent, false, true);
+            const btcPriceFormatted = `$${Number(btc.price).toLocaleString('en-US')}`;
+
+            if (document.getElementById('btcPriceAll')) document.getElementById('btcPriceAll').textContent = btcPriceFormatted;
+            if (document.getElementById('btcBadgeAll')) {
+                const el = document.getElementById('btcBadgeAll');
+                el.className = `text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded font-mono shrink-0 ${btcBadge.colorClass}`;
+                el.textContent = `${btcBadge.arrow} ${btcBadge.label} ${btcBadge.pctStr}`;
+            }
+            if (document.getElementById('btcPriceDetail')) document.getElementById('btcPriceDetail').textContent = btcPriceFormatted;
+            if (document.getElementById('btcChangeDescDetail')) {
+                const el = document.getElementById('btcChangeDescDetail');
+                el.className = `font-bold font-mono ${btcBadge.textColor}`;
+                el.textContent = btcBadge.fullBadge;
+            }
+            if (document.getElementById('btcHiloDetail') && btc.high && btc.low) {
+                const hi = Math.round(btc.high / 100) / 10;
+                const lo = Math.round(btc.low / 100) / 10;
+                document.getElementById('btcHiloDetail').textContent = `24h H: $${hi}k • L: $${lo}k`;
+            }
+
+            // 4. VN30 Index
+            const vn30 = cache.vn30 || { price: 1815.60, change: 2.19, percent: 0.12 };
+            const vn30Badge = formatMarketBadge(vn30.change, vn30.percent, true, false);
+            if (document.getElementById('vn30IndexValAll')) {
+                document.getElementById('vn30IndexValAll').textContent = Number(vn30.price).toFixed(2);
+            }
+            if (document.getElementById('vn30BadgeAll')) {
+                document.getElementById('vn30BadgeAll').innerHTML = `<span class="${vn30Badge.textColor}">${vn30Badge.fullBadge}</span>`;
+            }
+            if (document.getElementById('vn30IndexDetail')) {
+                document.getElementById('vn30IndexDetail').textContent = Number(vn30.price).toFixed(2);
+            }
+            if (document.getElementById('vn30DescDetail')) {
+                document.getElementById('vn30DescDetail').className = `text-[10px] font-bold mt-0.5 ${vn30Badge.textColor}`;
+                document.getElementById('vn30DescDetail').textContent = vn30Badge.fullBadge;
+            }
+
+            // 5. VN-INDEX
+            const vnindex = cache.vnindex || { price: 1699.62, change: -11.10, percent: -0.65 };
+            const vnindexBadge = formatMarketBadge(vnindex.change, vnindex.percent, true, false);
+            if (document.getElementById('vnindexValAll')) {
+                document.getElementById('vnindexValAll').textContent = Number(vnindex.price).toFixed(2);
+            }
+            if (document.getElementById('vnindexBadgeAll')) {
+                document.getElementById('vnindexBadgeAll').innerHTML = `<span class="${vnindexBadge.textColor}">${vnindexBadge.fullBadge}</span>`;
+            }
+            if (document.getElementById('vnindexDetail')) {
+                document.getElementById('vnindexDetail').textContent = Number(vnindex.price).toFixed(2);
+            }
+            if (document.getElementById('vnindexDescDetail')) {
+                document.getElementById('vnindexDescDetail').className = `text-[10px] font-bold mt-0.5 ${vnindexBadge.textColor}`;
+                document.getElementById('vnindexDescDetail').textContent = vnindexBadge.fullBadge;
+            }
+
+            // 6. Spot Gold World (XAU/USD)
+            if (document.getElementById('spotGoldWorldVal') && cache.spotGold) {
+                document.getElementById('spotGoldWorldVal').textContent = `$${Number(cache.spotGold).toFixed(1)} / oz`;
+            }
+
+            // 7. Cổ phiếu Watchlist (Mini Grid & Detailed View)
+            const watchlist = (appState.market && appState.market.watchlist && appState.market.watchlist.length > 0)
+                ? appState.market.watchlist
+                : ["CTG", "HPG", "VCB", "SSI", "MWG", "VHM"];
+            const stocksData = cache.stocks || {};
+
+            // Render View 1: Mini Grid (Clean inline Mondrian rows with space)
+            const miniGrid = document.getElementById('stocksMiniGridAll');
+            if (miniGrid) {
+                let html = '';
+                watchlist.slice(0, 4).forEach(sym => {
+                    const stock = stocksData[sym] || { price: 0, change: 0, percent: 0 };
+                    const badge = formatMarketBadge(stock.change, stock.percent);
+                    const priceStr = stock.price ? stock.price.toFixed(2) : '--';
+                    html += `
+                        <div class="flex items-center justify-between py-1 border-b border-current/20 font-mono">
+                            <div class="flex items-baseline gap-2">
+                                <span class="font-serif font-black text-sm text-white">${sym}</span>
+                                <span class="font-bold text-xs text-[#F4F1EA]">${priceStr}</span>
+                            </div>
+                            <span class="text-[11px] font-black px-1.5 py-0.5 rounded bg-black/25 ${badge.textColor} border border-current/20">${badge.shortBadge}</span>
+                        </div>
+                    `;
+                });
+                miniGrid.innerHTML = html;
+            }
+
+            // Render View 3: Detailed Table (Pure Mondrian Style - Big Typography, Full Height, No Scroll)
+            const detailedList = document.getElementById('stocksDetailedList');
+            if (detailedList) {
+                let html = '';
+                const stocksToShow = watchlist.slice(0, 4);
+                stocksToShow.forEach(sym => {
+                    const stock = stocksData[sym] || { price: 0, change: 0, percent: 0 };
+                    const badge = formatMarketBadge(stock.change, stock.percent);
+                    const priceStr = stock.price ? stock.price.toFixed(2) : '--';
+                    html += `
+                        <div class="flex items-center justify-between py-1.5 sm:py-2 border-t border-current/20 font-mono">
+                            <div class="flex items-baseline gap-3 sm:gap-4">
+                                <span class="font-serif font-black text-xl sm:text-2xl text-white tracking-wider">${sym}</span>
+                                <span class="font-mono font-black text-base sm:text-lg text-[#F4F1EA]">${priceStr}</span>
+                            </div>
+                            <div class="text-xs sm:text-[13px] font-black px-2.5 py-0.5 rounded bg-black/25 ${badge.textColor} border border-current/25 flex items-center gap-1 shrink-0">
+                                <span>${badge.fullBadge}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                detailedList.innerHTML = html;
+            }
+
+            // 8. Timestamp
+            if (document.getElementById('marketUpdatedTime')) {
+                const timeStr = cache.updatedAt || appState.gold.updatedAt || '16:48';
+                document.getElementById('marketUpdatedTime').textContent = `Cập nhật: ${timeStr}`;
+            }
+        }
+
+        function getWeatherSvg(code, isNight) {
+            // 0: Quang đãng
+            if (code === 0) {
+                if (isNight) {
+                    return `<svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>`;
+                }
+                return `<svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/></svg>`;
+            }
+            // 1, 2: Ít mây, Mây rải rác
+            if (code === 1 || code === 2) {
+                return `<svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>`;
+            }
+            // 3, 45, 48: Nhiều mây, Sương mù
+            if (code === 3 || (code >= 45 && code <= 48)) {
+                return `<svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"/></svg>`;
+            }
+            // 51..67, 80..82: Mưa phùn, Mưa rào
+            if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) {
+                return `<svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 16.58A5 5 0 0018 7h-1.26A8 8 0 104 15.25M16 14v4m-4-2v4m-4-3v4"/></svg>`;
+            }
+            // 71..77, 85..86: Tuyết
+            if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) {
+                return `<svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3m15.364 6.364L5.636 5.636m12.728 0L5.636 18.364"/></svg>`;
+            }
+            // 95..99: Dông & Sét
+            if (code >= 95 && code <= 99) {
+                return `<svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`;
+            }
+            // Default
+            return `<svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"/></svg>`;
+        }
+
+        function getWeatherMeta(code, isNight) {
+            let desc = "Quang đãng";
+            let icon = isNight ? "🌙" : "☀️";
+            if (code === 0) { desc = "Quang đãng"; icon = isNight ? "🌙" : "☀️"; }
+            else if (code === 1) { desc = "Ít mây"; icon = isNight ? "🌤️" : "🌤️"; }
+            else if (code === 2) { desc = "Mây rải rác"; icon = isNight ? "⛅" : "⛅"; }
+            else if (code === 3) { desc = "Nhiều mây"; icon = "☁️"; }
+            else if (code >= 45 && code <= 48) { desc = "Sương mù"; icon = "🌫️"; }
+            else if (code >= 51 && code <= 55) { desc = "Mưa phùn"; icon = "🌦️"; }
+            else if (code >= 56 && code <= 57) { desc = "Mưa phùn buốt"; icon = "🌧️"; }
+            else if (code >= 61 && code <= 65) { desc = "Mưa rào"; icon = "🌧️"; }
+            else if (code >= 66 && code <= 67) { desc = "Mưa đá nhẹ"; icon = "🌧️"; }
+            else if (code >= 71 && code <= 77) { desc = "Tuyết rơi"; icon = "🌨️"; }
+            else if (code >= 80 && code <= 82) { desc = "Mưa rào lớn"; icon = "🌧️"; }
+            else if (code >= 85 && code <= 86) { desc = "Tuyết rào"; icon = "🌨️"; }
+            else if (code >= 95 && code <= 99) { desc = "Dông & Sét"; icon = "⛈️"; }
+            else { desc = "Ổn định"; icon = isNight ? "🌙" : "☀️"; }
+
+            return {
+                desc: desc,
+                icon: icon,
+                svg: getWeatherSvg(code, isNight)
+            };
+        }
+
+        function renderWeatherTimeline(data, cityName) {
+            const container = document.getElementById('weatherTimelineList');
+            const summary = document.getElementById('weatherTimelineSummary');
+            if (!container) return;
+
+            const cur = (data && data.current) || (data && data.current_weather) || {};
+            let curTime = cur.time || new Date().toISOString().slice(0, 16);
+            let curTemp = Math.round(cur.temperature_2m != null ? cur.temperature_2m : (cur.temperature != null ? cur.temperature : 29));
+            let apparentTemp = cur.apparent_temperature != null ? Math.round(cur.apparent_temperature) : curTemp;
+            let hourly = (data && data.hourly) ? data.hourly : null;
+
+            let slots = [];
+
+            if (hourly && hourly.time && hourly.time.length > 0) {
+                const curPrefix = curTime.slice(0, 13);
+                let idx = hourly.time.findIndex(t => t >= curPrefix);
+                if (idx < 0) idx = 0;
+
+                // Grab 6 slots with 2-hour step: now, +2h, +4h, +6h, +8h, +10h
+                for (let k = 0; k < 6; k++) {
+                    const i = idx + k * 2;
+                    if (i < hourly.time.length) {
+                        const tStr = hourly.time[i];
+                        const hour = parseInt(tStr.split('T')[1].split(':')[0], 10);
+                        const isNow = (k === 0);
+                        const timeLabel = isNow ? "Bây giờ" : `${String(hour).padStart(2, '0')}:00`;
+                        const temp = Math.round(hourly.temperature_2m ? hourly.temperature_2m[i] : curTemp);
+                        const pop = Math.round(hourly.precipitation_probability ? hourly.precipitation_probability[i] : 0);
+                        const code = (hourly.weather_code ? hourly.weather_code[i] : hourly.weathercode ? hourly.weathercode[i] : 1);
+                        const isNight = (hour < 6 || hour >= 18);
+                        const meta = getWeatherMeta(code, isNight);
+
+                        slots.push({
+                            label: timeLabel,
+                            icon: meta.icon,
+                            svg: meta.svg,
+                            desc: meta.desc,
+                            temp: temp,
+                            pop: pop,
+                            isNow: isNow
+                        });
+                    }
+                }
+
+                // Summary text in header (Bổ sung Cảm giác nhiệt thực tế chuẩn Google)
+                if (summary) {
+                    const curCode = cur.weather_code != null ? cur.weather_code : (cur.weathercode != null ? cur.weathercode : 1);
+                    const curMeta = getWeatherMeta(curCode, false);
+                    let humidityStr = '';
+                    const humidityVal = cur.relative_humidity_2m != null ? cur.relative_humidity_2m : (hourly.relative_humidity_2m ? hourly.relative_humidity_2m[idx] : hourly.relativehumidity_2m ? hourly.relativehumidity_2m[idx] : null);
+                    if (humidityVal != null) {
+                        humidityStr = ` • Ẩm ${humidityVal}%`;
+                    }
+                    const feelStr = (apparentTemp && apparentTemp !== curTemp) ? ` • Cảm nhận ${apparentTemp}°C` : '';
+                    summary.textContent = `${cityName} • ${curTemp}°C${feelStr} • ${curMeta.desc}${humidityStr}`;
+                }
+            }
+
+            // Fallback if API was unavailable
+            if (slots.length === 0) {
+                const nowHour = new Date().getHours();
+                const fallbackMeta = [
+                    { h: 0, pop: 10, code: 1 },
+                    { h: 2, pop: 25, code: 2 },
+                    { h: 4, pop: 60, code: 61 },
+                    { h: 6, pop: 45, code: 51 },
+                    { h: 8, pop: 15, code: 2 },
+                    { h: 10, pop: 0, code: 0 }
+                ];
+                fallbackMeta.forEach((item, k) => {
+                    const h = (nowHour + item.h) % 24;
+                    const isNight = (h < 6 || h >= 18);
+                    const meta = getWeatherMeta(item.code, isNight);
+                    slots.push({
+                        label: k === 0 ? "Bây giờ" : `${String(h).padStart(2, '0')}:00`,
+                        icon: meta.icon,
+                        svg: meta.svg,
+                        desc: meta.desc,
+                        temp: curTemp - Math.floor(k / 2),
+                        pop: item.pop,
+                        isNow: (k === 0)
+                    });
+                });
+                if (summary) summary.textContent = `${cityName} • ${curTemp}°C • Dự báo 12h`;
+            }
+
+            container.innerHTML = slots.map(s => {
+                let popBadgeStyle = 'opacity-65 text-current';
+                if (s.pop >= 60) {
+                    popBadgeStyle = 'bg-blue-600 text-white font-black px-1.5 py-0.5 rounded shadow-xs';
+                } else if (s.pop >= 30) {
+                    popBadgeStyle = 'bg-blue-500/20 text-blue-900 font-extrabold px-1.5 py-0.5 rounded';
+                } else if (s.pop > 0) {
+                    popBadgeStyle = 'text-blue-950 font-bold opacity-80';
+                }
+
+                return `
+                    <div class="flex flex-col items-center justify-between p-1 sm:p-1.5 rounded ${s.isNow ? 'bg-black/10 border border-black/20' : 'bg-black/5 border border-black/10'} hover:bg-black/15 transition group text-center min-w-0" title="${s.label}: ${s.desc}, Nhiệt độ ${s.temp}°C, Khả năng mưa ${s.pop}%">
+                        <span class="text-[9px] sm:text-[10px] font-extrabold ${s.isNow ? 'text-[#D63820] font-black' : 'opacity-75'} uppercase tracking-tight truncate w-full">${s.label}</span>
+                        <span class="my-1 transform group-hover:scale-110 transition leading-none select-none flex items-center justify-center text-current">${s.svg || s.icon}</span>
+                        <span class="font-serif font-black text-xs sm:text-[15px] leading-tight">${s.temp}°</span>
+                        <span class="text-[9px] sm:text-[10px] mt-0.5 flex items-center justify-center gap-0.5 font-mono ${popBadgeStyle}">
+                            <svg class="w-2.5 h-2.5 shrink-0 inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg><span>${s.pop}%</span>
+                        </span>
+                        <span class="text-[8px] sm:text-[9px] font-medium opacity-70 truncate max-w-full block mt-0.5">${s.desc}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function fetchWeatherAPI() {
+            try {
+                const [lat, lon, cityName] = appState.city.split(',');
+                document.getElementById('weatherCity').textContent = cityName;
+                
+                // Fetch Realtime Station Nowcast + Hourly Forecast chuẩn múi giờ Việt Nam (Asia/Ho_Chi_Minh)
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,precipitation_probability,weather_code,relative_humidity_2m&timezone=Asia%2FHo_Chi_Minh&forecast_days=2`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const cur = (data && data.current) || (data && data.current_weather);
+                    if (cur) {
+                        const temp = Math.round(cur.temperature_2m != null ? cur.temperature_2m : cur.temperature);
+                        const code = cur.weather_code != null ? cur.weather_code : cur.weathercode;
+                        const isDay = cur.is_day !== 0;
+                        const meta = getWeatherMeta(code, !isDay);
+
+                        document.getElementById('weatherTemp').textContent = `${temp}°C`;
+                        const weatherIconEl = document.getElementById('weatherIcon');
+                        if (weatherIconEl) weatherIconEl.innerHTML = meta.svg;
+
+                        // Render timeline in Block 1
+                        renderWeatherTimeline(data, cityName);
+                    }
+                } else {
+                    renderWeatherTimeline(null, cityName);
+                }
+
+                const aqiRes = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=us_aqi`);
+                if (aqiRes.ok) {
+                    const aqiData = await aqiRes.json();
+                    if (aqiData && aqiData.current && aqiData.current.us_aqi != null) {
+                        const aqi = aqiData.current.us_aqi;
+                        const badge = document.getElementById('weatherAqiBadge');
+                        if (badge) badge.textContent = `AQI ${aqi}`;
+                    }
+                }
+            } catch (_) {
+                try {
+                    const [,, cityName] = appState.city.split(',');
+                    renderWeatherTimeline(null, cityName || 'Biên Hòa');
+                } catch (e) { }
+            }
+        }
+
+        async function fetchLiveMarketAPI(isManualTrigger = false) {
+            const syncIcon = document.getElementById('marketSyncIcon');
+            const livePulse = document.getElementById('marketLivePulse');
+
+            if (syncIcon) syncIcon.classList.add('animate-spin');
+            if (livePulse) livePulse.className = 'w-2 h-2 rounded-full bg-yellow-300 animate-ping shrink-0';
+
+            if (!appState.marketDataCache) {
+                appState.marketDataCache = {
+                    btc: { price: 77052, change: -1079, percent: -1.38, high: 78254, low: 76388 },
+                    vn30: { price: 1815.60, change: 2.19, percent: 0.12 },
+                    vnindex: { price: 1699.62, change: -11.10, percent: -0.65 },
+                    spotGold: 3908.80,
+                    stocks: {},
+                    updatedAt: '16:48:00'
+                };
+            }
+
+            const nowUnix = Math.floor(Date.now() / 1000);
+            const fromUnix = nowUnix - 86400 * 10;
+            const watchlist = (appState.market && appState.market.watchlist && appState.market.watchlist.length > 0)
+                ? appState.market.watchlist
+                : ["CTG", "HPG", "VCB", "SSI", "MWG", "VHM"];
+
+            // 1. Concurrent Fetch: USD/VND, BTC 24hr, Spot Gold, VN30, VNINDEX, Watchlist Stocks
+            const fetchPromises = [
+                // [0] USD/VND
+                fetch('https://api.exchangerate-api.com/v4/latest/USD')
+                    .then(r => r.ok ? r.json() : null)
+                    .catch(() => null),
+
+                // [1] Binance BTC 24hr Ticker
+                fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT')
+                    .then(r => r.ok ? r.json() : null)
+                    .catch(() => null),
+
+                // [2] Gold Spot XAU/USD
+                fetch('https://api.gold-api.com/price/XAU')
+                    .then(r => r.ok ? r.json() : null)
+                    .catch(() => null),
+
+                // [3] VN30 Index from VNDirect DChart
+                fetch(`https://dchart-api.vndirect.com.vn/dchart/history?resolution=D&symbol=VN30&from=${fromUnix}&to=${nowUnix}`)
+                    .then(r => r.ok ? r.json() : null)
+                    .catch(() => null),
+
+                // [4] VNINDEX from VNDirect DChart
+                fetch(`https://dchart-api.vndirect.com.vn/dchart/history?resolution=D&symbol=VNINDEX&from=${fromUnix}&to=${nowUnix}`)
+                    .then(r => r.ok ? r.json() : null)
+                    .catch(() => null)
+            ];
+
+            // Append stock fetches
+            watchlist.forEach(sym => {
+                fetchPromises.push(
+                    fetch(`https://dchart-api.vndirect.com.vn/dchart/history?resolution=D&symbol=${sym}&from=${fromUnix}&to=${nowUnix}`)
+                        .then(r => r.ok ? r.json() : null)
+                        .then(d => ({ sym, d }))
+                        .catch(() => ({ sym, d: null }))
+                );
+            });
+
+            try {
+                const results = await Promise.allSettled(fetchPromises);
+
+                // Parse USD/VND
+                if (results[0].status === 'fulfilled' && results[0].value?.rates?.VND) {
+                    const vnd = Math.round(results[0].value.rates.VND).toLocaleString('vi-VN');
+                    const el = document.getElementById('liveUsdVnd');
+                    if (el) el.textContent = `USD/VND: ${vnd}`;
+                }
+
+                // Parse Binance BTC
+                if (results[1].status === 'fulfilled' && results[1].value?.lastPrice) {
+                    const d = results[1].value;
+                    appState.marketDataCache.btc = {
+                        price: parseFloat(d.lastPrice),
+                        change: parseFloat(d.priceChange),
+                        percent: parseFloat(d.priceChangePercent),
+                        high: parseFloat(d.highPrice),
+                        low: parseFloat(d.lowPrice)
+                    };
+                }
+
+                // Parse Spot Gold
+                if (results[2].status === 'fulfilled' && results[2].value?.price) {
+                    appState.marketDataCache.spotGold = parseFloat(results[2].value.price);
+                }
+
+                // Parse VN30
+                if (results[3].status === 'fulfilled' && results[3].value?.c?.length >= 2) {
+                    const c = results[3].value.c;
+                    const last = c[c.length - 1];
+                    const prev = c[c.length - 2];
+                    const chg = last - prev;
+                    const pct = (chg / prev) * 100;
+                    appState.marketDataCache.vn30 = {
+                        price: last,
+                        change: Math.round(chg * 100) / 100,
+                        percent: Math.round(pct * 100) / 100
+                    };
+                }
+
+                // Parse VNINDEX
+                if (results[4].status === 'fulfilled' && results[4].value?.c?.length >= 2) {
+                    const c = results[4].value.c;
+                    const last = c[c.length - 1];
+                    const prev = c[c.length - 2];
+                    const chg = last - prev;
+                    const pct = (chg / prev) * 100;
+                    appState.marketDataCache.vnindex = {
+                        price: last,
+                        change: Math.round(chg * 100) / 100,
+                        percent: Math.round(pct * 100) / 100
+                    };
+                }
+
+                // Parse Stocks
+                if (!appState.marketDataCache.stocks) appState.marketDataCache.stocks = {};
+                for (let i = 5; i < results.length; i++) {
+                    if (results[i].status === 'fulfilled' && results[i].value) {
+                        const { sym, d } = results[i].value;
+                        if (d && d.c && d.c.length >= 2) {
+                            const last = d.c[d.c.length - 1];
+                            const prev = d.c[d.c.length - 2];
+                            const chg = last - prev;
+                            const pct = (chg / prev) * 100;
+                            appState.marketDataCache.stocks[sym] = {
+                                price: last,
+                                change: Math.round(chg * 100) / 100,
+                                percent: Math.round(pct * 100) / 100
+                            };
+                        }
+                    }
+                }
+
+                const now = new Date();
+                const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+                appState.marketDataCache.updatedAt = timeStr;
+                appState.gold.updatedAt = timeStr.slice(0, 5);
+
+                saveStateToStorage();
+                renderMarketUI();
+
+                if (isManualTrigger) {
+                    showHudToast('📈', 'Đã cập nhật Vàng, BTC, VN30 & Cổ phiếu');
+                }
+            } catch (_) {
+            } finally {
+                if (syncIcon) syncIcon.classList.remove('animate-spin');
+                if (livePulse) livePulse.className = 'w-2 h-2 rounded-full bg-emerald-300 live-dot shrink-0';
+            }
+        }
+
+        /********************************************************************
+         * 8. TIN VẮN VNEXPRESS RSS WIDGET
+         ********************************************************************/
+        const FALLBACK_NEWS = [
+            { title: "Giá vàng nhẫn và SJC duy trì ở vùng đỉnh lịch sử, giao dịch sôi động tại các đô thị lớn", pubDate: "Hôm nay", link: "https://vnexpress.net/kinh-doanh", description: "Thị trường kim loại quý trong nước tiếp tục bám sát đà tăng của thế giới cùng nhu cầu tích trữ cao." },
+            { title: "Hạ tầng kết nối vùng Đông Nam Bộ và sân bay Long Thành tăng tốc về đích các hạng mục chính", pubDate: "Hôm nay", link: "https://vnexpress.net/thoi-su", description: "Các tuyến cao tốc trọng điểm kết nối Đồng Nai, TP.HCM và Bà Rịa - Vũng Tàu được đẩy nhanh tiến độ." },
+            { title: "Xu hướng thiết kế không gian làm việc tối giản kết hợp nghệ thuật Á Đông lên ngôi", pubDate: "Hôm nay", link: "https://vnexpress.net/so-hoa", description: "Nhiều kỹ sư và nhà sáng tạo trẻ ưa chuộng phong cách bài trí góc máy tính mang đậm bản sắc văn hóa Việt." },
+            { title: "Kinh tế số và trí tuệ nhân tạo tạo động lực tăng trưởng mới cho doanh nghiệp công nghệ Việt", pubDate: "Hôm nay", link: "https://vnexpress.net/so-hoa", description: "Ứng dụng AI vào quản trị và tự động hóa giúp nâng cao năng suất lao động đáng kể." }
+        ];
+
+        let newsItems = [...FALLBACK_NEWS];
+        let widgetNewsIdx = 0;
+
+        async function fetchNewsRSS(categorySlug = 'tin-moi-nhat') {
+            try {
+                const rssUrl = encodeURIComponent(`https://vnexpress.net/rss/${categorySlug}.rss`);
+                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.items && data.items.length > 0) {
+                        newsItems = data.items.slice(0, 10).map(item => ({
+                            title: item.title,
+                            link: item.link,
+                            pubDate: item.pubDate ? item.pubDate.split(' ')[1]?.slice(0, 5) || 'Mới cập nhật' : 'Hôm nay',
+                            description: (item.description || '').replace(/<[^>]*>?/gm, '').trim()
+                        }));
+                    }
+                }
+            } catch (_) { }
+            updateNewsWidgetText();
+            renderNewsModalList();
+        }
+
+        function updateNewsWidgetText() {
+            if (!newsItems.length) return;
+            const wTitle = document.getElementById('widgetNewsTitle');
+            if (!wTitle) return;
+            wTitle.classList.remove('fade-animate');
+            void wTitle.offsetWidth;
+            wTitle.classList.add('fade-animate');
+            wTitle.textContent = newsItems[widgetNewsIdx % newsItems.length].title;
+        }
+
+        function cycleWidgetNews() {
+            widgetNewsIdx = (widgetNewsIdx + 1) % newsItems.length;
+            updateNewsWidgetText();
+        }
+
+        function renderNewsModalList() {
+            const container = document.getElementById('newsListContainer');
+            if (!container) return;
+            container.innerHTML = newsItems.map((item, idx) => `
+                <article class="${idx > 0 ? 'pt-4' : ''} flex flex-col gap-1">
+                    <div class="flex items-center justify-between text-xs opacity-70 font-mono">
+                        <span>TIN #${idx + 1}</span>
+                        <span>${item.pubDate}</span>
+                    </div>
+                    <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="font-serif font-bold text-lg hover:text-[#D63820] transition leading-snug">
+                        ${item.title} ↗
+                    </a>
+                    <p class="text-xs sm:text-sm opacity-85 leading-relaxed line-clamp-2">
+                        ${item.description || 'Nhấn vào tiêu đề để đọc toàn bộ bài viết trên VnExpress.'}
+                    </p>
+                </article>
+            `).join('');
+        }
+
+        function openNewsModal() {
+            renderNewsModalList();
+            document.getElementById('newsModal').classList.remove('hidden');
+        }
+        function closeNewsModal() {
+            document.getElementById('newsModal').classList.add('hidden');
+        }
+        function switchNewsCategory(slug, btnEl) {
+            document.querySelectorAll('.news-tab-btn').forEach(b => {
+                b.className = 'news-tab-btn px-3 py-1 text-xs font-bold uppercase tracking-wider hover:bg-black/10 rounded-sm';
+            });
+            if (btnEl) {
+                btnEl.className = 'news-tab-btn px-3 py-1 text-xs font-extrabold uppercase tracking-wider bg-[#141413] text-white rounded-sm';
+            }
+            fetchNewsRSS(slug);
+        }
+
+        function refreshAllMarketData(manual = false) {
+            fetchWeatherAPI();
+            fetchLiveMarketAPI(manual);
+            fetchNewsRSS('tin-moi-nhat');
+        }
+
+        /********************************************************************
+         * 9. WEB AUDIO SYNTHESIZER & NHẠC THƯ GIÃN GITHUB (LOOP)
+         ********************************************************************/
+        let audioCtx = null;
+        let currentAmbientMode = 'off';
+        let ambientAudioPlayer = null;
+
+        function getAmbientAudio() {
+            if (!ambientAudioPlayer) {
+                ambientAudioPlayer = new Audio('https://raw.githubusercontent.com/namxhung99/ScreenSaver2026/main/nhacthugian_GACYS0nm.mp3');
+                ambientAudioPlayer.loop = true;
+                ambientAudioPlayer.onerror = function () {
+                    // Dự phòng file offline trong cùng thư mục
+                    if (ambientAudioPlayer.src.includes('raw.githubusercontent.com')) {
+                        ambientAudioPlayer.src = 'nhacthugian_GACYS0nm.mp3';
+                        if (currentAmbientMode === 'music') {
+                            ambientAudioPlayer.play().catch(() => { });
+                        }
+                    }
+                };
+            }
+            return ambientAudioPlayer;
+        }
+
+        function playTibetanBowlChime() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const now = ctx.currentTime;
+                [432, 864, 1296].forEach((f, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(f, now);
+                    gain.gain.setValueAtTime(0.16 / (i + 1), now);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 4.0);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 4.1);
+                });
+            } catch (_) { }
+        }
+
+        function setAmbientMode(mode) {
+            if (audioCtx) {
+                try { audioCtx.close(); } catch (_) { }
+                audioCtx = null;
+            }
+            if (ambientAudioPlayer) {
+                try { ambientAudioPlayer.pause(); } catch (_) { }
+            }
+            currentAmbientMode = mode;
+
+            if (mode === 'off') {
+                document.getElementById('audioPlayingBadge').classList.add('hidden');
+                document.getElementById('ambientStatusText').textContent = 'Đang tắt — Chọn hiệu ứng bên dưới';
+                showHudToast('🔇', 'Đã tắt âm thanh nền');
+                return;
+            }
+
+            if (mode === 'music') {
+                const player = getAmbientAudio();
+                player.loop = true;
+                player.play().then(() => {
+                    document.getElementById('audioPlayingBadge').classList.remove('hidden');
+                    document.getElementById('ambientStatusText').textContent = 'Đang phát: Nhạc thư giãn Á Đông (Vòng lặp)';
+                    showHudToast('🎵', 'Nhạc thư giãn Á Đông (Loop)');
+                }).catch(() => {
+                    document.getElementById('audioPlayingBadge').classList.remove('hidden');
+                    document.getElementById('ambientStatusText').textContent = 'Đang phát: Nhạc thư giãn Á Đông (Vòng lặp)';
+                    showHudToast('🎵', 'Đã bật nhạc thư giãn (Nhấn màn hình nếu âm bị chặn)');
+                });
+                return;
+            }
+
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const bufferSize = 2 * audioCtx.sampleRate;
+                const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const output = noiseBuffer.getChannelData(0);
+                let lastOut = 0.0;
+                for (let i = 0; i < bufferSize; i++) {
+                    const white = Math.random() * 2 - 1;
+                    output[i] = (lastOut + (0.02 * white)) / 1.02;
+                    lastOut = output[i];
+                    output[i] *= (mode === 'fire' ? 0.25 : 0.18);
+                }
+
+                const source = audioCtx.createBufferSource();
+                source.buffer = noiseBuffer;
+                source.loop = true;
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = (mode === 'fire') ? 380 : 680;
+
+                const gainNode = audioCtx.createGain();
+                gainNode.gain.value = 0.35;
+
+                source.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                source.start(0);
+
+                document.getElementById('audioPlayingBadge').classList.remove('hidden');
+                const label = mode === 'rain' ? 'Tiếng mưa đêm ấm áp' : 'Tiếng lửa trại tí tách';
+                document.getElementById('ambientStatusText').textContent = `Đang phát: ${label}`;
+                showHudToast(mode === 'rain' ? '🌧️' : '🔥', label);
+            } catch (_) { }
+        }
+
+        function cycleAmbientSound() {
+            const order = ['off', 'music', 'rain', 'fire'];
+            const next = order[(order.indexOf(currentAmbientMode) + 1) % order.length];
+            setAmbientMode(next);
+        }
+
+        /********************************************************************
+         * 10. MODALS, TOÀN MÀN HÌNH, PIXEL SHIFT & HẠT BỤI NẮNG
+         ********************************************************************/
+        function openSettingsModal() {
+            document.getElementById('inputGreeting').value = appState.greeting;
+            document.getElementById('selectCity').value = appState.city;
+            document.getElementById('inputSjcSell').value = appState.gold.sjcSell;
+            document.getElementById('inputRingSell').value = appState.gold.ringSell;
+            document.getElementById('inputSjcBuy').value = appState.gold.sjcBuy;
+            document.getElementById('inputRingBuy').value = appState.gold.ringBuy;
+            document.getElementById('inputOil1').value = appState.oil.price1;
+            document.getElementById('inputOil2').value = appState.oil.price2;
+            document.getElementById('inputOil3').value = appState.oil.price3;
+            if (document.getElementById('inputStockWatchlist')) {
+                document.getElementById('inputStockWatchlist').value = (appState.market?.watchlist || ["CTG", "HPG", "VCB", "SSI", "MWG", "VHM"]).join(', ');
+            }
+            if (document.getElementById('chkMarketAutoCycle')) {
+                document.getElementById('chkMarketAutoCycle').checked = appState.market?.autoCycle ?? true;
+            }
+            document.getElementById('chkPixelShift').checked = appState.pixelShift;
+            document.getElementById('chkParticles').checked = appState.particles;
+            document.getElementById('settingsModal').classList.remove('hidden');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.add('hidden');
+        }
+
+        function saveSettings() {
+            appState.greeting = document.getElementById('inputGreeting').value.trim() || "Xin chào Nam Hùng";
+            appState.city = document.getElementById('selectCity').value;
+            appState.gold.sjcSell = document.getElementById('inputSjcSell').value.trim() || "142,0";
+            appState.gold.ringSell = document.getElementById('inputRingSell').value.trim() || "141,0";
+            appState.gold.sjcBuy = document.getElementById('inputSjcBuy').value.trim() || "139,0";
+            appState.gold.ringBuy = document.getElementById('inputRingBuy').value.trim() || "138,0";
+            appState.oil.price1 = document.getElementById('inputOil1').value.trim() || "28.250";
+            appState.oil.price2 = document.getElementById('inputOil2').value.trim() || "27.700";
+            appState.oil.price3 = document.getElementById('inputOil3').value.trim() || "29.120";
+
+            const rawWatchlist = document.getElementById('inputStockWatchlist')?.value || "CTG, HPG, VCB, SSI, MWG, VHM";
+            const symbols = rawWatchlist.split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
+            if (!appState.market) appState.market = {};
+            appState.market.watchlist = symbols.length > 0 ? symbols : ["CTG", "HPG", "VCB", "SSI", "MWG", "VHM"];
+            if (document.getElementById('chkMarketAutoCycle')) {
+                appState.market.autoCycle = document.getElementById('chkMarketAutoCycle').checked;
+            }
+
+            appState.pixelShift = document.getElementById('chkPixelShift').checked;
+            appState.particles = document.getElementById('chkParticles').checked;
+
+            const now = new Date();
+            appState.gold.updatedAt = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+            saveStateToStorage();
+            updateMarketAutoCycleState();
+            renderMarketUI();
+            fetchWeatherAPI();
+            fetchLiveMarketAPI(false);
+            closeSettingsModal();
+            showHudToast('✅', 'Đã lưu cài đặt màn hình');
+        }
+
+        function resetDefaultSettings() {
+            appState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+            saveStateToStorage();
+            applyArtTheme('mondrian', false);
+            updateMarketAutoCycleState();
+            renderMarketUI();
+            fetchWeatherAPI();
+            fetchLiveMarketAPI(false);
+            closeSettingsModal();
+            showHudToast('↺', 'Đã khôi phục mặc định');
+        }
+
+        function showDayDetailModal() {
+            document.getElementById('dayDetailModal').classList.remove('hidden');
+        }
+        function closeDayDetailModal() {
+            document.getElementById('dayDetailModal').classList.add('hidden');
+        }
+        function openYoutubeModal() {
+            document.getElementById('youtubeModal').classList.remove('hidden');
+        }
+        function closeYoutubeModal() {
+            document.getElementById('youtubeModal').classList.add('hidden');
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => { });
+                showHudToast('🖥️', 'Đã bật chế độ Toàn màn hình');
+            } else {
+                document.exitFullscreen().catch(() => { });
+            }
+        }
+
+        // OLED Burn-in Pixel Shift every 60 seconds
+        setInterval(() => {
+            if (!appState.pixelShift) {
+                document.documentElement.style.setProperty('--shift-x', '0px');
+                document.documentElement.style.setProperty('--shift-y', '0px');
+                return;
+            }
+            const dx = Math.floor(Math.random() * 5) - 2;
+            const dy = Math.floor(Math.random() * 5) - 2;
+            document.documentElement.style.setProperty('--shift-x', `${dx}px`);
+            document.documentElement.style.setProperty('--shift-y', `${dy}px`);
+        }, 60000);
+
+        // Auto-hide mouse cursor after 6 seconds of inactivity
+        let idleTimeout;
+        function resetIdleTimer() {
+            document.body.classList.remove('cursor-hidden');
+            clearTimeout(idleTimeout);
+            idleTimeout = setTimeout(() => {
+                document.body.classList.add('cursor-hidden');
+            }, 6000);
+        }
+        window.addEventListener('mousemove', resetIdleTimer);
+        window.addEventListener('keydown', resetIdleTimer);
+        window.addEventListener('click', resetIdleTimer);
+
+        // Ambient Dust Canvas
+        const canvas = document.getElementById('ambientCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        function initParticles() {
+            resizeCanvas();
+            particles = Array.from({ length: 24 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 2 + 0.8,
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: (Math.random() - 0.5) * 0.2,
+                alpha: Math.random() * 0.25 + 0.08
+            }));
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (appState.particles) {
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(160, 140, 95, ${p.alpha})`;
+                    ctx.fill();
+                });
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Keyboard Shortcuts
+        window.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+            if (e.key === 'Escape') {
+                closeSettingsModal();
+                closeDayDetailModal();
+                closeYoutubeModal();
+                closeNewsModal();
+            } else if (e.key.toLowerCase() === 't') {
+                cycleArtTheme();
+            } else if (e.key.toLowerCase() === 'f') {
+                toggleFullScreen();
+            } else if (e.key.toLowerCase() === 'm') {
+                cycleAmbientSound();
+            } else if (e.key.toLowerCase() === 'n') {
+                openNewsModal();
+            } else if (e.key.toLowerCase() === 'p') {
+                togglePomodoro();
+            } else if (e.code === 'Space') {
+                e.preventDefault();
+                nextQuote(true);
+            }
+        });
+
+        window.onload = function () {
+            if (!localStorage.getItem('namhung_theme_dongho_v1')) {
+                appState.theme = 'dongho';
+                localStorage.setItem('namhung_theme_dongho_v1', 'true');
+                saveStateToStorage();
+            }
+            applyArtTheme(appState.theme || 'dongho', false);
+            initRollingClock();
+            switchMarketTab(appState.market?.activeTab || 'stocks');
+            updateMarketAutoCycleState();
+            renderMarketUI();
+            renderCalendar(viewYear, viewMonth, selectedDay);
+            updateLiveClock();
+            setInterval(updateLiveClock, 1000);
+
+            setInterval(() => nextQuote(false), 25000);
+            setInterval(cycleWidgetNews, 12000);
+
+            refreshAllMarketData(false);
+            fetchOnlineQuote();
+            // Realtime financial update: every 45s for BTC, VN30, Stocks & Gold
+            setInterval(() => fetchLiveMarketAPI(false), 45000);
+            // General market & weather sync: every 15 mins
+            setInterval(() => refreshAllMarketData(false), 15 * 60 * 1000);
+
+            initParticles();
+            animateParticles();
+        };
+    </script>
+</body>
+
+</html>

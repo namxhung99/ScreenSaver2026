@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản vẽ Lịch VCB 2026 & Screensaver Row 2 Layout</title>
+    <script src="https://cdn.tailwindcss.com">
+        function toggleCalendarFullscreen() {
+            const calCard = document.querySelector('#view-calendar-focus .paper-shadow');
+            if (!calCard) return;
+            if (!document.fullscreenElement) {
+                if (calCard.requestFullscreen) {
+                    calCard.requestFullscreen();
+                } else if (calCard.webkitRequestFullscreen) {
+                    calCard.webkitRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0E1015;
+            color: #E2E8F0;
+        }
+        .font-serif-vcb {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+        .font-mono-vcb {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .paper-shadow {
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+        }
+        .fade-transition {
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes progressAnim {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        .timer-progress {
+            animation: progressAnim 60s linear infinite;
+        }
+        /* Fade Edge Vignette (Hòa vào nền giấy) */
+        .horse-fade-mask {
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);
+        }
+        /* Heritage Gold Capsule */
+        .horse-capsule-style {
+            border: 1.5px solid rgba(196, 154, 108, 0.5);
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            background: #FAF7F0;
+        }
+        /* ----------------------------------------------------------- */
+        /* BIOMECHANIC GALLOP CYCLES (NHỊP CHÂN CỦA TỪNG CON KHÁC NHAU) */
+        /* ----------------------------------------------------------- */
+        @keyframes horseGallopBody {
+            0% { transform: translateY(0px) rotate(0deg); }
+            22% { transform: translateY(-7px) rotate(-3.5deg); }
+            48% { transform: translateY(3.5px) rotate(2deg); }
+            72% { transform: translateY(1px) rotate(0deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes horseHeadNod {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-4.5deg) translateY(-2px); }
+            55% { transform: rotate(3.5deg) translateY(3px); }
+            80% { transform: rotate(-1deg); }
+        }
+
+        @keyframes frontLegNear {
+            0% { transform: rotate(-36deg); }
+            25% { transform: rotate(15deg); }
+            50% { transform: rotate(45deg); }
+            75% { transform: rotate(-10deg); }
+            100% { transform: rotate(-36deg); }
+        }
+
+        @keyframes frontLegFar {
+            0% { transform: rotate(36deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(-38deg); }
+            75% { transform: rotate(15deg); }
+            100% { transform: rotate(36deg); }
+        }
+
+        @keyframes hindLegNear {
+            0% { transform: rotate(42deg); }
+            30% { transform: rotate(10deg); }
+            60% { transform: rotate(-40deg); }
+            85% { transform: rotate(15deg); }
+            100% { transform: rotate(42deg); }
+        }
+
+        @keyframes hindLegFar {
+            0% { transform: rotate(-25deg); }
+            30% { transform: rotate(35deg); }
+            60% { transform: rotate(15deg); }
+            85% { transform: rotate(-35deg); }
+            100% { transform: rotate(-25deg); }
+        }
+
+        @keyframes maneFlutter {
+            0%, 100% { transform: skewX(-5deg) scaleY(1); }
+            35% { transform: skewX(-16deg) scaleY(1.08) translateY(-1px); }
+            70% { transform: skewX(2deg) scaleY(0.95); }
+        }
+
+        @keyframes tailWhip {
+            0%, 100% { transform: rotate(0deg) scaleX(1); }
+            25% { transform: rotate(-14deg) scaleX(1.06) translateY(-3px); }
+            55% { transform: rotate(8deg) scaleX(0.95) translateY(2px); }
+            80% { transform: rotate(-6deg); }
+        }
+
+        /* ----------------------------------------------------------- */
+        /* ORGANIC SURGE & DRIFT KEYFRAMES (CON VƯỢT, 2-3 CON SÁT NHAU) */
+        /* ----------------------------------------------------------- */
+        @keyframes driftHorse1 {
+            0%, 100% { transform: translate(340px, 6px) scale(1.02); }
+            35% { transform: translate(375px, 4px) scale(1.03); }
+            70% { transform: translate(330px, 8px) scale(1.01); }
+        }
+
+        @keyframes driftHorse2 {
+            0%, 100% { transform: translate(220px, 14px) scale(0.95); }
+            28% { transform: translate(248px, 10px) scale(0.96); }
+            60% { transform: translate(205px, 16px) scale(0.94); }
+            85% { transform: translate(235px, 12px) scale(0.95); }
+        }
+
+        @keyframes driftHorse3 {
+            0%, 100% { transform: translate(250px, 2px) scale(0.92); }
+            32% { transform: translate(225px, 4px) scale(0.93); }
+            65% { transform: translate(270px, 0px) scale(0.93); }
+            90% { transform: translate(240px, 2px) scale(0.92); }
+        }
+
+        @keyframes driftHorse4 {
+            0% { transform: translate(90px, 16px) scale(0.88); }
+            30% { transform: translate(180px, 12px) scale(0.92); }
+            55% { transform: translate(350px, -2px) scale(0.98); }
+            75% { transform: translate(310px, 6px) scale(0.95); }
+            100% { transform: translate(90px, 16px) scale(0.88); }
+        }
+
+        @keyframes driftHorse5 {
+            0%, 100% { transform: translate(45px, 8px) scale(0.86); }
+            45% { transform: translate(80px, 12px) scale(0.87); }
+            80% { transform: translate(30px, 6px) scale(0.85); }
+        }
+
+        /* ----------------------------------------------------------- */
+        /* ORIENTAL CLOUDS & WIND SPEEDLINES (HIỆU ỨNG MÂY & GIÓ CUỘN) */
+        /* ----------------------------------------------------------- */
+        @keyframes cloudsDriftFast {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-160%); }
+        }
+
+        @keyframes cloudsDriftSlow {
+            0% { transform: translateX(120%); }
+            100% { transform: translateX(-140%); }
+        }
+
+        @keyframes speedLinePulse {
+            0%, 100% { opacity: 0.2; transform: scaleX(0.7) translateX(0px); }
+            50% { opacity: 0.85; transform: scaleX(1.3) translateX(-25px); }
+        }
+
+        @keyframes goldenDustRise {
+            0% { opacity: 0.9; transform: translateY(0px) translateX(0px) scale(0.7); }
+            100% { opacity: 0; transform: translateY(-16px) translateX(-50px) scale(1.6); }
+        }
+
+        .anim-cloud-fast { animation: cloudsDriftFast 7s linear infinite; }
+        .anim-cloud-slow { animation: cloudsDriftSlow 11s linear infinite; }
+        .anim-speedline { animation: speedLinePulse 1.8s ease-in-out infinite; }
+        .anim-dust-particle { animation: goldenDustRise 1.1s cubic-bezier(0.2, 0.8, 0.3, 1) infinite; }
+
+        /* Individual Gallop Cycles */
+        .horse-cycle-1 .body-motion { animation: horseGallopBody 0.58s ease-in-out infinite; transform-origin: 50px 30px; }
+        .horse-cycle-1 .head-motion { animation: horseHeadNod 0.58s ease-in-out infinite; transform-origin: 62px 22px; }
+        .horse-cycle-1 .f-near { animation: frontLegNear 0.58s ease-in-out infinite; transform-origin: 60px 30px; }
+        .horse-cycle-1 .f-far  { animation: frontLegFar 0.58s ease-in-out infinite; transform-origin: 61px 30px; }
+        .horse-cycle-1 .h-near { animation: hindLegNear 0.58s ease-in-out infinite; transform-origin: 32px 25px; }
+        .horse-cycle-1 .h-far  { animation: hindLegFar 0.58s ease-in-out infinite; transform-origin: 33px 25px; }
+        .horse-cycle-1 .mane-motion { animation: maneFlutter 0.58s ease-in-out infinite; transform-origin: 65px 12px; }
+        .horse-cycle-1 .tail-motion { animation: tailWhip 0.58s ease-in-out infinite; transform-origin: 26px 21px; }
+
+        .horse-cycle-2 .body-motion { animation: horseGallopBody 0.62s ease-in-out infinite 0.12s; transform-origin: 50px 30px; }
+        .horse-cycle-2 .head-motion { animation: horseHeadNod 0.62s ease-in-out infinite 0.12s; transform-origin: 62px 22px; }
+        .horse-cycle-2 .f-near { animation: frontLegNear 0.62s ease-in-out infinite 0.12s; transform-origin: 60px 30px; }
+        .horse-cycle-2 .f-far  { animation: frontLegFar 0.62s ease-in-out infinite 0.12s; transform-origin: 61px 30px; }
+        .horse-cycle-2 .h-near { animation: hindLegNear 0.62s ease-in-out infinite 0.12s; transform-origin: 32px 25px; }
+        .horse-cycle-2 .h-far  { animation: hindLegFar 0.62s ease-in-out infinite 0.12s; transform-origin: 33px 25px; }
+        .horse-cycle-2 .mane-motion { animation: maneFlutter 0.62s ease-in-out infinite 0.12s; transform-origin: 65px 12px; }
+        .horse-cycle-2 .tail-motion { animation: tailWhip 0.62s ease-in-out infinite 0.12s; transform-origin: 26px 21px; }
+
+        .horse-cycle-3 .body-motion { animation: horseGallopBody 0.60s ease-in-out infinite 0.28s; transform-origin: 50px 30px; }
+        .horse-cycle-3 .head-motion { animation: horseHeadNod 0.60s ease-in-out infinite 0.28s; transform-origin: 62px 22px; }
+        .horse-cycle-3 .f-near { animation: frontLegNear 0.60s ease-in-out infinite 0.28s; transform-origin: 60px 30px; }
+        .horse-cycle-3 .f-far  { animation: frontLegFar 0.60s ease-in-out infinite 0.28s; transform-origin: 61px 30px; }
+        .horse-cycle-3 .h-near { animation: hindLegNear 0.60s ease-in-out infinite 0.28s; transform-origin: 32px 25px; }
+        .horse-cycle-3 .h-far  { animation: hindLegFar 0.60s ease-in-out infinite 0.28s; transform-origin: 33px 25px; }
+        .horse-cycle-3 .mane-motion { animation: maneFlutter 0.60s ease-in-out infinite 0.28s; transform-origin: 65px 12px; }
+        .horse-cycle-3 .tail-motion { animation: tailWhip 0.60s ease-in-out infinite 0.28s; transform-origin: 26px 21px; }
+
+        .horse-cycle-4 .body-motion { animation: horseGallopBody 0.50s ease-in-out infinite; transform-origin: 50px 30px; }
+        .horse-cycle-4 .head-motion { animation: horseHeadNod 0.50s ease-in-out infinite; transform-origin: 62px 22px; }
+        .horse-cycle-4 .f-near { animation: frontLegNear 0.50s ease-in-out infinite; transform-origin: 60px 30px; }
+        .horse-cycle-4 .f-far  { animation: frontLegFar 0.50s ease-in-out infinite; transform-origin: 61px 30px; }
+        .horse-cycle-4 .h-near { animation: hindLegNear 0.50s ease-in-out infinite; transform-origin: 32px 25px; }
+        .horse-cycle-4 .h-far  { animation: hindLegFar 0.50s ease-in-out infinite; transform-origin: 33px 25px; }
+        .horse-cycle-4 .mane-motion { animation: maneFlutter 0.50s ease-in-out infinite; transform-origin: 65px 12px; }
+        .horse-cycle-4 .tail-motion { animation: tailWhip 0.50s ease-in-out infinite; transform-origin: 26px 21px; }
+
+        .horse-cycle-5 .body-motion { animation: horseGallopBody 0.65s ease-in-out infinite 0.38s; transform-origin: 50px 30px; }
+        .horse-cycle-5 .head-motion { animation: horseHeadNod 0.65s ease-in-out infinite 0.38s; transform-origin: 62px 22px; }
+        .horse-cycle-5 .f-near { animation: frontLegNear 0.65s ease-in-out infinite 0.38s; transform-origin: 60px 30px; }
+        .horse-cycle-5 .f-far  { animation: frontLegFar 0.65s ease-in-out infinite 0.38s; transform-origin: 61px 30px; }
+        .horse-cycle-5 .h-near { animation: hindLegNear 0.65s ease-in-out infinite 0.38s; transform-origin: 32px 25px; }
+        .horse-cycle-5 .h-far  { animation: hindLegFar 0.65s ease-in-out infinite 0.38s; transform-origin: 33px 25px; }
+        .horse-cycle-5 .mane-motion { animation: maneFlutter 0.65s ease-in-out infinite 0.38s; transform-origin: 65px 12px; }
+        .horse-cycle-5 .tail-motion { animation: tailWhip 0.65s ease-in-out infinite 0.38s; transform-origin: 26px 21px; }
+
+        /* Drifting Herd Position Wrappers */
+        .horse-drift-1 { animation: driftHorse1 9s ease-in-out infinite; }
+        .horse-drift-2 { animation: driftHorse2 11s ease-in-out infinite; }
+        .horse-drift-3 { animation: driftHorse3 10s ease-in-out infinite; }
+        .horse-drift-4 { animation: driftHorse4 8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+        .horse-drift-5 { animation: driftHorse5 12s ease-in-out infinite; }
+    
+        /* FULLSCREEN FIT: Loại bỏ 100% khoảng trống (gap) thừa khi toàn màn hình */
+        :fullscreen, :-webkit-full-screen {
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100vw !important;
+            border-radius: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+            background-color: #F8F5EE !important;
+            overflow: hidden !important;
+        }
+        #view-calendar-focus .paper-shadow:fullscreen,
+        #view-calendar-focus .paper-shadow:-webkit-full-screen {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            padding: clamp(14px, 2.2vh, 28px) clamp(18px, 2.5vw, 40px) !important;
+        }
+        #view-calendar-focus .paper-shadow:fullscreen > .grid,
+        #view-calendar-focus .paper-shadow:-webkit-full-screen > .grid {
+            height: 100% !important;
+            flex: 1 1 0% !important;
+        }
+
+    
+        /* Cinematic Galloping Animation across Header & Through Clock */
+        @keyframes herdGallopAcross {
+            0% {
+                transform: translate3d(clamp(-340px, -25vw, -200px), 0, 0);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.95;
+            }
+            45% {
+                /* Galloping across the open header center */
+                transform: translate3d(clamp(-140px, -11vw, -70px), 0, 0);
+                opacity: 0.95;
+            }
+            75% {
+                /* Zoom-in surge: charging directly through and behind the clock digits! */
+                transform: translate3d(clamp(80px, 8vw, 150px), 0, 0);
+                opacity: 0.95;
+            }
+            88% {
+                transform: translate3d(clamp(170px, 15vw, 240px), 0, 0);
+                opacity: 0;
+            }
+            100% {
+                transform: translate3d(clamp(-340px, -25vw, -200px), 0, 0);
+                opacity: 0;
+            }
+        }
+
+        .herd-gallop-animation {
+            animation: herdGallopAcross 9s cubic-bezier(0.28, 0.8, 0.45, 1) infinite;
+            will-change: transform, opacity;
+        }
+
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Top Navigation Header -->
+    <div class="max-w-7xl mx-auto mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-white/10 pb-5">
+        <div>
+            <div class="flex items-center gap-3">
+                <span class="px-2.5 py-1 text-xs font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full">
+                    VCB 2026 Screensaver Architecture
+                </span>
+                <span class="text-xs text-slate-400 font-mono">Auto-rotate 1 min • Auto VCB-Mask • Scaled Fuel Block</span>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-white mt-2">
+                Bố Trí Chuẩn Lịch Bàn VCB & Tỉ Lệ Toàn Màn Hình
+            </h1>
+            <p class="text-xs md:text-sm text-slate-400 mt-1">
+                Tranh GIF tự động chuyển mỗi 60 giây kèm vcb-mask tương ứng • Đồng bộ font và icon thời tiết SVG • Scale gọn khối Giá Xăng.
+            </p>
+        </div>
+
+        <!-- View Switcher -->
+        <div class="flex items-center bg-slate-800/80 p-1.5 rounded-xl border border-white/10 self-start md:self-auto">
+            <button onclick="switchView('calendar-focus')" id="btn-view-cal" class="px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all bg-emerald-600 text-white shadow">
+                Chi Tiết Khung Lịch VCB
+            </button>
+            <button onclick="switchView('row2-full')" id="btn-view-row2" class="px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-400 hover:text-white">
+                Toàn Cảnh Row 2 (Lịch + Vàng + Xăng)
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="max-w-7xl mx-auto space-y-6">
+
+        <!-- ======================================================== -->
+        <!-- NEW INTERACTIVE MODULE: PURE VECTOR SVG GALLOPING HORSE (TỰ VẼ NGHỆ THUẬT) -->
+        <!-- ======================================================== -->
+        <div class="bg-[#151922] border-2 border-amber-500/40 rounded-2xl p-5 md:p-6 shadow-2xl relative overflow-hidden">
+            <!-- Header Tag -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="px-2.5 py-1 text-xs font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-lg flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                        Khảo sát vị trí bôi đỏ
+                    </span>
+                    <h2 class="text-base md:text-lg font-bold text-white">Đàn Ngũ Mã Truy Phong (Vector SVG Tự Vẽ 100%)</h2>
+                </div>
+                <span class="text-xs text-slate-400 font-mono">0 KB tài nguyên ngoài • Sắc nét vô cực • 60fps mượt mà</span>
+            </div>
+
+            <!-- LIVE SCREENSAVER HEADER SIMULATION (Exact Background & Font) -->
+            <div class="rounded-xl overflow-hidden border-2 border-red-500/60 shadow-lg bg-[#FAF7F0] text-[#1E1916] p-4 md:p-6 relative">
+                <!-- Red Box Tag Label -->
+                <div id="guide-badge" class="absolute top-2 left-1/2 -translate-x-1/2 text-[10px] font-bold font-mono tracking-wider text-red-600 bg-red-100/90 border border-red-300 px-2 py-0.5 rounded-full pointer-events-none z-20">
+                    KHUNG ANH BÔI ĐỎ (HERO CENTER SLOT)
+                </div>
+
+                <!-- 1. Top Bar Simulation -->
+                <div class="flex items-center justify-between text-xs pb-3 border-b border-[#E2D8C0]/80 text-[#554C42]">
+                    <div class="flex items-center gap-3">
+                        <span class="font-bold text-[#1E1916]">Xin chào Nam Hùng</span>
+                        <span class="text-[#A29788]">|</span>
+                        <div class="flex items-center gap-1.5 bg-[#E6EFEA] text-[#0B5C42] px-2 py-0.5 rounded-full text-[11px] font-semibold border border-[#8FB8A5]/40">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                            <span>Biên Hòa 32°C</span>
+                            <span class="text-[9px] bg-[#0B5C42] text-white px-1 rounded font-mono">AQI 69</span>
+                        </div>
+                        <span class="text-[11px] text-[#7A6F62] hidden sm:inline font-medium">Năm Bính Ngọ • Tiết Sương Giáng</span>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-[11px] text-[#7A6F62]">
+                        <span class="px-2 py-0.5 rounded bg-black/5 font-mono">25:00</span>
+                        <span class="px-2 py-0.5 rounded bg-black/5 font-medium">Đồng Hồ</span>
+                    </div>
+                </div>
+
+                <!-- 2. Hero Row: [Thứ Tư] + [KHUNG NGỰA CHẠY SVG] + [11:15:18] -->
+                <div class="pt-3 flex items-center justify-between gap-3 relative">
+                    <!-- Left: Day of Week -->
+                    <h1 class="font-serif-vcb font-black tracking-tight text-4xl md:text-6xl text-[#1E1916] leading-none shrink-0">
+                        Thứ Tư
+                    </h1>
+
+                    <!-- Center: Red Box Area with Galloping Vector Horse -->
+                    <div id="simulated-red-box" class="flex-1 flex items-center justify-center px-2 md:px-4 relative h-16 md:h-20 transition-all border-2 border-dashed border-red-400/80 rounded-xl bg-red-50/20 overflow-hidden">
+                        
+                        <!-- Horse Runner Wrapper -->
+                        <div id="horse-frame-wrapper" class="relative flex items-center justify-center transition-all duration-300" style="height: 72px;">
+                            
+                            <!-- ĐÀN NGŨ MÃ TRUY PHONG (NỀN TIỆP 100% BACKGROUND, KHÔNG CHE ĐỒNG HỒ) -->
+                <div class="flex-1 h-[72px] sm:h-[84px] md:h-[94px] flex items-center justify-end overflow-hidden pointer-events-none select-none mr-2 sm:mr-4 md:mr-5">
+                    <div class="relative h-full aspect-[2.34/1] flex items-center justify-end overflow-hidden rounded-xl">
+                        <img src="assets/ngu_ma_header_alpha.webp" alt="Đàn Ngũ Mã Truy Phong" class="h-full w-auto object-contain select-none pointer-events-none drop-shadow-sm" />
+                    </div>
+                </div>
+
+                    <!-- Right: Pixel-Perfect Giant Clock -->
+                    <div class="font-serif-vcb font-black text-3xl md:text-5xl text-[#B93822] tracking-tight leading-none shrink-0 font-mono-vcb">
+                        11:15:18
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTROLS FOR USER TO TEST & CHOOSE -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-5 pt-4 border-t border-white/10 text-xs">
+                
+                <!-- 1. Color Theme -->
+                <div>
+                    <label class="font-bold text-slate-300 block mb-2 flex items-center gap-1.5">
+                        <span>🎨</span> <span>1. Màu Sắc Tuấn Mã:</span>
+                    </label>
+                    <div class="space-y-1.5">
+                        <button onclick="setSvgHorseColor('gold')" class="btn-color-opt w-full text-left px-3 py-1.5 rounded-lg border border-amber-500/50 bg-amber-500/10 text-amber-300 font-bold transition flex items-center justify-between active-color" data-color="gold">
+                            <span>✦ Hoàng Kim (VCB Gold)</span>
+                            <span class="w-3 h-3 rounded-full bg-[#D4AF37] border border-white/30"></span>
+                        </button>
+                        <button onclick="setSvgHorseColor('red')" class="btn-color-opt w-full text-left px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 transition flex items-center justify-between" data-color="red">
+                            <span>Sơn Mài Chu Sa (Đồng Hồ)</span>
+                            <span class="w-3 h-3 rounded-full bg-[#B93822] border border-white/30"></span>
+                        </button>
+                        <button onclick="setSvgHorseColor('jade')" class="btn-color-opt w-full text-left px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 transition flex items-center justify-between" data-color="jade">
+                            <span>Lục Bảo Ngọc (VCB Green)</span>
+                            <span class="w-3 h-3 rounded-full bg-[#0B5C42] border border-white/30"></span>
+                        </button>
+                        <button onclick="setSvgHorseColor('dark')" class="btn-color-opt w-full text-left px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 transition flex items-center justify-between" data-color="dark">
+                            <span>Hắc Tuấn Mã (Mực Nho)</span>
+                            <span class="w-3 h-3 rounded-full bg-[#1E1916] border border-white/30"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. Motion Mode -->
+                <div>
+                    <label class="font-bold text-slate-300 block mb-2 flex items-center gap-1.5">
+                        <span>⚡</span> <span>2. Kiểu Chuyển Động:</span>
+                    </label>
+                    <div class="space-y-1.5">
+                        <button onclick="setSvgMotionMode('center')" class="btn-motion-opt w-full text-left px-3 py-1.5 rounded-lg border border-blue-500/50 bg-blue-500/10 text-blue-300 font-bold transition active-motion" data-motion="center">
+                            ✦ Phi Tại Chỗ (Centered Stride)
+                        </button>
+                        <button onclick="setSvgMotionMode('traverse')" class="btn-motion-opt w-full text-left px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 transition" data-motion="traverse">
+                            Phi Ngang Qua Khung (Across Header)
+                        </button>
+                    </div>
+                    <div class="mt-3">
+                        <label class="font-bold text-slate-300 block mb-1">Ẩn khung đỏ hướng dẫn:</label>
+                        <button onclick="toggleRedGuide()" id="btn-toggle-guide" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-[11px] font-mono text-slate-200">
+                            Tắt viền đỏ (Xem thực tế 100%)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. Stride Speed -->
+                <div>
+                    <label class="font-bold text-slate-300 block mb-2 flex items-center gap-1.5">
+                        <span>⏱</span> <span>3. Nhịp Tốc Độ Phi:</span>
+                    </label>
+                    <div class="space-y-1.5">
+                        <button onclick="setSvgSpeed('0.48s')" class="btn-speed-opt w-full text-left px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 font-mono transition" data-speed="0.48s">
+                            0.48s (Phi Nước Đại Cực Nhanh)
+                        </button>
+                        <button onclick="setSvgSpeed('0.62s')" class="btn-speed-opt w-full text-left px-3 py-1.5 rounded-lg border border-amber-500/50 bg-amber-500/10 text-amber-300 font-mono font-bold transition active-speed" data-speed="0.62s">
+                            ✦ 0.62s (Chuẩn Uy Dũng & Nhịp Nhàng)
+                        </button>
+                        <button onclick="setSvgSpeed('0.78s')" class="btn-speed-opt w-full text-left px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 font-mono transition" data-speed="0.78s">
+                            0.78s (Sải Bước Thong Dong)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. Height & Scale Tuning -->
+                <div>
+                    <label class="font-bold text-slate-300 block mb-2 flex items-center gap-1.5">
+                        <span>📐</span> <span>4. Kích Thước Chiều Cao:</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-2" id="height-btn-list">
+                        <button onclick="setSvgHorseHeight('56px')" class="btn-h-opt px-2.5 py-2 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 text-center font-mono text-[11px]" data-h="56px">
+                            56px
+                        </button>
+                        <button onclick="setSvgHorseHeight('68px')" class="btn-h-opt px-2.5 py-2 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 text-center font-mono text-[11px]" data-h="68px">
+                            68px
+                        </button>
+                        <button onclick="setSvgHorseHeight('74px')" class="btn-h-opt px-2.5 py-2 rounded-lg border border-amber-500/50 bg-amber-500/10 text-amber-300 text-center font-mono text-[11px] font-bold active-h" data-h="74px">
+                            ✦ 74px (Chuẩn)
+                        </button>
+                        <button onclick="setSvgHorseHeight('84px')" class="btn-h-opt px-2.5 py-2 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 text-center font-mono text-[11px]" data-h="84px">
+                            84px
+                        </button>
+                    </div>
+                    <div class="mt-3 text-[11px] text-emerald-400 font-mono">
+                        Trạng thái: <span id="status-horse-info" class="font-bold">Hoàng Kim • 74px • 0.62s • Tại chỗ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 1: CHI TIẾT KHUNG LỊCH VCB ĐÃ TINH CHỈNH HOÀN THIỆN -->
+        <div id="view-calendar-focus" class="space-y-4">
+            
+            <!-- Rotation & Mask Status Indicator Bar -->
+            <div class="bg-[#1C2028] border border-white/10 rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-slate-300 font-medium">Tự động chuyển tranh: <strong class="text-emerald-400 font-mono">mỗi 1 phút (60s)</strong></span>
+                    <span class="text-slate-500">•</span>
+                    <span class="text-slate-300 font-medium">Khung mask: <strong id="current-mask-label" class="text-amber-300 font-mono">vcb-mask.svg (Tự động)</strong></span>
+                </div>
+
+                <!-- 1-minute Progress Bar & Manual Tester Controls -->
+                <div class="flex items-center gap-3">
+                    <div class="w-28 h-1.5 bg-white/10 rounded-full overflow-hidden hidden sm:block" title="Đếm ngược 60 giây">
+                        <div id="countdown-bar" class="h-full bg-emerald-500 timer-progress"></div>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button onclick="prevTranh()" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white font-mono text-xs transition">
+                            ◀ Trước
+                        </button>
+                        <span id="current-index-display" class="font-mono text-emerald-400 font-bold px-1.5">05 / 31</span><button onclick="toggleCalendarFullscreen()" class="px-2.5 py-1 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-500/40 text-xs font-mono transition flex items-center gap-1.5" title="Xem toàn màn hình không có khoảng trống (100% Fullscreen)">⛶ Toàn màn hình</button>
+                        <button onclick="nextTranh()" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white font-mono text-xs transition">
+                            Sau ▶
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULATED VCB DESK CALENDAR CARD -->
+            <div class="bg-[#F6F2E9] text-[#1E1916] rounded-2xl overflow-hidden paper-shadow border border-[#E5DEC9]">
+                <div class="grid grid-cols-1 lg:grid-cols-12 h-full min-h-[calc(100vh-140px)]">
+                    
+                    <!-- LEFT COLUMN: ARTWORK & VCB MASK (5 COLS / 42%) -->
+                    <div class="lg:col-span-5 p-6 md:p-8 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#E2D8C0] bg-[#FAF7F0] h-full min-h-0">
+                        
+                        <!-- Top Header: Badge Tháng Ribbon VCB -->
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-center gap-3">
+                                <!-- Signature Green Ribbon Badge from paper calendar -->
+                                <div class="bg-[#0B5C42] text-white px-4 py-3 rounded-b-2xl shadow-md text-center border-t-4 border-[#084733]">
+                                    <div class="font-serif-vcb text-3xl font-extrabold leading-none tracking-tight">05</div>
+                                    <div class="text-[10px] uppercase font-bold tracking-widest mt-1 opacity-90 font-mono-vcb">MAY</div>
+                                    <div class="text-[9px] font-mono-vcb tracking-widest mt-0.5 opacity-75">2 0 2 6</div>
+                                </div>
+                                <div>
+                                    <div id="art-counter" class="text-xs font-bold text-[#0B5C42] uppercase tracking-wider font-mono-vcb">Tranh số 05 / 31</div>
+                                    <h2 id="art-title-vi" class="font-serif-vcb text-xl font-bold text-[#1E1916] transition-all">Ngựa Thồ Điện Biên</h2>
+                                    <div id="art-title-en" class="text-[11px] text-[#786D5F] font-mono-vcb transition-all">PACK HORSES OF ĐIỆN BIÊN</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Central Art: Animated GIF with Authentic Gold Arch Border -->
+                        <div class="my-5 flex flex-col items-center justify-center">
+                            <!-- Masked Painting Container (Square 1:1, Clean overflow-hidden, No opaque overlay) -->
+                            <div class="relative w-full max-w-[340px] aspect-square flex items-center justify-center overflow-hidden rounded-2xl bg-black/5 shadow-md border-2 border-[#C49A6C]/40">
+                                <!-- Base GIF animation (fills frame completely, 100% visible) -->
+                                <img id="art-gif" src="assets/tranh-05.gif" alt="Tranh VCB" class="w-full h-full object-cover z-0 fade-transition" />
+                                
+                                <!-- Authentic Vietcombank Gold Arch Border (fill: none, stroke: #C49A6C, never covers artwork) -->
+                                <img id="art-mask" src="assets/vcb-mask.svg" alt="Khung VCB Mask" class="absolute inset-0 w-full h-full object-fill pointer-events-none z-10" />
+                            </div>
+                        </div>
+
+                        <!-- Story / Thuyết minh văn hóa song ngữ -->
+                        <div class="space-y-2.5 bg-[#EFE9DB]/70 p-4 rounded-xl border border-[#DFD6C2]">
+                            <p id="art-content-vi" class="text-xs text-[#3E3832] leading-relaxed line-clamp-3 transition-all font-sans">
+                                "Trong chiến dịch Điện Biên Phủ, cùng với xe đạp thồ và bè mảng chở hàng, những chú ngựa thồ bền bỉ, gan dạ, kiên trung, đã góp công không nhỏ của tuyến hậu cần trong chiến thắng 'lừng lẫy năm châu, chấn động địa cầu' của dân tộc Việt Nam."
+                            </p>
+                            <div class="flex items-center justify-between pt-2 border-t border-[#D8CEB6] text-[11px] text-[#7A6F62]">
+                                <span class="inline-flex items-center gap-1.5 font-medium text-[11px]">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#0B5C42]"></span>
+                                        <span class="text-[#6B6154]">Chủ đề:</span>
+                                        <strong class="text-[#0B5C42] font-semibold font-sans">Vạn Mã Kỳ Hưng 2026</strong>
+                                    </span>
+                                <button onclick="openArtModal()" class="inline-flex items-center gap-1 text-[11px] font-medium text-[#7A6F62] hover:text-[#0B5C42] hover:underline transition opacity-80 hover:opacity-100">
+                                    <span>Xem thêm</span>
+                                    <span class="text-[9px] font-mono-vcb">→</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Brand Footer (Clean, no text watermark) -->
+                        <div class="mt-4 pt-3 flex items-center justify-between text-[#5C5245] text-xs">
+                            <img src="assets/vcb-logo-priority-2026.svg" alt="VCB Priority" class="h-6 opacity-90" />
+                            <div class="text-[10px] font-mono-vcb text-[#8F8374]"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT COLUMN: LỊCH THÁNG & WEATHER CAPSULE (7 COLS / 58%) -->
+                    <div class="lg:col-span-7 p-6 md:p-8 flex flex-col justify-between h-full min-h-0">
+                        
+                        <!-- Calendar Header & Realtime Clock -->
+                        <div>
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-[#E2D8C0]">
+                                <div>
+                                    <h3 class="text-sm sm:text-base font-extrabold text-[#5C5245] uppercase tracking-wider font-mono-vcb">Lịch Tháng 05 / 2026</h3>
+                                    <div class="text-xl sm:text-2xl font-serif-vcb font-black text-[#1E1916]">Tháng Tư (Đủ) • Ất Tỵ</div>
+                                </div>
+                                
+                                <div class="text-right">
+                                    <div class="font-mono-vcb text-3xl font-black text-[#1E1916] tracking-tight">10:55<span class="text-xs font-normal text-[#8A8072]"> AM</span></div>
+                                    <div class="text-[11px] text-[#0B5C42] font-semibold font-mono-vcb">Thứ Tư, 04/11/2026</div>
+                                </div>
+                            </div>
+
+                            <!-- MONTHLY CALENDAR GRID (Bản Giấy VCB) -->
+                            <div class="w-full">
+                                <div class="grid grid-cols-7 text-center font-black text-xs sm:text-sm pb-2.5 border-b-2 border-[#1E1916] text-[#2C241B] font-mono-vcb tracking-wider">
+                                    <div>MON</div>
+                                    <div>TUE</div>
+                                    <div>WED</div>
+                                    <div>THU</div>
+                                    <div>FRI</div>
+                                    <div>SAT</div>
+                                    <div class="text-[#B91C1C]">SUN</div>
+                                </div>
+
+                                <div class="grid grid-cols-7 gap-1 md:gap-1.5 pt-2 text-center text-xs font-mono-vcb">
+                                    <!-- Leading empty cells -->
+                                    <div class="p-2 opacity-20"></div>
+                                    <div class="p-2 opacity-20"></div>
+                                    <div class="p-2 opacity-20"></div>
+                                    <div class="p-2 opacity-20"></div>
+
+                                    <!-- 1..3 -->
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14 border border-transparent">
+                                        <span class="font-bold text-sm">1</span>
+                                        <span class="text-[10px] text-[#7A6F62] flex items-center justify-center gap-0.5">
+                                            15/3 <span class="w-1.5 h-1.5 rounded-full bg-[#8C6D3B]"></span>
+                                        </span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14 border border-transparent">
+                                        <span class="font-bold text-sm">2</span>
+                                        <span class="text-[10px] text-[#7A6F62]">16</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14 border border-transparent text-[#B91C1C]">
+                                        <span class="font-bold text-sm">3</span>
+                                        <span class="text-[10px] opacity-80">17</span>
+                                    </div>
+
+                                    <!-- Row 2: 4 (Hôm nay - Chỉ viền border tinh tế, không lệch chữ số) -->
+                                    <div class="p-2 rounded-lg bg-[#E6EFEA]/60 border-2 border-[#0B5C42] shadow-sm flex flex-col justify-between h-14">
+                                        <span class="font-black text-sm text-[#0B5C42]">4</span>
+                                        <span class="text-[10px] text-[#0B5C42] font-bold">18</span>
+                                    </div>
+
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">5</span>
+                                        <span class="text-[10px] text-[#7A6F62]">19</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">6</span>
+                                        <span class="text-[10px] text-[#7A6F62]">20</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">7</span>
+                                        <span class="text-[10px] text-[#7A6F62]">21</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">8</span>
+                                        <span class="text-[10px] text-[#7A6F62]">22</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">9</span>
+                                        <span class="text-[10px] text-[#7A6F62]">23</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14 text-[#B91C1C]">
+                                        <span class="font-bold text-sm">10</span>
+                                        <span class="text-[10px] opacity-80">24</span>
+                                    </div>
+
+                                    <!-- Row 3: 11..17 -->
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">11</span>
+                                        <span class="text-[10px] text-[#7A6F62]">25</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">12</span>
+                                        <span class="text-[10px] text-[#7A6F62]">26</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">13</span>
+                                        <span class="text-[10px] text-[#7A6F62]">27</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">14</span>
+                                        <span class="text-[10px] text-[#7A6F62]">28</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">15</span>
+                                        <span class="text-[10px] text-[#7A6F62]">29</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">16</span>
+                                        <span class="text-[10px] text-[#7A6F62]">30</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14 text-[#B91C1C]">
+                                        <span class="font-bold text-sm">17</span>
+                                        <span class="text-[10px] flex items-center justify-center gap-0.5">
+                                            1/4 <span class="text-[8px]">◐</span>
+                                        </span>
+                                    </div>
+
+                                    <!-- Row 4: 18..24 -->
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">18</span>
+                                        <span class="text-[10px] text-[#7A6F62]">2</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">19</span>
+                                        <span class="text-[10px] text-[#7A6F62]">3</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">20</span>
+                                        <span class="text-[10px] text-[#7A6F62]">4</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">21</span>
+                                        <span class="text-[10px] text-[#7A6F62]">5</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">22</span>
+                                        <span class="text-[10px] text-[#7A6F62]">6</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">23</span>
+                                        <span class="text-[10px] text-[#7A6F62]">7</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14 text-[#B91C1C]">
+                                        <span class="font-bold text-sm">24</span>
+                                        <span class="text-[10px] opacity-80">8</span>
+                                    </div>
+
+                                    <!-- Row 5: 25..31 -->
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">25</span>
+                                        <span class="text-[10px] text-[#7A6F62]">9</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">26</span>
+                                        <span class="text-[10px] text-[#7A6F62]">10</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">27</span>
+                                        <span class="text-[10px] text-[#7A6F62]">11</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">28</span>
+                                        <span class="text-[10px] text-[#7A6F62]">12</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">29</span>
+                                        <span class="text-[10px] text-[#7A6F62]">13</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14">
+                                        <span class="font-bold text-sm">30</span>
+                                        <span class="text-[10px] text-[#7A6F62]">14</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg hover:bg-black/5 transition flex flex-col justify-between h-14 text-[#B91C1C]">
+                                        <span class="font-bold text-sm">31</span>
+                                        <span class="text-[10px] flex items-center justify-center gap-0.5">
+                                            15 <span class="w-1.5 h-1.5 rounded-full bg-[#8C6D3B]"></span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Lunar Legend -->
+                                <div class="flex items-center gap-4 text-[11px] text-[#7E7467] mt-3 pt-2 border-t border-[#E5DEC9] font-sans">
+                                    <div class="flex items-center gap-1.5 font-mono-vcb">
+                                        <span>◐</span> Ngày mồng một
+                                    </div>
+                                    <div class="flex items-center gap-1.5 font-mono-vcb">
+                                        <span class="w-2 h-2 rounded-full bg-[#8C6D3B]"></span> Ngày rằm
+                                    </div>
+                                    <div class="ml-auto text-[10px] font-mono-vcb text-[#A09585]">
+                                        Tiết Sương Giáng • Giờ H.Đạo: Tý, Sửu, Mão
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- HARMONIZED WEATHER CAPSULE (Đồng bộ font & icon SVG, hiển thị 100% không bị chèn) -->
+                            <div class="mt-2 pt-2 border-t border-[#1E1916]/10 shrink-0">
+                                <div class="bg-[#ECE5D5] p-2 sm:p-2.5 rounded-xl border border-[#DFD7C4] shadow-sm">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <div class="flex items-center gap-1.5 sm:gap-2">
+                                            <div class="w-5 h-5 rounded bg-[#DFD6C2] flex items-center justify-center text-[#0B5C42]">
+                                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                                </svg>
+                                            </div>
+                                            <span id="calendarCapsuleCity" class="text-xs font-bold text-[#1E1916] font-sans">Biên Hòa</span>
+                                            <span id="calendarCapsuleTemp" class="text-xs font-mono-vcb font-bold text-[#0B5C42] bg-white/70 px-1.5 py-0.5 rounded border border-[#D5CBBB]">31°C • Cảm nhận 37°C</span>
+                                            <span id="calendarCapsuleDesc" class="text-[10px] text-[#6B6154] font-medium font-sans">Ít mây</span>
+                                        </div>
+                                        <div class="text-[10px] font-mono-vcb text-[#73685B] font-medium">Dự báo 5 mốc giờ</div>
+                                    </div>
+
+                                    <!-- 5 Dynamic Weather slots -->
+                                    <div id="calendarWeatherTimeline" class="grid grid-cols-5 gap-1.5 text-center text-[10px]">
+                                        <div class="bg-white/75 p-1.5 rounded-lg border border-[#D8CEB7] flex flex-col justify-between">
+                                            <div class="font-bold text-[#0B5C42] font-sans">Hiện tại</div>
+                                            <div class="my-0.5 flex items-center justify-center text-[#B45309]">
+                                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <circle cx="12" cy="12" r="4" stroke-width="1.8"/>
+                                                    <path stroke-linecap="round" stroke-width="1.8" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"/>
+                                                </svg>
+                                            </div>
+                                            <div class="font-bold font-mono-vcb text-[#1E1916]">31°</div>
+                                            <div class="text-[9px] text-[#556960] font-mono-vcb font-medium">0% mưa</div>
+                                        </div>
+
+                                        <div class="bg-white/75 p-1.5 rounded-lg border border-[#D8CEB7] flex flex-col justify-between">
+                                            <div class="text-[#786E61] font-sans">12:00</div>
+                                            <div class="my-0.5 flex items-center justify-center text-[#4B5563]">
+                                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="font-bold font-mono-vcb text-[#1E1916]">32°</div>
+                                            <div class="text-[9px] text-[#556960] font-mono-vcb font-medium">24% mưa</div>
+                                        </div>
+
+                                        <div class="bg-white/75 p-1.5 rounded-lg border border-[#D8CEB7] flex flex-col justify-between">
+                                            <div class="text-[#786E61] font-sans">14:00</div>
+                                            <div class="my-0.5 flex items-center justify-center text-[#2563EB]">
+                                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 16.58A5 5 0 0018 7h-1.26A8 8 0 104 15.25"/>
+                                                    <path stroke-linecap="round" stroke-width="1.8" d="M8 19v2m8-2v2m-4-1v2"/>
+                                                </svg>
+                                            </div>
+                                            <div class="font-bold font-mono-vcb text-[#1E1916]">33°</div>
+                                            <div class="text-[9px] text-[#2563EB] font-mono-vcb font-medium">49% mưa</div>
+                                        </div>
+
+                                        <div class="bg-white/75 p-1.5 rounded-lg border border-[#D8CEB7] flex flex-col justify-between">
+                                            <div class="text-[#786E61] font-sans">16:00</div>
+                                            <div class="my-0.5 flex items-center justify-center text-[#1D4ED8]">
+                                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 16.58A5 5 0 0018 7h-1.26A8 8 0 104 15.25"/>
+                                                    <path stroke-linecap="round" stroke-width="1.8" d="M8 18l-1 4m8-4l-1 4m-3-3l-1 3"/>
+                                                </svg>
+                                            </div>
+                                            <div class="font-bold font-mono-vcb text-[#1E1916]">30°</div>
+                                            <div class="text-[9px] text-[#1D4ED8] font-mono-vcb font-medium">71% mưa</div>
+                                        </div>
+
+                                        <div class="bg-white/75 p-1.5 rounded-lg border border-[#D8CEB7] flex flex-col justify-between">
+                                            <div class="text-[#786E61] font-sans">18:00</div>
+                                            <div class="my-0.5 flex items-center justify-center text-[#1E40AF]">
+                                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 16.58A5 5 0 0018 7h-1.26A8 8 0 104 15.25"/>
+                                                    <path stroke-linecap="round" stroke-width="2" d="M8 17l-1.5 5m8-5l-1.5 5m-3-4l-1.5 4"/>
+                                                </svg>
+                                            </div>
+                                            <div class="font-bold font-mono-vcb text-[#1E1916]">26°</div>
+                                            <div class="text-[9px] text-[#1E40AF] font-mono-vcb font-medium">83% mưa</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLOCK 2: RED MARKET BLOCK (GIÁ VÀNG / VN30 / BTC - Chiếm ~21%) -->
+                <div class="bg-[#D63820] text-white rounded-2xl p-5 paper-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-3 border-b border-white/20 mb-3">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider block font-sans">Thị Trường & Vàng SJC</span>
+                                <span class="text-[10px] text-white/75 font-mono">Cập nhật trực tiếp</span>
+                            </div>
+                            <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        </div>
+                        
+                        <div class="space-y-2 text-xs font-mono">
+                            <div class="bg-black/25 p-2.5 rounded-xl flex items-center justify-between border border-white/10">
+                                <div>
+                                    <div class="font-sans font-bold text-white text-xs">Vàng Miếng SJC</div>
+                                    <div class="text-[10px] text-white/70">Bán ra / Mua vào</div>
+                                </div>
+                                <span class="font-bold text-yellow-300 text-sm">89.5 - 91.5 tr</span>
+                            </div>
+
+                            <div class="bg-black/25 p-2.5 rounded-xl flex items-center justify-between border border-white/10">
+                                <div>
+                                    <div class="font-sans font-bold text-white text-xs">Nhẫn Trơn 9999</div>
+                                    <div class="text-[10px] text-white/70">DOJI / BTMC</div>
+                                </div>
+                                <span class="font-bold text-yellow-300 text-sm">88.2 - 89.8 tr</span>
+                            </div>
+
+                            <div class="bg-black/25 p-2.5 rounded-xl flex items-center justify-between border border-white/10">
+                                <span class="font-sans font-bold">VN-Index</span>
+                                <span class="font-bold text-emerald-300 text-sm">1,288.4 (+4.2)</span>
+                            </div>
+
+                            <div class="bg-black/25 p-2.5 rounded-xl flex items-center justify-between border border-white/10">
+                                <span class="font-sans font-bold">VN30</span>
+                                <span class="font-bold text-emerald-300 text-sm">1,345.1 (+6.8)</span>
+                            </div>
+
+                            <div class="bg-black/25 p-2.5 rounded-xl flex items-center justify-between border border-white/10">
+                                <span class="font-sans font-bold">Bitcoin</span>
+                                <span class="font-bold text-yellow-300 text-sm">$98,420</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-[10px] opacity-75 pt-3 border-t border-white/20 flex justify-between font-mono">
+                        <span>Cập nhật 5 phút/lần</span>
+                        <span>SJC • DOJI • HOSE</span>
+                    </div>
+                </div>
+
+                <!-- BLOCK 3: SCALED-DOWN BLUE FUEL BLOCK (XĂNG DẦU THU GỌN - Dạng cột thẻ siêu gọn ~14%) -->
+                <div class="bg-[#1835A8] text-white rounded-2xl p-4 paper-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-2.5 border-b border-white/20 mb-3">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider block font-sans">Xăng Dầu</span>
+                                <span class="text-[9px] opacity-75 font-mono">Petrolimex Vùng 1</span>
+                            </div>
+                            <svg class="w-4 h-4 text-sky-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                            </svg>
+                        </div>
+
+                        <!-- Compact Pillar Fuel List (Thu gọn tinh tế) -->
+                        <div class="space-y-2 text-xs font-mono">
+                            <div class="bg-black/25 p-2.5 rounded-xl border border-white/10">
+                                <div class="text-[11px] font-sans font-bold text-sky-200">RON 95-III</div>
+                                <div class="text-base font-black text-white mt-0.5">20.850đ</div>
+                                <div class="text-[10px] text-emerald-300 font-semibold mt-0.5 flex items-center gap-1">
+                                    <span>▼</span> -120đ/lít
+                                </div>
+                            </div>
+
+                            <div class="bg-black/25 p-2.5 rounded-xl border border-white/10">
+                                <div class="text-[11px] font-sans font-bold text-sky-200">E5 RON 92</div>
+                                <div class="text-base font-black text-white mt-0.5">19.740đ</div>
+                                <div class="text-[10px] text-emerald-300 font-semibold mt-0.5 flex items-center gap-1">
+                                    <span>▼</span> -110đ/lít
+                                </div>
+                            </div>
+
+                            <div class="bg-black/25 p-2.5 rounded-xl border border-white/10">
+                                <div class="text-[11px] font-sans font-bold text-sky-200">Dầu DO 0.05S</div>
+                                <div class="text-base font-black text-white mt-0.5">18.910đ</div>
+                                <div class="text-[10px] text-emerald-300 font-semibold mt-0.5 flex items-center gap-1">
+                                    <span>▼</span> -180đ/lít
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-[9px] opacity-70 pt-2.5 border-t border-white/20 text-center font-mono">
+                        Bộ Công Thương
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT FOR AUTOMATIC ROTATION & MASK PAIRING -->
+    <script>
+        // Data of 31 Paintings with Pre-Assigned Masks
+        const TRANH_DATA = [{"id": 1, "title_vi": "NGỰA CHÍN HỒNG MAO", "title_en": "NINE RED-MANED HORSE", "gif": "assets/tranh-01.gif", "mask": "vcb-mask.svg", "content_vi": "Ngựa chín hồng mao là con ngựa có chín búi lông màu đỏ ở bờm. Theo truyền thuyết, ngựa chín hồng mao là một trong các sính lễ của Sơn Tinh dâng lên vua Hùng để được cưới nàng Mỵ Nương. Con ngựa này đại diện cho những kỳ quan của nước Văn Lang, lòng thành tìm kiếm lễ vật quý lạ của thần Sơn Tinh dâng lên Vua Hùng. Hình tượng này đã đi vào tâm khảm người Việt như một biểu tượng của sự kỳ diệu hữu hiệu của thần thông.", "content_en": "According to legend, the Nine Red-Maned Horse was a mythical steed distinguished by nine tufts of red hair on its mane. It was one of the betrothal offerings presented by Sơn Tinh to King Hùng in order to win the hand of Princess Mỵ Nương. The horse symbolises the wonders of the ancient Văn Lang kingdom and reflects Sơn Tinh’s sincerity and determination in seeking rare and precious gifts for the king. Over time, this image has become deeply embedded in the Vietnamese collective consciousness as a symbol of the miraculous power of the divine."}, {"id": 2, "title_vi": "NGỰA GIÓNG", "title_en": "GIÓNG’s HORSE", "gif": "assets/tranh-02.gif", "mask": "vcb-mask.svg", "content_vi": "Ở thời đại các Vua Hùng bắt đầu dựng nước và giữ nước, hình tượng Ngựa Sắt là mơ ước và khát vọng cũng như là điều kiện và cơ sở vật chất của cư dân Văn Lang. Thông qua câu chuyện về chú bé làng Gióng, khi lịch sử và đất nước cần đến, đã vươn mình thành dũng sĩ khổng lồ, đại diện cho bước chuyển mình vĩ đại và kỳ diệu, mang tính thời đại lúc bấy giờ, đồng thời đánh dấu bước ngoặt từ “Văn minh đồ đá” sang “Thời đại kim khí”.", "content_en": "During the era of the Hùng Kings, when the foundations of the nation were being laid and defended, the image of the Iron Horse represented both the aspirations and material ambitions of the people of Văn Lang. Through the legend of Saint Gióng, the village boy who grew into a towering hero when the country was in peril, the Iron Horse embodies a dramatic and almost miraculous transformation of the age. It marks a historic turning point, symbolising the transition from the Stone Age to the Metal Age and reflecting the emergence of a new level of civilisation."}, {"id": 3, "title_vi": "BẠCH MÃ", "title_en": "WHITE HORSE", "gif": "assets/tranh-03.gif", "mask": "vcb-mask.svg", "content_vi": "Vua Lý Thái Tổ khi định đô về Thăng Long, muốn xây thành bảo vệ, nhưng thành cứ xây là đổ, bèn đến ngôi đền thờ thần thành hoàng Long Đỗ Tô Lịch, ở mạn Đông kinh thành, cầu xin phù trợ. Thần linh đã hiện ra, trong hình tượng Ngựa Trắng - biểu tượng của mặt trời, đi một vòng từ phía Đông kinh thành, sang mạn Tây, rồi trở về, ẩn vào trong đền. Nhà vua hiểu ý thần linh bảo ban, rằng: Ngựa Trắng đã vạch một vòng đất thiêng, quây lấy kinh thành, giống như mặt trời trong một ngày đêm, đã vạch một vòng biểu kiến, trên vũ trụ! Bèn nương theo dấu chân Ngựa Trắng mà xây tường thành Thăng Long. Quả nhiên ứng nghiệm, xây tường thành công! Vì thế, đặt tên cho đền là Bạch Mã (bây giờ, vẫn đang ở phố Hàng Buồm, và đã được Chính phủ xếp hạng là “Di sản quốc gia đặc biệt”.", "content_en": "When King Lý Thái Tổ decided to establish the capital in Thăng Long, repeated attempts to build the citadel failed as the walls kept collapsing. The king then went to the temple dedicated to the god Long Đỗ Tô Lịch, located on the eastern side of the capital, to pray for divine guidance. The deity appeared in the form of a White Horse, a symbol of the sun, and ran a complete circuit from the east to the west of the citadel before returning and disappearing into the temple. The king understood this as a sacred sign, indicating that the White Horse had traced a holy boundary enclosing the capital, much like the sun’s apparent daily path across the sky. Following the horse’s footprints, the king rebuilt the citadel walls, which were successfully completed. In gratitude, the temple was named Bạch Mã (White Horse Temple). Today, it still stands on Hàng Buồm Street and has been recognised by the Government as a special national monument."}, {"id": 4, "title_vi": "NGỰA ANH ĐI TRƯỚC VÕNG NÀNG THEO SAU", "title_en": "THE HORSE LEADS THE WAY, THE LADY’S PALANQUIN FOLLOWS", "gif": "assets/tranh-04.gif", "mask": "vcb-mask.svg", "content_vi": "Đây là mơ ước ngàn đời, xưa kia, cả những sĩ tử và những “cô gái đã nuôi chồng ăn học”/”có chồng là học trò” thi đỗ tiến sĩ, được nhà vua và triều đình ban ân điển. “Vinh quy bái tổ”, “khuyến học”, “trọng thị khoa cử” cũng là khát vọng về con đường duy nhất để có cuộc “đổi đời”, được hưởng vinh hoa phú quý sau khi học hành đỗ đạt.", "content_en": "This image reflects a centuries-old aspiration deeply rooted in Vietnamese society. In the past, scholars who passed the imperial examinations - often supported by wives who endured hardship to fund their husbands’ studies - were granted royal favour and recognition by the king and the court. Traditions such as vinh quy bái tổ (triumphal return to one’s ancestral village), khuyến học (the promotion of learning), and trọng thị khoa cử (the high esteem accorded to the examination system) embodied the belief that education was the sole path to social mobility, honour, and a transformed life marked by prosperity and prestige."}, {"id": 5, "title_vi": "NGỰA THỒ ĐIỆN BIÊN", "title_en": "PACK HORSES OF ĐIỆN BIÊN", "gif": "assets/tranh-05.gif", "mask": "vcb-mask.svg", "content_vi": "Trong chiến dịch Điện Biên Phủ, cùng với xe đạp thồ và bè mảng chở hàng, những chú ngựa thồ bền bỉ, gan dạ, kiên trung, đã góp công không nhỏ của tuyến hậu cần trong chiến thắng “lừng lẫy năm châu, chấn động địa cầu” của dân tộc Việt Nam.", "content_en": "During the Điện Biên Phủ Campaign, alongside cargo bicycles and supply rafts, the pack horses - enduring, courageous and steadfast - played a vital role in sustaining the logistics network. Their contribution was instrumental to the historic victory that “resounded across the five continents and shook the world,” marking a defining moment in the Vietnamese people’s struggle for independence."}, {"id": 6, "title_vi": "CHIẾN MÃ CỦA TƯỚNG LÊ TẦN", "title_en": "WAR HORSE OF GENERAL LÊ TẦN", "gif": "assets/tranh-06.gif", "mask": "vcb-mask.svg", "content_vi": "Nuôi dạy được một chiến mã rất giỏi trận mạc, năm 1258, danh tướng Lê Tần dự trận đánh lớn chống quân Mông Nguyên xâm lược lần thứ nhất, ở Bình Lệ Nguyên, với tư thế được sử cũ chép nguyên văn là: “Một người một ngựa ra vào trận giặc, vẻ mặt thản nhiên như không”, chiến mã đã giúp chủ tướng lập công lớn, đã được vua Trần Thái Tông biểu dương là: “Trẫm không có khanh thì đâu có được như ngày nay” và cho đổi tên thành Lê Phụ Trần (người họ Lê giúp đỡ nhà Trần).", "content_en": "Having trained an exceptional war horse for the battlefield, in 1258, the renowned general Lê Tần took part in the major battle against the first Mongol–Yuan invasion at Bình Lệ Nguyên. Historical records describe his stance in the fighting verbatim as: “One man and one horse moving in and out of the enemy ranks, his expression calm and unperturbed.” The war horse enabled its commander to achieve great merit, for which he was praised by King Trần Thái Tông, who declared: “Without you, I would not have what we have today,” and granted him the new name Lê Phụ Trần (meaning a man of the Lê clan who aided the Trần dynasty)."}, {"id": 7, "title_vi": "NGỰA Ở CỬA THƯỢNG TỨ", "title_en": "HORSE AT THE THƯỢNG TỨ GATE", "gif": "assets/tranh-07.gif", "mask": "vcb-mask.svg", "content_vi": "Năm 1826, vua Minh Mạng cải cách tổ chức kỵ binh. Ông cho đặt ở cửa Đông Nam kinh thành Viện Thượng Tứ 上駟 - Trung tâm cai quản, chăn nuôi và huấn luyện ngựa chiến lớn nhất đất nước. Mọi chú ngựa đực ở trong nước đến 4 tuổi đều phải gửi về Viện Thượng Tứ ở kinh thành để huấn luyện. Góc Đông Nam ngoài thành, kéo dài gần 2km đến cầu Gia Hội cũng là bãi tập chiến mã. Toàn bộ quần thể tạo thành một vùng gắn liền với con ngựa và văn hoá thượng võ của cố đô Huế.", "content_en": "In 1826, King Minh Mạng carried out reforms of the cavalry organisation. He established the Thượng Tứ Institute at the southeastern gate of the imperial capital, making it the country’s largest centre for the management, breeding and training of war horses. All male horses across the country, upon reaching the age of four, were required to be sent to the Thượng Tứ Institute in the capital for training. The southeastern area outside the citadel, stretching nearly two kilometres to Gia Hội Bridge, also served as a training ground for war horses. Together, this entire complex formed a distinctive zone closely associated with horses and the martial culture of the former capital of Huế."}, {"id": 8, "title_vi": "CƯỠI NGỰA BẮN CUNG", "title_en": "HORSEBACK ARCHERY", "gif": "assets/tranh-08.gif", "mask": "vcb-mask.svg", "content_vi": "Vua Minh Mạng nói: “kỵ xạ (cưỡi ngựa bắn cung) là một trong các môn của cổ học, văn quan cũng phải luyện tập, không phải bổn phận của mỗi võ quan”. Từ buổi vua Lý Anh Tông lập Xạ Đình, tự mình tập cưỡi ngựa bắn cung, tầng lớp quý tộc nước ta bất kể văn ban, võ ban đều luôn chú trọng tập luyện cưỡi ngựa bắn cung, thể hiện tư tưởng không chỉ trau dồi văn sách mà còn cần rèn luyện thể chất, sẵn sàng chiến đấu bảo vệ đất nước của người quân tử.", "content_en": "King Minh Mạng once stated: “Mounted archery is one of the disciplines of ancient learning; it is something that civil officials must also practise, not a duty reserved only for military officials.” Since the time King Lý Anh Tông established the Xạ Đình and personally trained in horseback archery, the Vietnamese aristocracy - whether from the civil or military ranks - has consistently placed great emphasis on this practice. It reflects the belief that a true gentleman should not only cultivate scholarly knowledge but also strengthen the body, remaining ready to defend the country when called upon."}, {"id": 9, "title_vi": "NGỰA TRONG CUỘC KỴ GIÁ", "title_en": "HORSES IN THE ROYAL CAVALCADE", "gif": "assets/tranh-09.gif", "mask": "vcb-mask.svg", "content_vi": "Theo điển lệ triều Nguyễn, khi Thiên Tử đi ra ngoài cung mà cưỡi ngựa (kỵ giá), các kỵ sĩ đi theo sẽ mang lỗ bộ (binh khí nghi vệ) gồm thần cơ pháo, cung sừng thanh, lao ném, đao, nỏ bắn liền, giáp trụ… để thể hiện sự uy nghi, khiến thần dân phải ngưỡng phục.", "content_en": "According to the Nguyễn Dynasty court protocol, when the Emperor left the palace on horseback, the accompanying cavalry carried ceremonial weapons and regalia, including thần cơ artillery (early gunpowder weapons), horn bows, throwing spears, swords, repeating crossbows, and armour, to project imperial authority and inspire awe and reverence among the subjects."}, {"id": 10, "title_vi": "CHỢ NGỰA BIÊN THÙY", "title_en": "FRONTIER HORSE MARKET", "gif": "assets/tranh-10.gif", "mask": "vcb-mask.svg", "content_vi": "Theo sử cũ thì từ thế kỷ thứ 8, đất từ Phong Châu ngược lên biên giới phía Bắc nước ta đến Vân Nam (Trung Quốc) là một dải mênh mông, sản sinh nhiều ngựa tốt, nơi mà người từ các nơi xa gần đều tìm đến để mua bán ngựa. Tuyến giao thương này, bao gồm cả việc người miền xuôi đổi muối và trà, lấy ngựa của miền ngược. Đây là một trong những chứng tích về thương mại thịnh đạt của nước ta, trên miền biên viễn thời xa xưa.", "content_en": "According to historical records, from as early as the 8th century, the region stretching from Phong Châu northward to Việt Nam’s northern frontier and into Vân Nam (China) formed a vast area known for producing fine horses. People from near and far travelled there to trade in horses. This trade route also involved exchanges in which people from the lowlands bartered salt and tea for horses from the uplands. It stands as one of the historical testimonies to the flourishing of commerce along Việt Nam’s border regions in ancient times."}, {"id": 11, "title_vi": "THUYỀN HẢI MÃ", "title_en": "HẢI MÃ VESSELS", "gif": "assets/tranh-11.gif", "mask": "vcb-mask.svg", "content_vi": "Sách \"Lê triều hội điển\" ghi chép về một loại thuyền lớn có tốc độ cao, nên được gọi là thuyền \"Hải Mã\" (ngựa biển). Thuyền dài tới sáu lăm thước (26m), nhưng bề rộng chỉ mười thước năm tấc (4.2m), thuôn dài mà hẹp để giảm tối đa lực cản của nước. Thuyền còn được trang bị ba mươi tư cọc chèo để có thể di chuyển ngược dòng sông hay đi biển mà không phụ thuộc vào gió. Đây là xương sống của vận tải đường thuỷ nước ta thời nhà Lê, đồng thời là đỉnh cao của công nghệ đóng thuyền của người Việt và nước Việt xưa.", "content_en": "The Lê triều hội điển book records a type of large, high-speed vessel known as the Hải Mã (Sea Horse). Measuring up to sixty-five thước (approximately 26 metres) in length but only ten thước and five tấc (about 4.2 metres) in width, the vessel was long and narrow in design to minimise water resistance. It was equipped with thirty-four oar posts, enabling it to travel upriver or at sea without reliance on wind. These vessels formed the backbone of waterborne transport during the Lê Dynasty and represented the pinnacle of shipbuilding technology in historic Việt Nam."}, {"id": 12, "title_vi": "TUẤN MÃ ĐẠI VIỆT", "title_en": "THE STEEDS OF ĐẠI VIỆT", "gif": "assets/tranh-12.gif", "mask": "vcb-mask.svg", "content_vi": "Đầu thế kỉ 16, những thương nhân, nhà du hành và nhà truyền giáo phương Tây đầu tiên đi theo đường biển đã tiếp xúc với nước ta. Ghi chép đầu tiên về nước Đại Việt của người phương Tây là cuốn \"Suma Oriental\" (1512) của bác sĩ Bồ Đào Nha Tome Pires. Ấn tượng của ông là nước ta có vô vàn ngựa. Samuel Baron - một người gốc Hà Lan đã sinh sống ở Đàng Ngoài thế kỉ 17 kể rằng: “Tướng quân (chúa Trịnh) có thể huy động khoảng 8.000 đến 10.000 ngựa”. Cụ thể, trong một dịp “Theckydaw” (Tế kỳ đạo), ông này đã chứng kiến một cuộc diễu hành có khoảng 5.000 kỵ binh, cưỡi 5.000 chiến mã tham dự.", "content_en": "In the early 16th century, the first Western merchants, travellers, and missionaries reached Đại Việt by sea and came into contact with the country. The earliest Western account of Đại Việt appears in Suma Oriental (1512) by the Portuguese physician Tomé Pires, who noted his impression of the country as being rich in horses. In the 17th century, Samuel Baron, a Dutch-born resident of Đàng Ngoài, recorded that “the General” (the Trịnh Lord) could mobilise approximately 8,000 to 10,000 horses. On one occasion, during a ceremony referred to as “Theckydaw” (Tế Kỳ Đạo), Baron witnessed a procession of around 5,000 cavalrymen mounted on 5,000 war horses."}, {"id": 13, "title_vi": "MỘT CON NGỰA ĐAU CẢ TÀU BỎ CỎ", "title_en": "WHEN ONE HORSE FALLS ILL, THE WHOLE STABLE FORGOES THE GRASS", "gif": "assets/tranh-13.gif", "mask": "vcb-mask.svg", "content_vi": "Đây là câu thành ngữ quen thuộc, chứa đựng triết lý sâu sắc của người xưa, ngụ ý về tầm quan trọng của tinh thần tương thân tương ái. Những hình tượng này nhắc nhở mỗi chúng ta về tình yêu thương, đồng cảm, chia sẻ và đoàn kết trong cuộc sống hàng ngày.", "content_en": "This familiar proverb embodies a profound philosophy passed down from earlier generations, expressing the importance of mutual care and solidarity. The image serves as a reminder of compassion, empathy, sharing, and unity in everyday life."}, {"id": 14, "title_vi": "NGỰA ĐƯỢC CHẠM KHẮC Ở ĐÌNH LÀNG", "title_en": "HORSES CARVED IN VILLAGE COMMUNAL HOUSES", "gif": "assets/tranh-14.gif", "mask": "vcb-mask.svg", "content_vi": "Từ thế kỷ 17 và đầu thế kỷ 18, trên những chạm khắc đình làng châu thổ Bắc Bộ, hình tượng ngựa được khắc họa hiền lành, gần gũi, mang vẻ đẹp hồn hậu, lạc quan, chứa đựng ước vọng yên bình của người nông dân Việt Nam thời bấy giờ.", "content_en": "From the 17th to the early 18th centuries, carvings in village communal houses across the Red River Delta depict horses as gentle and familiar figures, marked by a simple, optimistic beauty. These images embody the aspirations for peace and stability held by Vietnamese farmers of the time."}, {"id": 15, "title_vi": "TRANH NGỰA LÀNG SÌNH", "title_en": "SÌNH VILLAGE HORSE PAINTINGS", "gif": "assets/tranh-15.gif", "mask": "vcb-mask.svg", "content_vi": "Hình tượng Ngựa Bay trong tranh làng Sình (Huế) có lịch sử hơn 400 năm đã tạo nên những giá trị mỹ thuật dân gian quý giá, là một phần không thể thiếu trong tín ngưỡng tại địa phương, biểu thị cho sự tôn kính, lòng biết ơn và mong ước về một năm mới an lành, thịnh vượng của người dân vùng cố đô.", "content_en": "The image of the Flying Horse in Sình Village folk paintings in Huế, with a history spanning more than 400 years, represents a valuable tradition of folk art. An integral part of local spiritual practice, these paintings express reverence, gratitude, and the hope for a peaceful and prosperous new year among the people of the former imperial capital."}, {"id": 16, "title_vi": "NGỰA CHẠY CÁ BƠI LÊN TRỜI ĐƯA TÁO", "title_en": "HORSES RUN, FISH SWIM CARRYING THE KITCHEN GODS TO HEAVEN", "gif": "assets/tranh-16.gif", "mask": "vcb-mask.svg", "content_vi": "Trong phong tục cúng ông Công ông Táo của người miền Nam nước Việt, thay vì cúng cá chép như ở miền Bắc, người dân thường dâng một con ngựa giấy có yên cương đầy đủ. Điều này xuất phát từ quan niệm rằng ngựa là phương tiện di chuyển của các vị thần, bao gồm cả Táo quân. Việc cúng ngựa giấy được thực hiện nhằm cung cấp phương tiện cho các vị Táo quân lên chầu trời, thể hiện sự tôn kính và chu đáo của gia chủ đối với các vị thần linh.", "content_en": "In the southern regions of Việt Nam, the custom of worshipping the Kitchen Gods differs from that in the North. Instead of offering carp, people commonly present a paper horse complete with saddle and bridle. This practice stems from the belief that horses serve as the means of transport for deities, including the Kitchen Gods. Offering a paper horse provides them with a vehicle to ascend to Heaven, expressing the household’s reverence and attentiveness toward the divine."}, {"id": 17, "title_vi": "CÓ ĐI ĐƯỜNG DÀI MỚI BIẾT NGỰA HAY", "title_en": "A LONG ROAD TESTS THE STRENGTH OF A HORSE", "gif": "assets/tranh-17.gif", "mask": "vcb-mask.svg", "content_vi": "Thành ngữ dân gian có ý nghĩa sâu sắc rằng: “Chỉ khi trải qua những thử thách thực sự, đặc biệt là trong thời gian dài và hoàn cảnh khó khăn, người ta mới có thể nhận ra ai là người giỏi giang, trung thành, hoặc điều gì là tốt đẹp, bền vững”. Thành ngữ này nhấn mạnh sự kiểm chứng qua thực tế lâu dài, chứ không nên đánh giá quá vội vàng về bề ngoài hay ấn tượng ban đầu của con người và sự việc.", "content_en": "This folk proverb conveys a profound meaning: “Only through prolonged trials and difficult circumstances can one truly recognise who is capable and loyal, or what is genuinely good and enduring.” It emphasises the importance of judgment tested over time, cautioning against hasty assessments based solely on appearances or first impressions."}, {"id": 18, "title_vi": "NGỰA Ô ANH THẮNG KIỀU VÀNG ANH TRA KHỚP BẠC ĐƯA NÀNG VỀ DINH", "title_en": "MY BLACK STEED CARRIES MY LADY HOME IN A GOLDEN PALANQUIN", "gif": "assets/tranh-18.gif", "mask": "vcb-mask.svg", "content_vi": "Lý Ngựa Ô là một trong “tứ đại dân ca” của kho tàng dân ca cổ truyền nước ta. Hình ảnh chú Ngựa Ô đen tuyền cùng với giai điệu tươi vui và nhịp phách rộn ràng trong điệu hát “Lý giao duyên” đã thành di sản quý báu của phương Nam nước Việt, phản ánh thật sinh động niềm vui, hạnh phúc trong những cuộc tình duyên và hôn nhân của người dân ở miền đất này.", "content_en": "Lý Ngựa Ô is one of the “four great folk songs” in Việt Nam’s traditional folk music heritage. The image of the jet-black horse, together with the lively melody and rhythmic beat of the Lý giao duyên song form, has become a treasured cultural legacy of southern Việt Nam. It vividly reflects the joy and happiness found in courtship and marriage among the people of this region."}, {"id": 19, "title_vi": "NGỰA TRONG TRANH ĐÔNG HỒ", "title_en": "HORSES IN ĐÔNG HỒ FOLK PAINTINGS", "gif": "assets/tranh-19.gif", "mask": "vcb-mask.svg", "content_vi": "Những chú Ngựa trong tranh Đông Hồ đã được các thế hệ nghệ nhân dân gian vùng Kinh Bắc - Bắc Ninh trước hết khắc hình lên ván gỗ, rồi với từng mảng màu rực rỡ, in xuống những tờ giấy dó chế biến công phu và tuyệt mỹ, thể hiện thật chất phác, mơ ước về sức mạnh và sự nhanh nhẹn, vươn mình tới thịnh vượng và hùng cường của dân tộc.", "content_en": "In Đông Hồ folk paintings, generations of artisans from the Kinh Bắc–Bắc Ninh region first carved horse images onto wooden blocks, then printed them onto meticulously crafted dó paper using vibrant colour layers. These horses are rendered in a simple, unpretentious style, expressing aspirations for strength, agility, and the nation’s rise toward prosperity and vitality."}, {"id": 20, "title_vi": "VÂN MÃ", "title_en": "WINGED HORSE", "gif": "assets/tranh-20.gif", "mask": "vcb-mask.svg", "content_vi": "Vân Mã (ngựa có cánh bay) là đồ án trang trí cổ của Á Đông, có từ rất lâu trước khi tiếp xúc với phương Tây. Vân Mã xuất hiện nhiều trên đồ gốm và gạch thời Lê. Mô típ điển hình là con ngựa đầu ngẩng cao, giương đôi cánh trên lưng, trong tư thế đang phi nước đại, như thể đang bay giữa trời mây, thể hiện mong ước vượt tầm, chinh phục những giới hạn.", "content_en": "Vân Mã, the winged horse, is an ancient decorative motif of East Asia that predates contact with the West. It appears frequently on ceramics and bricks from the Lê Dynasty. The typical image shows a horse with its head held high, wings spread from its back, captured mid-gallop as if flying through clouds and sky, expressing the aspiration to transcend boundaries and conquer new horizons."}, {"id": 21, "title_vi": "CƯỠI NGỰA ĐÁNH CẦU", "title_en": "HORSEBACK POLO", "gif": "assets/tranh-21.gif", "mask": "vcb-mask.svg", "content_vi": "Cưỡi ngựa đánh cầu (Mã Cầu) là môn thể thao thời Lý, Trần, thể hiện tinh thần thượng võ, rèn luyện thể chất, kỹ năng và tinh thần chiến đấu. Các hoàng đế, vương hầu và quan lại thường tham gia Mã Cầu để phô bày sức mạnh, tinh thần thể thao của tầng lớp quý tộc. Các cuộc thi cưỡi ngựa đánh cầu thường được tổ chức trong các dịp lễ hội, đặc biệt là Tết Nguyên Đán, tạo không khí vui tươi, náo nhiệt và gắn kết triều đình, hoàng gia.", "content_en": "Horseback polo, known as Mã Cầu, was a sport practised during the Lý and Trần dynasties, embodying the martial spirit while developing physical strength, skill, and combat readiness. Emperors, princes, and court officials often took part to display strength and athleticism within the aristocratic class. Polo matches were commonly held during festivals, especially the Lunar New Year, creating a lively, festive atmosphere and reinforcing bonds within the royal court."}, {"id": 22, "title_vi": "CHIẾN LỢI PHẨM NGỰA QUÝ", "title_en": "WAR HORSES PRESENTED TO THE KING", "gif": "assets/tranh-22.gif", "mask": "vcb-mask.svg", "content_vi": "Sử cũ chép: Năm Minh Đạo thứ 2 (1043), Châu Ái và Châu Văn nổi loạn chống lại triều đình. Vua Lý Thái Tông cho Khai Hoàng Vương (Nhật Tông) làm Đô thống đại nguyên soái đi đánh Châu Ái, Phụng Càn Vương (Nhật Trung) làm Đô thống nguyên soái đi đánh Châu Văn. Sau khi dẹp yên Châu Văn, Phụng Càn Vương đã dâng lên vua 4 con ngựa tốt bắt được. Nhà vua đặt tên cho những con ngựa này là Tài Thiên, Quảng Thắng, Truy Phong, Nhật Ngự. Đây là hình tượng của xã tắc quy về một mối, chấm dứt sự loạn lạc và chia cắt của đất nước.", "content_en": "Historical records state that in the second year of the Minh Đạo era (1043), Châu Ái and Châu Văn rose in rebellion against the court. King Lý Thái Tông appointed Khai Hoàng Vương (Nhật Tông) as Commander-in-Chief to campaign against Châu Ái, and Phụng Càn Vương (Nhật Trung) as Commander to suppress Châu Văn. After restoring order in Châu Văn, Phụng Càn Vương presented the king with four fine horses captured during the campaign. The king named them Tài Thiên, Quảng Thắng, Truy Phong, and Nhật Ngự. These horses symbolise the reunification of the realm, marking the end of disorder and division within the country."}, {"id": 23, "title_vi": "BÁC HỒ CƯỠI NGỰA Ở CHIẾN KHU VIỆT BẮC", "title_en": "UNCLE HỒ ON HORSEBACK IN THE VIỆT BẮC RESISTANCE BASE", "gif": "assets/tranh-23.gif", "mask": "vcb-mask.svg", "content_vi": "Trong kháng chiến chống Pháp (1946-1954), Bác Hồ thường công tác ở chiến khu Việt Bắc, chủ yếu tại Thái Nguyên và Tuyên Quang. Những chuyến đi xa, Bác thường cưỡi ngựa - nhưng chỉ khi thật cần thiết. Một lần thấy ngựa được cho ăn nhiều thóc, Bác nhắc nhở phải tiết kiệm để dành cho tiền tuyến. Từ đó, Bác chỉ dùng một con ngựa cho cả đoàn: thay nhau cưỡi, ai mệt thì lên ngựa. Bác cũng thường xuống đi bộ để chia sẻ cho các đồng chí khác.", "content_en": "During the resistance war against the French (1946–1954), President Hồ Chí Minh worked primarily in the Việt Bắc base area, especially in Thái Nguyên and Tuyên Quang. On long journeys, he travelled on horseback only when truly necessary. On one occasion, noticing that the horse was being fed too much grain, he reminded those responsible to practise thrift and save supplies for the front lines. From then on, only one horse was used for the entire group, with members taking turns to ride when tired. He himself often chose to walk, sharing the burden with his comrades."}, {"id": 24, "title_vi": "CHIẾN MÃ CỦA QUẬN HE", "title_en": "WAR HORSE OF QUẬN HE", "gif": "assets/tranh-24.gif", "mask": "vcb-mask.svg", "content_vi": "Theo sách “Sơn cư tạp thuật”, Quận He - Nguyễn Hữu Cầu (thủ lĩnh cuộc khởi nghĩa nông dân lớn ở thế kỉ 18) có một con ngựa chiến khôn ngoan và có nghĩa. Với chú chiến mã này, ông tả xung hữu đột, đánh cho quân chúa Trịnh nhiều phen thất điên bát đảo. Khi khởi nghĩa bị đàn áp, Quận He Nguyễn Hữu Cầu bị bắt và bị xử trảm, chú ngựa nhịn ăn 3 ngày rồi chết theo chủ tướng, thể hiện một tinh thần trung nghĩa hiếm có.", "content_en": "According to Sơn cư tạp thuật, Quận He - Nguyễn Hữu Cầu, the leader of a major peasant uprising in the 18th century - possessed a war horse noted for its intelligence and loyalty. With this steed, he charged fiercely through enemy ranks, inflicting repeated defeats on the forces of the Trịnh lords. After the uprising was suppressed, Nguyễn Hữu Cầu was captured and executed. His war horse refused to eat for three days and then died, following its master in death and embodying a rare spirit of loyalty and righteousness."}, {"id": 25, "title_vi": "NGỰA QUÝ Ở PHƯƠNG NAM", "title_en": "SUPERIOR HORSES OF THE SOUTH", "gif": "assets/tranh-25.gif", "mask": "vcb-mask.svg", "content_vi": "Sách “Lĩnh ngoại đại đáp” thời Tống của Trung Quốc khen ngợi những phẩm chất của các tuấn mã phương Nam: “Mắt như cái chuông gió lớn, người ta đang đem yên cương đến là nó đã thẳng người gân chân, thúc dây cương một cái là phi đi như bay, nhảy tường vượt hào, chỉ cần hô một tiếng… Nếu mà có được một con tốt, thì ngựa Bắc tuy khoẻ, cũng đuổi không kịp. Một thớt ngựa như vậy có giá đến mấy chục lượng vàng”. Câu sử bút này thể hiện sự quý giá của giống ngựa phương Nam.", "content_en": "The Song-dynasty Chinese work Lĩnh ngoại đại đáp praised the exceptional qualities of southern steeds, describing them as follows: “Their eyes are like large wind bells; at the mere sight of saddle and bridle they tense their bodies and brace their legs. With a single tug on the reins, they dash forward as if flying, leaping over walls and crossing moats, responding to just one command… If one possesses a truly fine horse, even the strong horses of the North cannot catch up. A horse such as this is worth dozens of taels of gold.” This historical account attests to the great value and renown of southern horse breeds."}, {"id": 26, "title_vi": "NGỰA NHẢY CỨU CHỦ", "title_en": "THE HORSE THAT SAVED ITS MASTER", "gif": "assets/tranh-26.gif", "mask": "vcb-mask.svg", "content_vi": "Năm 1383, Độc bạ Trần Công Niếu cưỡi ngựa tuần tra, bị giặc đánh đuổi, phải chạy gấp. Chợt gặp một con ngòi rộng, chắn ngang đường chạy. Giữa cơn nguy cấp, may sao, con ngựa đã cất vó, nhảy vọt được qua ngòi. Chạy thoát về quân doanh, Trần tướng quân bèn đặt tên cho ngựa là Tử Bất Tề, như một sự tưởng thưởng cho chiến mã đã nỗ lực vượt qua nguy nan để cứu chủ.", "content_en": "In 1383, Trần Công Niếu, a Độc bạ official, was riding on patrol when he was attacked and forced to flee. Suddenly, a wide stream blocked his path. In that moment of danger, his horse gathered itself and leapt cleanly across the water. Thanks to this daring jump, Trần Công Niếu escaped safely back to the military camp. In gratitude, he named the horse Tử Bất Tề, in recognition of the war horse’s effort to overcome peril and save its master."}, {"id": 27, "title_vi": "LONG MÃ", "title_en": "LONG MÃ", "gif": "assets/tranh-27.gif", "mask": "vcb-mask.svg", "content_vi": "Long Mã cõng Hà Đồ là hình tượng đại diện của tri thức và thái bình, thường xuất hiện trong kiến trúc và nghệ thuật, đặc biệt ở các di tích trong Đại Nội Huế. Theo truyền thuyết, Long Mã là con vật có đầu giống rồng và thân giống ngựa, xuất hiện trên sông và lưng cõng Hà Đồ (bản đồ Ngân Hà - biểu tượng của tri thức kì bí về sự vận hành của vũ trụ) để dâng lên vị quân chủ hiền minh nhằm hỗ trợ ngài trong việc trị quốc an dân. Long Mã xuất hiện là điềm báo của thời đại thịnh trị, ấm no.", "content_en": "Long Mã carrying the Hà Đồ is a symbolic image representing knowledge and peaceful order, frequently found in architecture and the arts, particularly at heritage sites within the Imperial City of Huế. According to legend, the Long Mã is a mythical creature with the head of a dragon and the body of a horse, appearing from the river with the Hà Đồ borne upon its back. The Hà Đồ, often understood as a cosmic diagram symbolising profound knowledge of the workings of the universe, is presented to a wise ruler to aid him in governing the realm and bringing peace to the people. The appearance of the Long Mã is regarded as an auspicious sign of an era of prosperity and harmony."}, {"id": 28, "title_vi": "KIM MÃ", "title_en": "KIM MÃ (GOLDEN HORSE)", "gif": "assets/tranh-28.gif", "mask": "vcb-mask.svg", "content_vi": "Đời nhà Lê, bãi đất ở mé ngoài cửa ô Thạch Bảo, được triều đình chọn làm nơi đặt trại nuôi ngựa đông đúc của cung Vua, phủ Chúa. Chỗ đất ấy, về sau cho đến bây giờ, chính là đường phố rộng lớn mang tên Kim Mã (Ngựa Vàng), ở mạn tây của trung tâm Thủ đô Hà Nội.", "content_en": "During the Lê Dynasty, a tract of land just outside Thạch Bảo Gate was selected by the court as a large horse-breeding ground for the royal palace and the lord’s residence. Over time, this area developed into what is now Kim Mã Street - literally “Golden Horse” - a broad avenue located on the western side of central Hà Nội."}, {"id": 29, "title_vi": "NGỰA TRÊN TRỐNG ĐỒNG", "title_en": "HORSES ON THE BRONZE DRUMS", "gif": "assets/tranh-29.gif", "mask": "vcb-mask.svg", "content_vi": "Ngựa mang yên cương đã được khắc họa trên thân trống đồng phong cách Đông Sơn, phát hiện tại đảo Makalamau (Indonesia). Những chiếc trống đồng này đã được sản xuất ở Việt Nam thời xa xưa và đã theo những tuyến buôn bán hàng hải lan tỏa ra khắp Đông Nam Á.", "content_en": "Horses fitted with saddles and bridles are depicted on Đông Sơn–style bronze drums discovered on Makalamau Island (Indonesia). These drums were produced in ancient Việt Nam and spread across Southeast Asia through early maritime trade routes."}, {"id": 30, "title_vi": "NGỰA LẠ CHÀ BÀ", "title_en": "THE EXOTIC HORSE FROM CHÀ BÀ", "gif": "assets/tranh-30.gif", "mask": "vcb-mask.svg", "content_vi": "Sử cũ chép: Năm 1394, thuyền buôn nước Chà Bà (Java, Indonesia) tới nước ta dâng giống ngựa lạ. Con ngựa là lễ vật của thương nhân từ xa xôi tới để thiết lập quan hệ buôn bán, cho thấy Đại Việt thế kỷ 14 là điểm đến tin cậy của các đối tác thương mại quốc tế, cùng với vị thế quan trọng trong các tuyến thương mại khu vực vào thời đó.", "content_en": "Historical records note that in 1394, a merchant vessel from Chà Bà (Java, Indonesia) arrived in Đại Việt bearing an unusual breed of horse as a tribute. The horse was presented as a gift by merchants from distant lands to establish trade relations, reflecting Đại Việt’s status in the 14th century as a trusted destination for international partners and an important hub within regional trade networks."}, {"id": 31, "title_vi": "NGỰA Ở PHÚ YÊN", "title_en": "HORSES IN PHÚ YÊN", "gif": "assets/tranh-31.gif", "mask": "vcb-mask.svg", "content_vi": "Sách \"Phủ biên tạp lục\" của Lê Quý Đôn chép: \"Ngựa sinh sản trong khe núi, hàng trăm hàng ngàn con thành bầy. Có con cao hai thước rưỡi đến ba thước. Người địa phương thuần dưỡng, dạy cho thồ hàng hoá đến phủ Phú Yên buôn bán. Phụ nữ đến chợ mà phải đi xa thì đều cưỡi ngựa, lấy đó làm thường tình\". Những chú ngựa Phú Yên vậy là đã nhận việc vận chuyển hàng hóa nặng, tạo điều kiện cho những người phụ nữ Nam Trung Bộ thế kỉ 18 có thể tham gia buôn bán đường dài, giúp huyết mạch của nền kinh tế xứ Đàng Trong thông suốt.", "content_en": "The book Phủ biên tạp lục by Lê Quý Đôn records: “Horses breed in mountain valleys, forming herds of hundreds or even thousands. Some stand two and a half to three thước tall. Local people tame them and train them to carry goods to Phú Yên for trade. Women who must travel long distances to market commonly ride horses.” These Phú Yên horses thus took on the task of transporting heavy goods, enabling women in the South Central region in the 18th century to participate in long-distance trade. In doing so, they helped keep the economic lifelines of Đàng Trong flowing smoothly."}];
+
+        let currentIndex = 4; // Start at Tranh 5 (index 4) to match user's paper photo
+        let autoRotateTimer = null;
+
+        function updatePainting(idx) {
+            currentIndex = (idx + TRANH_DATA.length) % TRANH_DATA.length;
+            const data = TRANH_DATA[currentIndex];
+
+            const gifEls = [document.getElementById('art-gif'), document.getElementById('row2-art-gif')].filter(Boolean);
+            const maskEls = [document.getElementById('art-mask'), document.getElementById('row2-art-mask')].filter(Boolean);
+
+            // Crossfade
+            gifEls.forEach(el => el.style.opacity = '0');
+            maskEls.forEach(el => el.style.opacity = '0');
+
+            setTimeout(() => {
+                gifEls.forEach(el => el.src = data.gif);
+                maskEls.forEach(el => el.src = 'assets/' + data.mask);
+
+                ['art-counter', 'row2-art-counter'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = `Tranh số ${String(data.id).padStart(2, '0')} / 31`;
+                });
+                ['art-title-vi', 'row2-art-title-vi'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = data.title_vi;
+                });
+                ['art-title-en', 'row2-art-title-en'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = data.title_en;
+                });
+                ['art-content-vi', 'row2-art-content-vi'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = `"${data.content_vi}"`;
+                });
+
+                const curIdx = document.getElementById('current-index-display');
+                if (curIdx) curIdx.textContent = `${String(data.id).padStart(2, '0')} / 31`;
+                const curMask = document.getElementById('current-mask-label');
+                if (curMask) curMask.textContent = `${data.mask} (Tự động)`;
+
+                gifEls.forEach(el => el.style.opacity = '1');
+                maskEls.forEach(el => el.style.opacity = '1');
+            }, 300);
+
+            // Reset progress bar animation
+            const bar = document.getElementById('countdown-bar');
+            if (bar) {
+                bar.classList.remove('timer-progress');
+                void bar.offsetWidth; // trigger reflow
+                bar.classList.add('timer-progress');
+            }
+        }
+
+        function updateModal() {
+            const data = TRANH_DATA[currentIndex];
+            if (!data) return;
+            document.getElementById('modal-art-id').textContent = String(data.id).padStart(2, '0');
+            document.getElementById('modal-art-counter').textContent = `Bộ Lịch Vietcombank 2026 • Tranh ${String(data.id).padStart(2, '0')} / 31`;
+            document.getElementById('modal-art-title-vi').textContent = data.title_vi;
+            document.getElementById('modal-art-title-en').textContent = data.title_en;
+            document.getElementById('modal-art-gif').src = data.gif;
+            document.getElementById('modal-art-mask').src = 'assets/' + data.mask;
+            document.getElementById('modal-art-content-vi').textContent = data.content_vi;
+            document.getElementById('modal-art-content-en').textContent = data.content_en;
+        }
+
+        function openArtModal() {
+            updateModal();
+            const modal = document.getElementById('art-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            clearInterval(autoRotateTimer); // Pause auto-rotation while user is reading
+        }
+
+        function closeArtModal() {
+            const modal = document.getElementById('art-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+            resetInterval(); // Resume auto-rotation
+        }
+
+        function nextTranh() {
+            updatePainting(currentIndex + 1);
+            resetInterval();
+        }
+
+        function prevTranh() {
+            updatePainting(currentIndex - 1);
+            resetInterval();
+        }
+
+        function resetInterval() {
+            clearInterval(autoRotateTimer);
+            autoRotateTimer = setInterval(() => {
+                updatePainting(currentIndex + 1);
+            }, 60000); // exactly 60,000ms = 1 minute
+        }
+
+        function switchView(viewId) {
+            document.getElementById('view-calendar-focus').classList.add('hidden');
+            document.getElementById('view-row2-full').classList.add('hidden');
+
+            document.getElementById('btn-view-cal').className = "px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-400 hover:text-white";
+            document.getElementById('btn-view-row2').className = "px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-400 hover:text-white";
+
+            document.getElementById('view-' + viewId).classList.remove('hidden');
+            if (viewId === 'calendar-focus') {
+                document.getElementById('btn-view-cal').className = "px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all bg-emerald-600 text-white shadow";
+            } else {
+                document.getElementById('btn-view-row2').className = "px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all bg-blue-600 text-white shadow";
+            }
+        }
+
+        // ----------------------------------------------------
+        // LOGIC FOR HERO HEADER SVG HORSE CONTROLLER
+        // ----------------------------------------------------
+        let currentSvgColor = 'gold';
+        let currentSvgSpeed = '0.62s';
+        let currentSvgHeight = '74px';
+        let currentSvgMotion = 'center';
+        let isGuideVisible = true;
+
+        function updateSvgHorseStatus() {
+            const statusEl = document.getElementById('status-horse-info');
+            if (statusEl) {
+                const colorNames = {
+                    gold: 'Hoàng Kim',
+                    red: 'Chu Sa',
+                    jade: 'Lục Bảo',
+                    dark: 'Hắc Tuấn Mã'
+                };
+                const motionName = currentSvgMotion === 'traverse' ? 'Phi ngang' : 'Tại chỗ';
+                statusEl.textContent = `${colorNames[currentSvgColor] || 'Hoàng Kim'} • ${currentSvgHeight} • ${currentSvgSpeed} • ${motionName}`;
+            }
+        }
+
+        function setSvgHorseColor(theme) {
+            currentSvgColor = theme;
+            const paths = document.querySelectorAll('#vcb-vector-horse path[fill^="url(#"]');
+            
+            let bodyGrad = 'url(#goldBodyGrad)';
+            let maneGrad = 'url(#goldManeGrad)';
+            
+            if (theme === 'red') {
+                bodyGrad = 'url(#redBodyGrad)';
+                maneGrad = 'url(#redBodyGrad)';
+            } else if (theme === 'jade') {
+                bodyGrad = 'url(#jadeBodyGrad)';
+                maneGrad = 'url(#jadeBodyGrad)';
+            } else if (theme === 'dark') {
+                bodyGrad = 'url(#darkBodyGrad)';
+                maneGrad = 'url(#darkBodyGrad)';
+            }
+
+            paths.forEach(p => {
+                const cur = p.getAttribute('fill');
+                if (cur && cur.includes('BodyGrad')) {
+                    p.setAttribute('fill', bodyGrad);
+                } else if (cur && cur.includes('ManeGrad')) {
+                    p.setAttribute('fill', maneGrad);
+                }
+            });
+
+            document.querySelectorAll('.btn-color-opt').forEach(btn => {
+                if (btn.getAttribute('data-color') === theme) {
+                    btn.className = "btn-color-opt w-full text-left px-3 py-1.5 rounded-lg border border-amber-500/50 bg-amber-500/10 text-amber-300 font-bold transition flex items-center justify-between active-color";
+                } else {
+                    btn.className = "btn-color-opt w-full text-left px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 transition flex items-center justify-between";
+                }
+            });
+            updateSvgHorseStatus();
+        }
+
+        function setSvgMotionMode(mode) {
+            currentSvgMotion = mode;
+            const wrapper = document.getElementById('horse-frame-wrapper');
+            if (wrapper) {
+                if (mode === 'traverse') {
+                    wrapper.classList.add('traverse-mode');
+                } else {
+                    wrapper.classList.remove('traverse-mode');
+                }
+            }
+
+            document.querySelectorAll('.btn-motion-opt').forEach(btn => {
+                if (btn.getAttribute('data-motion') === mode) {
+                    btn.className = "btn-motion-opt w-full text-left px-3 py-1.5 rounded-lg border border-blue-500/50 bg-blue-500/10 text-blue-300 font-bold transition active-motion";
+                } else {
+                    btn.className = "btn-motion-opt w-full text-left px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 transition";
+                }
+            });
+            updateSvgHorseStatus();
+        }
+
+        function setSvgSpeed(speed) {
+            currentSvgSpeed = speed;
+            document.documentElement.style.setProperty('--gallop-dur', speed);
+
+            document.querySelectorAll('.btn-speed-opt').forEach(btn => {
+                if (btn.getAttribute('data-speed') === speed) {
+                    btn.className = "btn-speed-opt w-full text-left px-3 py-1.5 rounded-lg border border-amber-500/50 bg-amber-500/10 text-amber-300 font-mono font-bold transition active-speed";
+                } else {
+                    btn.className = "btn-speed-opt w-full text-left px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 font-mono transition";
+                }
+            });
+            updateSvgHorseStatus();
+        }
+
+        function setSvgHorseHeight(h) {
+            currentSvgHeight = h;
+            const wrapper = document.getElementById('horse-frame-wrapper');
+            if (wrapper) {
+                wrapper.style.height = h;
+            }
+
+            document.querySelectorAll('#height-btn-list .btn-h-opt').forEach(btn => {
+                if (btn.getAttribute('data-h') === h) {
+                    btn.className = "btn-h-opt px-2.5 py-2 rounded-lg border border-amber-500/50 bg-amber-500/10 text-amber-300 text-center font-mono text-[11px] font-bold active-h";
+                } else {
+                    btn.className = "btn-h-opt px-2.5 py-2 rounded-lg border border-white/10 hover:bg-white/5 text-slate-300 text-center font-mono text-[11px]";
+                }
+            });
+            updateSvgHorseStatus();
+        }
+
+        function toggleRedGuide() {
+            isGuideVisible = !isGuideVisible;
+            const box = document.getElementById('simulated-red-box');
+            const badge = document.getElementById('guide-badge');
+            const btn = document.getElementById('btn-toggle-guide');
+            if (box && badge && btn) {
+                if (isGuideVisible) {
+                    box.classList.add('border-2', 'border-dashed', 'border-red-400/80', 'bg-red-50/20');
+                    badge.classList.remove('hidden');
+                    btn.textContent = "Tắt viền đỏ (Xem thực tế 100%)";
+                    btn.className = "px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-[11px] font-mono text-slate-200";
+                } else {
+                    box.classList.remove('border-2', 'border-dashed', 'border-red-400/80', 'bg-red-50/20');
+                    badge.classList.add('hidden');
+                    btn.textContent = "Bật lại viền đỏ hướng dẫn";
+                    btn.className = "px-2.5 py-1 rounded bg-red-500/20 text-red-300 hover:bg-red-500/30 text-[11px] font-mono";
+                }
+            }
+        }
+
+        // Initialize 1-minute auto timer
+        resetInterval();
+    </script>
+
+    <!-- MODAL XEM ĐẦY ĐỦ ĐIỂN TÍCH VĂN HÓA BỘ TRANH VCB 2026 -->
+    <div id="art-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-[#F8F5EE] text-[#1E1916] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto paper-shadow border border-[#E2D8C0] p-6 md:p-8 relative">
+            
+            <!-- Close Button -->
+            <button onclick="closeArtModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center text-slate-700 font-bold transition">
+                ✕
+            </button>
+
+            <!-- Modal Header -->
+            <div class="flex items-start gap-3.5 pb-4 border-b border-[#E2D8C0]">
+                <div class="bg-[#0B5C42] text-white px-3 py-2 rounded-xl text-center font-mono-vcb shadow-sm">
+                    <div id="modal-art-id" class="text-lg font-black leading-none">05</div>
+                    <div class="text-[9px] uppercase tracking-wider opacity-85 mt-1 font-bold">TRANH</div>
+                </div>
+                <div>
+                    <div id="modal-art-counter" class="text-xs font-bold text-[#0B5C42] uppercase tracking-wider font-mono-vcb">Bộ Lịch Vietcombank 2026</div>
+                    <h3 id="modal-art-title-vi" class="font-serif-vcb text-2xl font-bold text-[#1E1916]">Ngựa Thồ Điện Biên</h3>
+                    <div id="modal-art-title-en" class="text-xs text-[#786D5F] font-mono-vcb font-semibold">PACK HORSES OF ĐIỆN BIÊN</div>
+                </div>
+            </div>
+
+            <!-- Modal Body: Centered Art Preview with Authentic VCB Mask -->
+            <div class="my-5 flex justify-center">
+                <div class="relative w-48 aspect-square bg-black/5 rounded-2xl overflow-hidden shadow-inner flex items-center justify-center border-2 border-[#C49A6C]/40">
+                    <img id="modal-art-gif" src="assets/tranh-05.gif" alt="Tranh GIF" class="w-full h-full object-cover" />
+                    <img id="modal-art-mask" src="assets/vcb-mask.svg" alt="Mask" class="absolute inset-0 w-full h-full object-fill pointer-events-none" />
+                </div>
+            </div>
+
+            <!-- Full Stories Container -->
+            <div class="space-y-4">
+                <!-- Vietnamese Full Story -->
+                <div class="bg-white/80 p-4 rounded-xl border border-[#DFD7C4] shadow-xs">
+                    <div class="text-[11px] font-bold text-[#0B5C42] uppercase tracking-wider mb-1.5 flex items-center gap-1.5 font-sans">
+                        <span class="w-2 h-2 rounded-full bg-[#0B5C42]"></span> Ý nghĩa lịch sử & Văn hóa (Tiếng Việt)
+                    </div>
+                    <p id="modal-art-content-vi" class="text-sm text-[#2E2822] leading-relaxed font-sans text-justify">
+                        <!-- Loaded dynamically -->
+                    </p>
+                </div>
+
+                <!-- English Full Story -->
+                <div class="bg-white/80 p-4 rounded-xl border border-[#DFD7C4] shadow-xs">
+                    <div class="text-[11px] font-bold text-[#7E7467] uppercase tracking-wider mb-1.5 flex items-center gap-1.5 font-sans">
+                        <span class="w-2 h-2 rounded-full bg-[#7E7467]"></span> Historical & Cultural Significance (English)
+                    </div>
+                    <p id="modal-art-content-en" class="text-xs text-[#524B43] leading-relaxed font-sans italic text-justify">
+                        <!-- Loaded dynamically -->
+                    </p>
+                </div>
+            </div>
+
+            <!-- Modal Navigation Footer -->
+            <div class="mt-6 pt-4 border-t border-[#E2D8C0] flex items-center justify-between">
+                <button onclick="prevTranh(); updateModal();" class="px-3.5 py-2 rounded-lg bg-black/5 hover:bg-black/10 text-xs font-bold font-mono-vcb transition flex items-center gap-1">
+                    ◀ Tranh trước
+                </button>
+                <button onclick="closeArtModal()" class="px-6 py-2.5 rounded-xl bg-[#0B5C42] text-white text-xs font-bold shadow-md hover:bg-[#084733] transition">
+                    Đóng cửa sổ
+                </button>
+                <button onclick="nextTranh(); updateModal();" class="px-3.5 py-2 rounded-lg bg-black/5 hover:bg-black/10 text-xs font-bold font-mono-vcb transition flex items-center gap-1">
+                    Tranh sau ▶
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

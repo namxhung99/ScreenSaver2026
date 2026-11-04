@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đàn Ngũ Mã Truy Phong SVG 100%</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #0D1017;
+            color: #E2E8F0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* ----------------------------------------------------------- */
+        /* BIOMECHANIC GALLOP CYCLES (NHỊP CHÂN CỦA TỪNG CON KHÁC NHAU) */
+        /* ----------------------------------------------------------- */
+        @keyframes horseGallopBody {
+            0% { transform: translateY(0px) rotate(0deg); }
+            22% { transform: translateY(-7px) rotate(-3.5deg); } /* Suspension bay trên không */
+            48% { transform: translateY(3.5px) rotate(2deg); }   /* Tiếp đất */
+            72% { transform: translateY(1px) rotate(0deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes horseHeadNod {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-4.5deg) translateY(-2px); }
+            55% { transform: rotate(3.5deg) translateY(3px); }
+            80% { transform: rotate(-1deg); }
+        }
+
+        @keyframes frontLegNear {
+            0% { transform: rotate(-36deg); }
+            25% { transform: rotate(15deg); }
+            50% { transform: rotate(45deg); }
+            75% { transform: rotate(-10deg); }
+            100% { transform: rotate(-36deg); }
+        }
+
+        @keyframes frontLegFar {
+            0% { transform: rotate(36deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(-38deg); }
+            75% { transform: rotate(15deg); }
+            100% { transform: rotate(36deg); }
+        }
+
+        @keyframes hindLegNear {
+            0% { transform: rotate(42deg); }
+            30% { transform: rotate(10deg); }
+            60% { transform: rotate(-40deg); }
+            85% { transform: rotate(15deg); }
+            100% { transform: rotate(42deg); }
+        }
+
+        @keyframes hindLegFar {
+            0% { transform: rotate(-25deg); }
+            30% { transform: rotate(35deg); }
+            60% { transform: rotate(15deg); }
+            85% { transform: rotate(-35deg); }
+            100% { transform: rotate(-25deg); }
+        }
+
+        @keyframes maneFlutter {
+            0%, 100% { transform: skewX(-5deg) scaleY(1); }
+            35% { transform: skewX(-16deg) scaleY(1.08) translateY(-1px); }
+            70% { transform: skewX(2deg) scaleY(0.95); }
+        }
+
+        @keyframes tailWhip {
+            0%, 100% { transform: rotate(0deg) scaleX(1); }
+            25% { transform: rotate(-14deg) scaleX(1.06) translateY(-3px); }
+            55% { transform: rotate(8deg) scaleX(0.95) translateY(2px); }
+            80% { transform: rotate(-6deg); }
+        }
+
+        /* ----------------------------------------------------------- */
+        /* ORGANIC SURGE & DRIFT KEYFRAMES (CON VƯỢT, 2-3 CON SÁT NHAU) */
+        /* ----------------------------------------------------------- */
+        
+        /* Con 1: Đầu đàn dũng mãnh, dẫn dắt đội hình */
+        @keyframes driftHorse1 {
+            0%, 100% { transform: translate(340px, 6px) scale(1.02); }
+            35% { transform: translate(375px, 4px) scale(1.03); }  /* Bứt lên trước */
+            70% { transform: translate(330px, 8px) scale(1.01); }  /* Nhường nhịp */
+        }
+
+        /* Con 2: Chạy cánh gần Con 3, so kè từng bước chân */
+        @keyframes driftHorse2 {
+            0%, 100% { transform: translate(220px, 14px) scale(0.95); }
+            28% { transform: translate(248px, 10px) scale(0.96); } /* Bắt kịp con 3 */
+            60% { transform: translate(205px, 16px) scale(0.94); } /* Sát vai nhau */
+            85% { transform: translate(235px, 12px) scale(0.95); }
+        }
+
+        /* Con 3: Cặp bài trùng sát cánh với Con 2 (Lúc thì 2,3 con sát nhau) */
+        @keyframes driftHorse3 {
+            0%, 100% { transform: translate(250px, 2px) scale(0.92); }
+            32% { transform: translate(225px, 4px) scale(0.93); }  /* Đan cài sát con 2 */
+            65% { transform: translate(270px, 0px) scale(0.93); }  /* Vọt nhẹ lên trên */
+            90% { transform: translate(240px, 2px) scale(0.92); }
+        }
+
+        /* Con 4: Chú tuấn mã bứt phá (Lúc thì chạy nhanh hơn, vượt hẳn lên) */
+        @keyframes driftHorse4 {
+            0% { transform: translate(90px, 16px) scale(0.88); }
+            30% { transform: translate(180px, 12px) scale(0.92); }
+            55% { transform: translate(350px, -2px) scale(0.98); } /* Bứt tốc thần sầu vượt đàn! */
+            75% { transform: translate(310px, 6px) scale(0.95); }
+            100% { transform: translate(90px, 16px) scale(0.88); } /* Lùi lại lấy đà vòng mới */
+        }
+
+        /* Con 5: Ngựa bọc lót phía sau, tạo chiều sâu phối cảnh */
+        @keyframes driftHorse5 {
+            0%, 100% { transform: translate(45px, 8px) scale(0.86); }
+            45% { transform: translate(80px, 12px) scale(0.87); }
+            80% { transform: translate(30px, 6px) scale(0.85); }
+        }
+
+        /* ----------------------------------------------------------- */
+        /* ORIENTAL CLOUDS & WIND SPEEDLINES (HIỆU ỨNG MÂY & GIÓ CUỘN) */
+        /* ----------------------------------------------------------- */
+        @keyframes cloudsDriftFast {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-160%); }
+        }
+
+        @keyframes cloudsDriftSlow {
+            0% { transform: translateX(120%); }
+            100% { transform: translateX(-140%); }
+        }
+
+        @keyframes speedLinePulse {
+            0%, 100% { opacity: 0.2; transform: scaleX(0.7) translateX(0px); }
+            50% { opacity: 0.85; transform: scaleX(1.3) translateX(-25px); }
+        }
+
+        @keyframes goldenDustRise {
+            0% { opacity: 0.9; transform: translateY(0px) translateX(0px) scale(0.7); }
+            100% { opacity: 0; transform: translateY(-16px) translateX(-50px) scale(1.6); }
+        }
+
+        .anim-cloud-fast {
+            animation: cloudsDriftFast 7s linear infinite;
+        }
+        .anim-cloud-slow {
+            animation: cloudsDriftSlow 11s linear infinite;
+        }
+        .anim-speedline {
+            animation: speedLinePulse 1.8s ease-in-out infinite;
+        }
+        .anim-dust-particle {
+            animation: goldenDustRise 1.1s cubic-bezier(0.2, 0.8, 0.3, 1) infinite;
+        }
+
+        /* Individual Horse Gallop Speeds (Nhịp chân lệch pha tự nhiên) */
+        .horse-cycle-1 .body-motion { animation: horseGallopBody 0.58s ease-in-out infinite; transform-origin: 50px 30px; }
+        .horse-cycle-1 .head-motion { animation: horseHeadNod 0.58s ease-in-out infinite; transform-origin: 62px 22px; }
+        .horse-cycle-1 .f-near { animation: frontLegNear 0.58s ease-in-out infinite; transform-origin: 60px 30px; }
+        .horse-cycle-1 .f-far  { animation: frontLegFar 0.58s ease-in-out infinite; transform-origin: 61px 30px; }
+        .horse-cycle-1 .h-near { animation: hindLegNear 0.58s ease-in-out infinite; transform-origin: 32px 25px; }
+        .horse-cycle-1 .h-far  { animation: hindLegFar 0.58s ease-in-out infinite; transform-origin: 33px 25px; }
+        .horse-cycle-1 .mane-motion { animation: maneFlutter 0.58s ease-in-out infinite; transform-origin: 65px 12px; }
+        .horse-cycle-1 .tail-motion { animation: tailWhip 0.58s ease-in-out infinite; transform-origin: 26px 21px; }
+
+        .horse-cycle-2 .body-motion { animation: horseGallopBody 0.62s ease-in-out infinite 0.12s; transform-origin: 50px 30px; }
+        .horse-cycle-2 .head-motion { animation: horseHeadNod 0.62s ease-in-out infinite 0.12s; transform-origin: 62px 22px; }
+        .horse-cycle-2 .f-near { animation: frontLegNear 0.62s ease-in-out infinite 0.12s; transform-origin: 60px 30px; }
+        .horse-cycle-2 .f-far  { animation: frontLegFar 0.62s ease-in-out infinite 0.12s; transform-origin: 61px 30px; }
+        .horse-cycle-2 .h-near { animation: hindLegNear 0.62s ease-in-out infinite 0.12s; transform-origin: 32px 25px; }
+        .horse-cycle-2 .h-far  { animation: hindLegFar 0.62s ease-in-out infinite 0.12s; transform-origin: 33px 25px; }
+        .horse-cycle-2 .mane-motion { animation: maneFlutter 0.62s ease-in-out infinite 0.12s; transform-origin: 65px 12px; }
+        .horse-cycle-2 .tail-motion { animation: tailWhip 0.62s ease-in-out infinite 0.12s; transform-origin: 26px 21px; }
+
+        .horse-cycle-3 .body-motion { animation: horseGallopBody 0.60s ease-in-out infinite 0.28s; transform-origin: 50px 30px; }
+        .horse-cycle-3 .head-motion { animation: horseHeadNod 0.60s ease-in-out infinite 0.28s; transform-origin: 62px 22px; }
+        .horse-cycle-3 .f-near { animation: frontLegNear 0.60s ease-in-out infinite 0.28s; transform-origin: 60px 30px; }
+        .horse-cycle-3 .f-far  { animation: frontLegFar 0.60s ease-in-out infinite 0.28s; transform-origin: 61px 30px; }
+        .horse-cycle-3 .h-near { animation: hindLegNear 0.60s ease-in-out infinite 0.28s; transform-origin: 32px 25px; }
+        .horse-cycle-3 .h-far  { animation: hindLegFar 0.60s ease-in-out infinite 0.28s; transform-origin: 33px 25px; }
+        .horse-cycle-3 .mane-motion { animation: maneFlutter 0.60s ease-in-out infinite 0.28s; transform-origin: 65px 12px; }
+        .horse-cycle-3 .tail-motion { animation: tailWhip 0.60s ease-in-out infinite 0.28s; transform-origin: 26px 21px; }
+
+        .horse-cycle-4 .body-motion { animation: horseGallopBody 0.50s ease-in-out infinite; transform-origin: 50px 30px; }
+        .horse-cycle-4 .head-motion { animation: horseHeadNod 0.50s ease-in-out infinite; transform-origin: 62px 22px; }
+        .horse-cycle-4 .f-near { animation: frontLegNear 0.50s ease-in-out infinite; transform-origin: 60px 30px; }
+        .horse-cycle-4 .f-far  { animation: frontLegFar 0.50s ease-in-out infinite; transform-origin: 61px 30px; }
+        .horse-cycle-4 .h-near { animation: hindLegNear 0.50s ease-in-out infinite; transform-origin: 32px 25px; }
+        .horse-cycle-4 .h-far  { animation: hindLegFar 0.50s ease-in-out infinite; transform-origin: 33px 25px; }
+        .horse-cycle-4 .mane-motion { animation: maneFlutter 0.50s ease-in-out infinite; transform-origin: 65px 12px; }
+        .horse-cycle-4 .tail-motion { animation: tailWhip 0.50s ease-in-out infinite; transform-origin: 26px 21px; }
+
+        .horse-cycle-5 .body-motion { animation: horseGallopBody 0.65s ease-in-out infinite 0.38s; transform-origin: 50px 30px; }
+        .horse-cycle-5 .head-motion { animation: horseHeadNod 0.65s ease-in-out infinite 0.38s; transform-origin: 62px 22px; }
+        .horse-cycle-5 .f-near { animation: frontLegNear 0.65s ease-in-out infinite 0.38s; transform-origin: 60px 30px; }
+        .horse-cycle-5 .f-far  { animation: frontLegFar 0.65s ease-in-out infinite 0.38s; transform-origin: 61px 30px; }
+        .horse-cycle-5 .h-near { animation: hindLegNear 0.65s ease-in-out infinite 0.38s; transform-origin: 32px 25px; }
+        .horse-cycle-5 .h-far  { animation: hindLegFar 0.65s ease-in-out infinite 0.38s; transform-origin: 33px 25px; }
+        .horse-cycle-5 .mane-motion { animation: maneFlutter 0.65s ease-in-out infinite 0.38s; transform-origin: 65px 12px; }
+        .horse-cycle-5 .tail-motion { animation: tailWhip 0.65s ease-in-out infinite 0.38s; transform-origin: 26px 21px; }
+
+        /* Drifting Herd Position Wrappers */
+        .horse-drift-1 { animation: driftHorse1 9s ease-in-out infinite; }
+        .horse-drift-2 { animation: driftHorse2 11s ease-in-out infinite; }
+        .horse-drift-3 { animation: driftHorse3 10s ease-in-out infinite; }
+        .horse-drift-4 { animation: driftHorse4 8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+        .horse-drift-5 { animation: driftHorse5 12s ease-in-out infinite; }
+    </style>
+</head>
+<body class="p-6 md:p-10">
+    <div class="max-w-6xl mx-auto space-y-8">
+        
+        <!-- Header -->
+        <div class="border-b border-white/10 pb-4">
+            <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-full">
+                Kiến Trúc Ngũ Mã Truy Phong (5 Ngựa Vector SVG Tự Vẽ 100%)
+            </span>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-white mt-2">
+                Đàn Ngựa 5 Con Phi Nước Đại — Tinh Chỉnh Khung Header Screensaver
+            </h1>
+            <p class="text-sm text-slate-400 mt-1">
+                Lúc thì 2, 3 con sát vai nhau • Lúc thì có con bứt tốc vượt lên • Vân mây Á Đông cuộn sóng • Vệt gió xé gió lướt ngang.
+            </p>
+        </div>
+
+        <!-- SIMULATED HERO ROW (Nền giấy ngà #FAF7F0 của Screensaver) -->
+        <div class="bg-[#FAF7F0] text-[#1E1916] rounded-2xl p-6 md:p-8 border border-[#E5DEC9] shadow-2xl relative overflow-hidden">
+            
+            <!-- Top Bar Simulation -->
+            <div class="flex items-center justify-between text-xs pb-3 border-b border-[#E2D8C0] text-[#554C42]">
+                <div class="flex items-center gap-3">
+                    <span class="font-bold text-[#1E1916]">Xin chào Nam Hùng</span>
+                    <span class="text-[#A29788]">|</span>
+                    <span class="bg-[#E6EFEA] text-[#0B5C42] px-2.5 py-0.5 rounded-full text-[11px] font-semibold border border-[#8FB8A5]/40">
+                        Biên Hòa 32°C • AQI 69
+                    </span>
+                    <span class="text-[11px] text-[#7A6F62] hidden sm:inline">Năm Bính Ngọ • Tiết Sương Giáng</span>
+                </div>
+                <div class="flex items-center gap-2 text-[11px] text-[#7A6F62]">
+                    <span class="px-2 py-0.5 rounded bg-black/5 font-mono">25:00</span>
+                    <span class="px-2 py-0.5 rounded bg-black/5 font-medium">Đồng Hồ</span>
+                </div>
+            </div>
+
+            <!-- HERO ROW (Thứ Tư + ĐÀN 5 NGỰA SVG + 11:15:18) -->
+            <div class="pt-4 flex items-center justify-between gap-4 relative">
+                
+                <!-- Day of Week (Far Left) -->
+                <h1 class="font-serif font-black tracking-tight text-5xl md:text-7xl text-[#1E1916] leading-none shrink-0" style="font-family: 'Playfair Display', serif;">
+                    Thứ Tư
+                </h1>
+
+                <!-- CENTER RED BOX: PANORAMIC 5-HORSE HERD (NGŨ MÃ TRUY PHONG) -->
+                <div id="herd-header-track" class="flex-1 flex items-center justify-center relative h-24 md:h-28 overflow-hidden border-2 border-dashed border-red-500/80 rounded-2xl bg-red-50/20 transition-all">
+                    
+                    <!-- GUIDE BADGE -->
+                    <div id="guide-badge" class="absolute top-1.5 left-1/2 -translate-x-1/2 text-[9px] font-bold font-mono tracking-wider text-red-600 bg-red-100/90 border border-red-300 px-2 py-0.5 rounded-full pointer-events-none z-30">
+                        KHUNG ANH BÔI ĐỎ • ĐÀN NGŨ MÃ PHI NƯỚC ĐẠI
+                    </div>
+
+                    <!-- HERD SVG VIEWPORT -->
+                    <div id="herd-viewport" class="w-full h-full flex items-center justify-center relative overflow-hidden" style="max-height: 86px;">
+                        
+                        <svg class="w-full h-full" viewBox="0 0 540 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                            <defs>
+                                <!-- Shared Gradients -->
+                                <linearGradient id="goldLeadGrad" x1="0%" y1="0%" x2="100%" y2="80%">
+                                    <stop offset="0%" stop-color="#FCE5A4"/>
+                                    <stop offset="35%" stop-color="#D4AF37"/>
+                                    <stop offset="100%" stop-color="#7A4B10"/>
+                                </linearGradient>
+
+                                <linearGradient id="vermilionGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#E24A32"/>
+                                    <stop offset="60%" stop-color="#B93822"/>
+                                    <stop offset="100%" stop-color="#6A1608"/>
+                                </linearGradient>
+
+                                <linearGradient id="jadeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#24C28D"/>
+                                    <stop offset="50%" stop-color="#0B5C42"/>
+                                    <stop offset="100%" stop-color="#042C20"/>
+                                </linearGradient>
+
+                                <linearGradient id="bronzeGrad" x1="0%" y1="0%" x2="100%" y2="80%">
+                                    <stop offset="0%" stop-color="#E4C179"/>
+                                    <stop offset="50%" stop-color="#A5732A"/>
+                                    <stop offset="100%" stop-color="#5C3B0E"/>
+                                </linearGradient>
+
+                                <linearGradient id="darkInkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#4A413B"/>
+                                    <stop offset="60%" stop-color="#1E1916"/>
+                                    <stop offset="100%" stop-color="#050404"/>
+                                </linearGradient>
+
+                                <linearGradient id="cloudGoldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#FAF7F0" stop-opacity="0"/>
+                                    <stop offset="30%" stop-color="#E8D7B8" stop-opacity="0.85"/>
+                                    <stop offset="70%" stop-color="#DFC498" stop-opacity="0.95"/>
+                                    <stop offset="100%" stop-color="#FAF7F0" stop-opacity="0"/>
+                                </linearGradient>
+
+                                <!-- Hoof gold highlight -->
+                                <linearGradient id="hoofGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#FFF4D0"/>
+                                    <stop offset="100%" stop-color="#B8860B"/>
+                                </linearGradient>
+
+                                <!-- Golden Glow Filter for Lead Stallion -->
+                                <filter id="leadGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-color="#D4AF37" flood-opacity="0.4"/>
+                                </filter>
+
+                                <!-- REUSABLE SCULPTED HORSE RIG TEMPLATE (Size ~100x55) -->
+                                <g id="single-horse-rig">
+                                    <g class="body-motion">
+                                        <!-- Far Hind Leg -->
+                                        <g class="h-far" opacity="0.8">
+                                            <path d="M33 25 C31 29 28 34 26 38 C25 41 29 44 31 47 C32 49 34 50 34 51 L37 50.5 C36 48 34 45 33 43 C32 41 33 37 36 32 C38 29 37 26 33 25 Z" fill="currentColor"/>
+                                            <path d="M33 50 L37 49.5 L38 51.5 L34 52 Z" fill="url(#hoofGold)"/>
+                                        </g>
+
+                                        <!-- Far Front Leg -->
+                                        <g class="f-far" opacity="0.8">
+                                            <path d="M61 29 C62 34 63 38 65 42 C66 44 65 46 67 49 L70 48.5 C68 45 68 42 67 40 C66 36 65 33 63 29 Z" fill="currentColor"/>
+                                            <path d="M67 48.5 L70 48 L71 50 L68 50.5 Z" fill="url(#hoofGold)"/>
+                                        </g>
+
+                                        <!-- Flowing Plumed Tail (3 Tầng sóng) -->
+                                        <g class="tail-motion">
+                                            <path d="M26 21 C22 19 16 18 10 20 C5 22 1 25 0 28 C-0.5 29 4 28 9 25 C14 23 20 23 24 24 Z" fill="currentColor" opacity="0.95"/>
+                                            <path d="M25 22 C20 22 13 22 7 26 C3 28 0 32 0.5 33 C1.5 33 5.5 30 11 27 C17 25 22 25 24 24 Z" fill="currentColor" opacity="0.8"/>
+                                            <path d="M24 23 C19 24 12 27 8 32 C5 35 4 38 5 38 C6 37 9 34 14 30 C19 27 23 26 24 25 Z" fill="currentColor" opacity="0.65"/>
+                                        </g>
+
+                                        <!-- Torso, Flank & Deep Muscular Chest -->
+                                        <path d="M26 21 C28 18 33 17 40 18 C48 19 54 19 59 21 C62 23 65 25 66 28 C67 32 64 36 59 37 C52 37 48 34 43 34 C37 34 31 35 27 31 C24 28 24 24 26 21 Z" fill="currentColor"/>
+
+                                        <!-- Near Hind Leg -->
+                                        <g class="h-near">
+                                            <path d="M32 24 C29 28 25 34 23 38 C21 41 26 45 28 49 C29 50 31 52 31 53 L35 52.5 C34 50 32 47 30 44 C29 42 30 37 34 32 C37 28 36 25 32 24 Z" fill="currentColor"/>
+                                            <path d="M31 52 L35 51.5 L36 53.5 L32 54 Z" fill="url(#hoofGold)"/>
+                                        </g>
+
+                                        <!-- Near Front Leg -->
+                                        <g class="f-near">
+                                            <path d="M59 28 C61 33 64 38 66 42 C67 45 66 47 69 50 L72 49 C70 46 70 43 68 40 C67 36 64 32 62 28 Z" fill="currentColor"/>
+                                            <path d="M68 49 L72 48.5 L73 51 L69 51.5 Z" fill="url(#hoofGold)"/>
+                                        </g>
+
+                                        <!-- Head, Arched Crested Neck & Mane -->
+                                        <g class="head-motion">
+                                            <!-- Arched Neck -->
+                                            <path d="M59 21 C62 18 66 13 71 9 C73 7 76 7 78 8 C77 11 74 15 72 19 C69 24 66 28 62 28 Z" fill="currentColor"/>
+                                            <!-- Head Profile -->
+                                            <path d="M72 9 C74 7 77 6 81 8 C84 9 87 12 90 13 C92 14 93 16 92 17 C91 18 88 17 86 17 C83 17 80 19 77 21 C74 23 71 21 72 17 C73 14 71 11 72 9 Z" fill="currentColor"/>
+                                            <!-- Ear -->
+                                            <path d="M76 7 C77 4 79 2 81 3 C81 4 80 6 78 8 Z" fill="currentColor"/>
+                                            <!-- Eye -->
+                                            <circle cx="82" cy="11" r="0.9" fill="#FFF4D0"/>
+                                            <circle cx="82.2" cy="10.9" r="0.4" fill="#1E1916"/>
+                                            <!-- Flowing Mane Strands (5 lớp lộng gió) -->
+                                            <g class="mane-motion" opacity="0.95">
+                                                <path d="M71 9 C68 6 63 5 58 7 C61 8 65 9 69 10 Z" fill="currentColor"/>
+                                                <path d="M68 11 C64 8 58 7 53 10 C57 11 61 13 65 14 Z" fill="currentColor"/>
+                                                <path d="M65 14 C61 11 55 10 49 14 C54 15 58 16 62 17 Z" fill="currentColor"/>
+                                                <path d="M62 18 C58 14 52 14 46 18 C51 19 55 20 59 21 Z" fill="currentColor"/>
+                                                <path d="M60 21 C56 18 50 19 44 24 C49 24 53 24 57 24 Z" fill="currentColor"/>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+
+                                <!-- ORIENTAL ROLLING CLOUD TEMPLATE (Vân Mây Á Đông) -->
+                                <g id="oriental-cloud-cluster">
+                                    <path d="M0 20 C15 10 35 10 48 18 C58 12 75 12 85 20 C95 15 112 18 120 25 C125 32 118 40 108 40 C85 40 60 42 35 41 C15 41 0 35 0 20 Z" fill="url(#cloudGoldGrad)"/>
+                                    <path d="M25 24 C35 18 50 18 60 23 C70 19 82 20 90 26" stroke="#D4AF37" stroke-width="0.8" stroke-linecap="round" fill="none" opacity="0.45"/>
+                                </g>
+                            </defs>
+
+                            <!-- ========================================================= -->
+                            <!-- LAYER 1: BACKGROUND ORIENTAL CLOUDS (MÂY TRÔI TẦNG XA) -->
+                            <!-- ========================================================= -->
+                            <g class="anim-cloud-slow" opacity="0.55">
+                                <use href="#oriental-cloud-cluster" x="10" y="55" transform="scale(1.2 0.8)"/>
+                                <use href="#oriental-cloud-cluster" x="280" y="50" transform="scale(1.4 0.9)"/>
+                            </g>
+
+                            <!-- SPEED LINES (VỆT GIÓ XÉ NGANG) -->
+                            <g class="anim-speedline">
+                                <line x1="80" y1="20" x2="160" y2="20" stroke="#C49A6C" stroke-width="1.2" stroke-linecap="round" opacity="0.35"/>
+                                <line x1="220" y1="15" x2="330" y2="15" stroke="#C49A6C" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+                                <line x1="140" y1="82" x2="260" y2="82" stroke="#D4AF37" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+                                <line x1="310" y1="78" x2="440" y2="78" stroke="#C49A6C" stroke-width="1.2" stroke-linecap="round" opacity="0.35"/>
+                            </g>
+
+                            <!-- ========================================================= -->
+                            <!-- LAYER 2: THE 5 HORSES HERD (NGŨ MÃ TRUY PHONG) -->
+                            <!-- ========================================================= -->
+
+                            <!-- CON 5: NGỰA BỌC LÓT HẬU CẦN (Xa nhất, tầng sâu, màu than mực nho quý phái) -->
+                            <g class="horse-drift-5 horse-cycle-5" color="url(#darkInkGrad)" opacity="0.82">
+                                <use href="#single-horse-rig"/>
+                            </g>
+
+                            <!-- CON 3: CẶP BÀI TRÙNG (Sát cánh cùng Con 2, màu ngọc bích phong thủy) -->
+                            <g class="horse-drift-3 horse-cycle-3" color="url(#jadeGrad)" opacity="0.9">
+                                <use href="#single-horse-rig"/>
+                            </g>
+
+                            <!-- CON 2: CẶP BÀI TRÙNG (Sát vai Con 3, so kè từng bước chân, màu đồng thau cổ điển) -->
+                            <g class="horse-drift-2 horse-cycle-2" color="url(#bronzeGrad)" opacity="0.92">
+                                <use href="#single-horse-rig"/>
+                            </g>
+
+                            <!-- CON 4: CHÚ TUẤN MÃ BỨT TỐC (Màu đỏ chu sa, chạy lúc nhanh lúc chậm, vọt lên trước!) -->
+                            <g class="horse-drift-4 horse-cycle-4" color="url(#vermilionGrad)" opacity="0.95">
+                                <use href="#single-horse-rig"/>
+                                <!-- Golden dust trailing sprinter -->
+                                <circle cx="20" cy="45" r="2" fill="#E24A32" class="anim-dust-particle"/>
+                                <circle cx="10" cy="48" r="1.5" fill="#D4AF37" class="anim-dust-particle" style="animation-delay: 0.3s;"/>
+                            </g>
+
+                            <!-- CON 1: TUẤN MÃ ĐẦU ĐÀN (To nhất, uy dũng nhất, phủ vàng Hoàng Kim rực rỡ) -->
+                            <g class="horse-drift-1 horse-cycle-1" color="url(#goldLeadGrad)" filter="url(#leadGlow)">
+                                <use href="#single-horse-rig"/>
+                                <!-- Leader Golden Aura Dust -->
+                                <circle cx="22" cy="44" r="2.5" fill="#D4AF37" class="anim-dust-particle"/>
+                                <circle cx="12" cy="48" r="1.8" fill="#FFF4D0" class="anim-dust-particle" style="animation-delay: 0.4s;"/>
+                            </g>
+
+                            <!-- ========================================================= -->
+                            <!-- LAYER 3: FOREGROUND ORIENTAL CLOUDS (MÂY TRÔI DƯỚI CHÂN VÓ NGỰA) -->
+                            <!-- ========================================================= -->
+                            <g class="anim-cloud-fast" opacity="0.75">
+                                <use href="#oriental-cloud-cluster" x="120" y="68" transform="scale(1.1 0.7)"/>
+                                <use href="#oriental-cloud-cluster" x="380" y="70" transform="scale(1.3 0.8)"/>
+                            </g>
+
+                            <!-- Subtly floating foreground cloud -->
+                            <g class="anim-cloud-slow" opacity="0.6">
+                                <use href="#oriental-cloud-cluster" x="-40" y="62" transform="scale(1.2 0.75)"/>
+                            </g>
+                        </svg>
+
+                    </div>
+                </div>
+
+                <!-- Giant Clock (Far Right) -->
+                <div class="font-serif font-black text-4xl md:text-6xl text-[#B93822] tracking-tight leading-none shrink-0 font-mono" style="font-family: 'Playfair Display', serif;">
+                    11:15:18
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CONTROL PANEL & EXPLANATION -->
+        <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-6 space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                <div>
+                    <h2 class="text-base font-bold text-amber-400 flex items-center gap-2">
+                        <span>🐎</span> Bảng Phân Tích & Điều Khiển Đàn Ngũ Mã 5 Con (100% SVG)
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">
+                        Tích hợp toàn bộ yêu cầu của anh: 5 con ngựa có tốc độ riêng, 2-3 con so kè sát nhau, 1 con bứt tốc vượt đàn, mây Á Đông cuộn sóng.
+                    </p>
+                </div>
+                <button onclick="toggleRedFrame()" id="btn-toggle-red" class="px-3.5 py-2 rounded-xl bg-red-500/20 text-red-300 hover:bg-red-500/30 font-mono text-xs font-bold transition">
+                    Tắt viền đỏ (Xem thực tế screensaver)
+                </button>
+            </div>
+
+            <!-- ROLES OF THE 5 HORSES -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-xs">
+                <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30">
+                    <div class="font-bold text-amber-300 flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37]"></span> Con 1 (Đầu đàn)
+                    </div>
+                    <div class="text-[11px] text-slate-300 mt-1 font-sans">
+                        Màu Hoàng Kim rực rỡ, vóc dáng uy dũng nhất, dẫn dắt đội hình ở vị trí tiên phong.
+                    </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-yellow-900/20 border border-yellow-700/30">
+                    <div class="font-bold text-yellow-300 flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#A5732A]"></span> Con 2 (Cánh trái)
+                    </div>
+                    <div class="text-[11px] text-slate-300 mt-1 font-sans">
+                        Màu đồng thau cổ điển, chạy kề vai sát cánh cùng Con 3 thành cặp bài trùng.
+                    </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30">
+                    <div class="font-bold text-emerald-300 flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#0B5C42]"></span> Con 3 (Cánh phải)
+                    </div>
+                    <div class="text-[11px] text-slate-300 mt-1 font-sans">
+                        Màu ngọc bích phong thủy, so kè từng bước chân, đan cài lúc trước lúc sau với Con 2.
+                    </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-red-950/30 border border-red-500/30">
+                    <div class="font-bold text-red-300 flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#B93822]"></span> Con 4 (Bứt tốc)
+                    </div>
+                    <div class="text-[11px] text-slate-300 mt-1 font-sans">
+                        Màu đỏ chu sa đồng hồ. Nhịp chân nhanh nhất (0.50s), có pha bứt phá vượt hẳn lên đầu đàn!
+                    </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-700/40">
+                    <div class="font-bold text-slate-300 flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#1E1916] border border-white/30"></span> Con 5 (Hậu thuẫn)
+                    </div>
+                    <div class="text-[11px] text-slate-400 mt-1 font-sans">
+                        Màu mực nho huyền bí, phi bước thong dong bọc lót phía sau, tạo chiều sâu 3D cho đàn.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FEATURES SUMMARY -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-white/10 text-xs">
+                <div class="space-y-1">
+                    <strong class="text-white block">☁️ Vân Mây Á Đông (Vân Mã):</strong>
+                    <p class="text-slate-400 text-[11px]">
+                        Các dải mây vàng cuộn tròn mộc bản trôi ngược chiều chạy ở cả tầng xa và dưới chân vó ngựa, tái hiện điển tích "Vân Mã lướt mây".
+                    </p>
+                </div>
+                <div class="space-y-1">
+                    <strong class="text-white block">⚡ Vệt Gió Xé Ngang & Bụi Vàng:</strong>
+                    <p class="text-slate-400 text-[11px]">
+                        Các vệt tốc độ (speed lines) và hạt tinh thể vàng bay thoang thoảng sau vó ngựa tạo cảm giác phi nước đại xé gió chân thực.
+                    </p>
+                </div>
+                <div class="space-y-1">
+                    <strong class="text-white block">🎯 Hiệu Năng & Độ Phân Giải:</strong>
+                    <p class="text-slate-400 text-[11px]">
+                        100% Vector SVG chạy mượt 60fps trên GPU, không tốn băng thông tải ảnh, sắc nét tuyệt đối trên màn hình 4K/Retina.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        let isRedFrameOn = true;
+        function toggleRedFrame() {
+            isRedFrameOn = !isRedFrameOn;
+            const track = document.getElementById('herd-header-track');
+            const badge = document.getElementById('guide-badge');
+            const btn = document.getElementById('btn-toggle-red');
+            if (isRedFrameOn) {
+                track.classList.add('border-2', 'border-dashed', 'border-red-500/80', 'bg-red-50/20');
+                badge.classList.remove('hidden');
+                btn.textContent = "Tắt viền đỏ (Xem thực tế screensaver)";
+                btn.className = "px-3.5 py-2 rounded-xl bg-red-500/20 text-red-300 hover:bg-red-500/30 font-mono text-xs font-bold transition";
+            } else {
+                track.classList.remove('border-2', 'border-dashed', 'border-red-500/80', 'bg-red-50/20');
+                badge.classList.add('hidden');
+                btn.textContent = "Bật lại viền đỏ hướng dẫn";
+                btn.className = "px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 font-mono text-xs font-bold transition";
+            }
+        }
+    </script>
+</body>
+</html>
