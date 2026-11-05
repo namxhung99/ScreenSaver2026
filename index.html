@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lịch Á Đông Mondrian — Xin chào Nam Hùng</title>
+    <!-- Gas Price Data (CORS-free offline & online) -->
+    <script src="assets/data/gas_price.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1386,56 +1388,85 @@
                 </div>
             </div>
 
-            <!-- BLOCK 3: BLUE FUEL BLOCK ("Xăng dầu" Petrolimex vùng 1) -->
-            <div onclick="openSettingsModal()" title="Nhấn để tùy chỉnh giá Xăng Dầu"
-                class="mondrian-card theme-block-blue cursor-pointer p-4 sm:p-5 lg:px-6 lg:py-4 flex flex-col justify-between">
+            <!-- BLOCK 3: BLUE FUEL BLOCK ("Xăng dầu" Petrolimex Vùng 1 - Có So Sánh Kỳ VnExpress) -->
+            <div onclick="openGasComparisonModal()" title="Nhấn để xem bảng so sánh giá xăng dầu chi tiết theo từng kỳ"
+                class="mondrian-card theme-block-blue cursor-pointer p-4 sm:p-5 lg:px-6 lg:py-4 flex flex-col justify-between group transition hover:brightness-105">
                 <div>
                     <div class="flex items-start justify-between gap-2">
-                        <h3 class="font-editorial italic font-bold text-[clamp(1.45rem,3vh,2.1rem)] leading-tight">
-                            Xăng dầu
-                        </h3>
-                        <span
-                            class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-black/25 shrink-0">
-                            Vùng 1
-                        </span>
-                    </div>
-                    <p class="text-[11px] sm:text-xs opacity-90 font-medium mt-0.5">
-                        đồng mỗi lít, Petrolimex vùng 1
-                    </p>
-                </div>
-
-                <!-- 3 Fuel Price Rows -->
-                <div class="my-auto py-0.5 flex flex-col justify-center">
-                    <div class="border-t-[1.5px] border-current/75 py-1.5 flex items-baseline justify-between gap-2">
-                        <span class="font-bold text-xs sm:text-sm lg:text-base">E10 RON95</span>
-                        <span id="oilPrice1"
-                            class="font-serif font-black text-[clamp(1.55rem,3.2vh,2.35rem)] leading-none tracking-tight">
-                            28.250
-                        </span>
-                    </div>
-
-                    <div class="border-t-[1.5px] border-current/75 py-1.5 flex items-baseline justify-between gap-2">
-                        <span class="font-bold text-xs sm:text-sm lg:text-base">E5 RON92</span>
-                        <span id="oilPrice2"
-                            class="font-serif font-black text-[clamp(1.55rem,3.2vh,2.35rem)] leading-none tracking-tight">
-                            27.700
-                        </span>
-                    </div>
-
-                    <div class="border-t-[1.5px] border-current/75 pt-1.5 flex items-baseline justify-between gap-2">
-                        <span class="font-bold text-xs sm:text-sm lg:text-base">Dầu DO</span>
-                        <span id="oilPrice3"
-                            class="font-serif font-black text-[clamp(1.55rem,3.2vh,2.35rem)] leading-none tracking-tight">
-                            29.120
-                        </span>
+                        <div>
+                            <h3 class="font-editorial italic font-bold text-[clamp(1.45rem,3vh,2.1rem)] leading-tight">
+                                Xăng dầu
+                            </h3>
+                            <p class="text-[11px] sm:text-xs opacity-90 font-medium mt-0.5">
+                                Petrolimex Vùng 1 • đồng/lít
+                            </p>
+                        </div>
+                        <div class="flex flex-col items-end gap-1 shrink-0">
+                            <span
+                                class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-black/25">
+                                Vùng 1
+                            </span>
+                            <span id="oilPeriodTag"
+                                class="text-[10px] font-bold font-mono px-2 py-0.5 rounded bg-emerald-500/25 border border-emerald-400/40 text-emerald-200">
+                                Kỳ 05/11
+                            </span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Bottom Note -->
+                <!-- 3 Fuel Price Rows with Period Comparison (Compact & Balanced) -->
+                <div class="my-auto py-0.5 flex flex-col justify-center space-y-1.5">
+                    <!-- E10 RON 95 -->
+                    <div class="border-t-[1.5px] border-current/75 pt-1.5">
+                        <div class="flex items-baseline justify-between gap-1.5">
+                            <span class="font-bold text-xs lg:text-[13px] tracking-tight leading-none whitespace-nowrap">E10 RON95</span>
+                            <span id="oilPrice1"
+                                class="font-serif font-black text-[clamp(1.25rem,2.3vh,1.75rem)] leading-none tracking-tight">
+                                21.150
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-[10px] font-mono mt-0.5 opacity-90">
+                            <span id="oilPrevPrice1" class="opacity-70">Cũ: 23.230</span>
+                            <span id="oilDiffBadge1" class="font-bold text-emerald-300">↓ 2.080 (-8.95%)</span>
+                        </div>
+                    </div>
+
+                    <!-- E5 RON 92 -->
+                    <div class="border-t-[1.5px] border-current/75 pt-1.5">
+                        <div class="flex items-baseline justify-between gap-1.5">
+                            <span class="font-bold text-xs lg:text-[13px] tracking-tight leading-none whitespace-nowrap">E5 RON92</span>
+                            <span id="oilPrice2"
+                                class="font-serif font-black text-[clamp(1.25rem,2.3vh,1.75rem)] leading-none tracking-tight">
+                                20.890
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-[10px] font-mono mt-0.5 opacity-90">
+                            <span id="oilPrevPrice2" class="opacity-70">Cũ: 23.200</span>
+                            <span id="oilDiffBadge2" class="font-bold text-emerald-300">↓ 2.310 (-9.96%)</span>
+                        </div>
+                    </div>
+
+                    <!-- Dầu Diesel DO -->
+                    <div class="border-t-[1.5px] border-current/75 pt-1.5">
+                        <div class="flex items-baseline justify-between gap-1.5">
+                            <span class="font-bold text-xs lg:text-[13px] tracking-tight leading-none whitespace-nowrap">Dầu DO</span>
+                            <span id="oilPrice3"
+                                class="font-serif font-black text-[clamp(1.25rem,2.3vh,1.75rem)] leading-none tracking-tight">
+                                28.690
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-[10px] font-mono mt-0.5 opacity-90">
+                            <span id="oilPrevPrice3" class="opacity-70">Cũ: 28.870</span>
+                            <span id="oilDiffBadge3" class="font-bold text-emerald-300">↓ 180 (-0.62%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Note with Comparison Trigger -->
                 <div
-                    class="pt-1 border-t border-current/25 flex items-center justify-between text-[11px] opacity-85 font-medium">
-                    <span>Petrolimex niêm yết</span>
-                    <span class="underline">Cập nhật ›</span>
+                    class="pt-1.5 border-t border-current/25 flex items-center justify-between min-w-0 text-[11px] opacity-90 font-medium">
+                    <span id="oilComparisonSummary" class="truncate font-medium flex-1 mr-1">So kỳ 03/11: Đồng loạt giảm mạnh</span>
+                    <span class="underline shrink-0 font-bold ml-1 group-hover:translate-x-0.5 transition-transform">So sánh kỳ ›</span>
                 </div>
             </div>
 
@@ -1638,7 +1669,91 @@
 
     </main>
 
-    <!-- ==================== MODAL 1: THEME STUDIO & CÀI ĐẶT ==================== -->
+        <!-- ==================== MODAL 5: BẢNG SO SÁNH GIÁ XĂNG DẦU (VNEXPRESS & LIÊN BỘ) ==================== -->
+    <div id="gasComparisonModal"
+        class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-[#F4F1EA] text-[#141413] border-2 border-[#141413] w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl p-6 sm:p-8">
+            <div class="flex items-start justify-between border-b-2 border-[#141413] pb-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 bg-[#141413] text-[#E5B524] text-[10px] font-extrabold uppercase tracking-widest">
+                            VnExpress • Liên Bộ Công Thương - Tài Chính
+                        </span>
+                        <span id="modalGasPeriodTag" class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-700 text-white font-mono">
+                            Kỳ 05/11/2026
+                        </span>
+                    </div>
+                    <h3 class="font-serif font-black text-2xl sm:text-3xl mt-1.5 leading-tight">
+                        Biến Động Giá Xăng Dầu & So Sánh Kỳ
+                    </h3>
+                    <p class="text-xs sm:text-sm opacity-80 mt-1">
+                        Áp dụng từ 15:00 ngày 05/11/2026 • Petrolimex Vùng 1
+                    </p>
+                </div>
+                <button onclick="closeGasComparisonModal()"
+                    class="w-9 h-9 rounded-full border-2 border-[#141413] flex items-center justify-center font-bold hover:bg-[#D63820] hover:text-white transition shrink-0">✕</button>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="my-5 overflow-x-auto border border-[#141413]/20">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b-2 border-[#141413] text-[11px] sm:text-xs font-black uppercase tracking-wider bg-black/5">
+                            <th class="py-2.5 px-3">Mặt hàng</th>
+                            <th class="py-2.5 px-3 text-right">Kỳ mới (05/11)</th>
+                            <th class="py-2.5 px-3 text-right">Kỳ trước (03/11)</th>
+                            <th class="py-2.5 px-3 text-right">Chênh lệch</th>
+                            <th class="py-2.5 px-3 text-right">% Thay đổi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gasComparisonTableBody" class="divide-y divide-[#141413]/15 text-xs sm:text-sm font-medium">
+                        <!-- Rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Highlights & Policy Context Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-4">
+                <div class="p-3 bg-emerald-50 border border-emerald-300 rounded-sm">
+                    <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-800">Thuế Tiêu Thụ Đặc Biệt</div>
+                    <div class="font-bold text-xs sm:text-sm text-emerald-950 mt-0.5">Về 0% từ ngày 01/11/2026</div>
+                    <p class="text-[11px] text-emerald-800/80 mt-1 leading-relaxed">
+                        Nghị quyết 45 đưa thuế suất xăng E10 (trước 7%) và E5 (trước 8%) về 0% đến hết tháng 3/2027 giúp giá xăng hạ nhiệt sâu.
+                    </p>
+                </div>
+                <div class="p-3 bg-amber-50 border border-amber-300 rounded-sm">
+                    <div class="text-[11px] font-bold uppercase tracking-wider text-amber-800">Quỹ Bình Ổn Giá (BOG)</div>
+                    <div class="font-bold text-xs sm:text-sm text-amber-950 mt-0.5">Trích lập trở lại 700 đ/lít</div>
+                    <p class="text-[11px] text-amber-800/80 mt-1 leading-relaxed">
+                        Trích lập 700 đồng/lít với xăng sinh học, 500 đồng/kg với mazut; ngừng chi sử dụng quỹ đối với tất cả mặt hàng.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Action footer -->
+            <div class="border-t-2 border-[#141413] pt-4 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="fetchLiveMarketAPI(true)"
+                        class="px-3.5 py-1.5 bg-[#141413] text-[#F4F1EA] text-xs font-bold rounded-sm hover:bg-black/80 transition flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <span>Đồng bộ VnExpress API ↻</span>
+                    </button>
+                    <a href="https://vnexpress.net/chu-de/gia-xang-dau-3026" target="_blank"
+                        class="px-3 py-1.5 border border-[#141413] text-xs font-bold hover:bg-black/5 transition">
+                        Xem trang VnExpress ↗
+                    </a>
+                </div>
+                <button type="button" onclick="closeGasComparisonModal(); openSettingsModal();"
+                    class="text-xs font-bold underline opacity-80 hover:opacity-100">
+                    Tùy chỉnh giá thủ công ›
+                </button>
+            </div>
+        </div>
+    </div>
+
+<!-- ==================== MODAL 1: THEME STUDIO & CÀI ĐẶT ==================== -->
     <div id="settingsModal"
         class="fixed inset-0 z-50 hidden bg-black/65 backdrop-blur-sm flex items-center justify-center p-4">
         <div
@@ -2312,9 +2427,28 @@
                 updatedAt: "15:28"
             },
             oil: {
-                price1: "28.250",
-                price2: "27.700",
-                price3: "29.120"
+                period: "Kỳ 05/11",
+                prevPeriod: "Kỳ 03/11",
+                source: "VnExpress",
+                price1: "21.150",
+                price2: "20.890",
+                price3: "28.690",
+                prevPrice1: "23.230",
+                prevPrice2: "23.200",
+                prevPrice3: "28.870",
+                diff1: -2080,
+                diff2: -2310,
+                diff3: -180,
+                pct1: -8.95,
+                pct2: -9.96,
+                pct3: -0.62,
+                summary: "So kỳ 03/11: Đồng loạt giảm mạnh",
+                items: [
+                    { name: "Xăng E10 RON 95-III", shortName: "E10 RON95", currentPrice: 21150, previousPrice: 23230, changeAmount: -2080, changePercent: -8.95 },
+                    { name: "Xăng E5 RON 92", shortName: "E5 RON92", currentPrice: 20890, previousPrice: 23200, changeAmount: -2310, changePercent: -9.96 },
+                    { name: "Dầu Diesel (DO 0.05S)", shortName: "Dầu DO", currentPrice: 28690, previousPrice: 28870, changeAmount: -180, changePercent: -0.62 },
+                    { name: "Dầu Mazut 180CST", shortName: "Dầu Mazut", currentPrice: 22000, previousPrice: 23970, changeAmount: -1970, changePercent: -8.22 }
+                ]
             },
             market: {
                 watchlist: ["CTG", "HPG", "VCB", "SSI", "MWG", "VHM"],
@@ -2805,10 +2939,24 @@
             if (document.getElementById('goldSjcBuyDetail')) document.getElementById('goldSjcBuyDetail').textContent = `Mua vào ${sjcBuy} tr/lượng`;
             if (document.getElementById('goldRingBuyDetail')) document.getElementById('goldRingBuyDetail').textContent = `Mua vào ${ringBuy} tr/lượng`;
 
-            // 2. Xăng dầu Petrolimex
+            // 2. Xăng dầu Petrolimex & So sánh kỳ VnExpress
             if (document.getElementById('oilPrice1')) document.getElementById('oilPrice1').textContent = appState.oil.price1;
             if (document.getElementById('oilPrice2')) document.getElementById('oilPrice2').textContent = appState.oil.price2;
             if (document.getElementById('oilPrice3')) document.getElementById('oilPrice3').textContent = appState.oil.price3;
+
+            if (document.getElementById('oilPrevPrice1')) document.getElementById('oilPrevPrice1').textContent = `Cũ: ${appState.oil.prevPrice1 || '23.230'}`;
+            if (document.getElementById('oilPrevPrice2')) document.getElementById('oilPrevPrice2').textContent = `Cũ: ${appState.oil.prevPrice2 || '23.200'}`;
+            if (document.getElementById('oilPrevPrice3')) document.getElementById('oilPrevPrice3').textContent = `Cũ: ${appState.oil.prevPrice3 || '28.870'}`;
+
+            if (document.getElementById('oilDiffBadge1')) renderOilBadge('oilDiffBadge1', appState.oil.diff1, appState.oil.pct1);
+            if (document.getElementById('oilDiffBadge2')) renderOilBadge('oilDiffBadge2', appState.oil.diff2, appState.oil.pct2);
+            if (document.getElementById('oilDiffBadge3')) renderOilBadge('oilDiffBadge3', appState.oil.diff3, appState.oil.pct3);
+
+            if (document.getElementById('oilPeriodTag')) document.getElementById('oilPeriodTag').textContent = appState.oil.period || 'Kỳ 05/11';
+            if (document.getElementById('modalGasPeriodTag')) document.getElementById('modalGasPeriodTag').textContent = appState.oil.period || 'Kỳ 05/11';
+            if (document.getElementById('oilComparisonSummary')) document.getElementById('oilComparisonSummary').textContent = appState.oil.summary || 'So kỳ 03/11: Đồng loạt giảm mạnh';
+
+            renderGasComparisonTable();
 
             const cache = appState.marketDataCache || {};
 
@@ -3231,8 +3379,22 @@
                 );
             });
 
+            // Append Gas Price Fetch (VnExpress & Liên Bộ)
+            fetchPromises.push(
+                fetch('assets/data/gas_price.json?t=' + Date.now())
+                    .then(r => r.ok ? r.json() : null)
+                    .then(data => ({ type: 'gas', data }))
+                    .catch(() => null)
+            );
+
             try {
                 const results = await Promise.allSettled(fetchPromises);
+
+                // Parse Gas Price API (VnExpress)
+                const gasResult = results.find(r => r.status === 'fulfilled' && r.value?.type === 'gas' && r.value?.data);
+                if (gasResult && gasResult.value.data) {
+                    applyGasData(gasResult.value.data);
+                }
 
                 // Parse USD/VND
                 if (results[0].status === 'fulfilled' && results[0].value?.rates?.VND) {
@@ -3533,7 +3695,99 @@
         /********************************************************************
          * 10. MODALS, TOÀN MÀN HÌNH, PIXEL SHIFT & HẠT BỤI NẮNG
          ********************************************************************/
-        function openSettingsModal() {
+        
+        function renderOilBadge(elementId, diff, pct) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            if (diff === undefined || diff === null) return;
+            if (diff < 0) {
+                el.className = 'text-[10px] sm:text-[11px] font-mono font-bold text-emerald-300 mt-0.5';
+                el.textContent = `↓ ${Math.abs(diff).toLocaleString('vi-VN')} đ (${pct ? pct.toFixed(2) : ''}%)`;
+            } else if (diff > 0) {
+                el.className = 'text-[10px] sm:text-[11px] font-mono font-bold text-rose-300 mt-0.5';
+                el.textContent = `↑ ${diff.toLocaleString('vi-VN')} đ (+${pct ? pct.toFixed(2) : ''}%)`;
+            } else {
+                el.className = 'text-[10px] sm:text-[11px] font-mono font-bold opacity-75 mt-0.5';
+                el.textContent = '— Đứng giá';
+            }
+        }
+
+        function renderGasComparisonTable() {
+            const tbody = document.getElementById('gasComparisonTableBody');
+            if (!tbody) return;
+            const items = appState.oil.items || [
+                { name: "Xăng E10 RON 95-III", currentPrice: 21150, previousPrice: 23230, changeAmount: -2080, changePercent: -8.95 },
+                { name: "Xăng E5 RON 92", currentPrice: 20890, previousPrice: 23200, changeAmount: -2310, changePercent: -9.96 },
+                { name: "Dầu Diesel (DO 0.05S)", currentPrice: 28690, previousPrice: 28870, changeAmount: -180, changePercent: -0.62 },
+                { name: "Dầu Mazut 180CST", currentPrice: 22000, previousPrice: 23970, changeAmount: -1970, changePercent: -8.22 }
+            ];
+
+            let html = '';
+            items.forEach(it => {
+                const diff = it.changeAmount;
+                const pct = it.changePercent;
+                const isDown = diff < 0;
+                const isUp = diff > 0;
+                const badgeColor = isDown ? 'text-emerald-700 bg-emerald-100' : (isUp ? 'text-rose-700 bg-rose-100' : 'text-gray-700 bg-gray-100');
+                const arrow = isDown ? '↓' : (isUp ? '↑' : '—');
+                const diffStr = isDown ? `-${Math.abs(diff).toLocaleString('vi-VN')} đ` : (isUp ? `+${diff.toLocaleString('vi-VN')} đ` : '0 đ');
+                const pctStr = `${pct > 0 ? '+' : ''}${pct.toFixed(2)}%`;
+
+                html += `
+                    <tr class="hover:bg-black/5 transition">
+                        <td class="py-2.5 px-3 font-bold">${it.name}</td>
+                        <td class="py-2.5 px-3 text-right font-serif font-black text-sm text-[#141413]">${it.currentPrice.toLocaleString('vi-VN')} đ</td>
+                        <td class="py-2.5 px-3 text-right font-mono text-xs opacity-75">${it.previousPrice.toLocaleString('vi-VN')} đ</td>
+                        <td class="py-2.5 px-3 text-right font-mono font-bold text-xs ${isDown ? 'text-emerald-700' : (isUp ? 'text-rose-700' : '')}">${diffStr}</td>
+                        <td class="py-2.5 px-3 text-right">
+                            <span class="inline-block px-2 py-0.5 rounded font-mono font-bold text-[11px] ${badgeColor}">
+                                ${arrow} ${pctStr}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function openGasComparisonModal() {
+            renderGasComparisonTable();
+            document.getElementById('gasComparisonModal')?.classList.remove('hidden');
+        }
+
+        function closeGasComparisonModal() {
+            document.getElementById('gasComparisonModal')?.classList.add('hidden');
+        }
+
+        function applyGasData(gasData) {
+            if (!gasData || !gasData.items) return;
+            const items = gasData.items;
+            const e10 = items.find(i => i.id === 'e10_ron95') || items[0];
+            const e5 = items.find(i => i.id === 'e5_ron92') || items[1];
+            const doItem = items.find(i => i.id === 'diesel_do') || items[2];
+
+            appState.oil.period = gasData.currentPeriod?.periodName ? gasData.currentPeriod.periodName.replace(' điều hành', '').replace('/2026', '') : 'Kỳ 05/11';
+            appState.oil.prevPeriod = gasData.previousPeriod?.periodName ? gasData.previousPeriod.periodName.replace(' điều hành', '').replace('/2026', '') : 'Kỳ 03/11';
+            appState.oil.items = items;
+            appState.oil.price1 = e10.currentPrice.toLocaleString('vi-VN');
+            appState.oil.price2 = e5.currentPrice.toLocaleString('vi-VN');
+            appState.oil.price3 = doItem.currentPrice.toLocaleString('vi-VN');
+            appState.oil.prevPrice1 = e10.previousPrice.toLocaleString('vi-VN');
+            appState.oil.prevPrice2 = e5.previousPrice.toLocaleString('vi-VN');
+            appState.oil.prevPrice3 = doItem.previousPrice.toLocaleString('vi-VN');
+            appState.oil.diff1 = e10.changeAmount;
+            appState.oil.diff2 = e5.changeAmount;
+            appState.oil.diff3 = doItem.changeAmount;
+            appState.oil.pct1 = e10.changePercent;
+            appState.oil.pct2 = e5.changePercent;
+            appState.oil.pct3 = doItem.changePercent;
+            appState.oil.summary = gasData.comparisonSummary?.overallTrend || 'So kỳ 03/11: Đồng loạt giảm mạnh';
+
+            renderMarketUI();
+            renderGasComparisonTable();
+        }
+
+function openSettingsModal() {
             document.getElementById('inputGreeting').value = appState.greeting;
             document.getElementById('selectCity').value = appState.city;
             document.getElementById('inputSjcSell').value = appState.gold.sjcSell;
@@ -3703,6 +3957,7 @@
                 closeDayDetailModal();
                 closeYoutubeModal();
                 closeNewsModal();
+                closeGasComparisonModal();
             } else if (e.key.toLowerCase() === 't') {
                 cycleArtTheme();
             } else if (e.key.toLowerCase() === 'f') {
@@ -3720,6 +3975,9 @@
         });
 
         window.onload = function () {
+            if (window.VNEXPRESS_GAS_DATA) {
+                applyGasData(window.VNEXPRESS_GAS_DATA);
+            }
             if (!localStorage.getItem('namhung_theme_dongho_v1')) {
                 appState.theme = 'dongho';
                 localStorage.setItem('namhung_theme_dongho_v1', 'true');
