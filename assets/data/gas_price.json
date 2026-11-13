@@ -1,37 +1,36 @@
 {
   "status": "success",
   "source": "VnExpress (Chuyên đề Giá Xăng Dầu)",
-  "sourceUrl": "https://vnexpress.net/gia-xang-dau-moi-nhat-hom-nay-5-11-5141125.html",
-  "articleTitle": "Giá xăng về sát 21.000 đồng một lít",
+  "sourceUrl": "https://vnexpress.net/gia-xang-dau-moi-nhat-hom-nay-12-11-5143841.html",
+  "articleTitle": "Giá xăng về dưới 20.000 đồng một lít",
   "zone": "Vùng 1 (Petrolimex niêm yết)",
   "currentPeriod": {
-    "periodName": "Kỳ điều hành 05/11/2026",
-    "effectiveDate": "2026-11-05",
+    "periodName": "Kỳ điều hành 12/11/2026",
+    "effectiveDate": "12/11/2026",
     "effectiveTime": "15:00",
-    "dateFormatted": "15:00 ngày 05/11/2026",
+    "dateFormatted": "15:00 ngày 12/11/2026",
     "decision": "Liên Bộ Công Thương - Tài chính"
   },
   "previousPeriod": {
-    "periodName": "Kỳ điều hành 03/11/2026",
-    "effectiveDate": "2026-11-03",
-    "dateFormatted": "03/11/2026"
+    "periodName": "Kỳ điều hành liền kề",
+    "effectiveDate": "Kỳ trước",
+    "dateFormatted": "Kỳ trước"
   },
   "comparisonSummary": {
-    "overallTrend": "Đồng loạt giảm mạnh ở tất cả mặt hàng",
-    "maxDropItem": "Xăng E5 RON 92 (-2.310 đ/lít, -9.96%)",
-    "note": "Thuế TTĐB với xăng về 0% từ 1/11/2026. Quỹ BOG trích lập 700 đ/lít xăng sinh học, 500 đ/kg mazut."
+    "overallTrend": "Kỳ 12/11: Đồng loạt giảm sâu",
+    "maxDropItem": "Xăng E5 RON 92 (-1500 đ/lít)",
+    "note": "Quỹ bình ổn giá xăng dầu với mỗi lít xăng sinh học 600 đồng, dầu mazut 1"
   },
   "items": [
     {
       "id": "e10_ron95",
       "name": "Xăng E10 RON 95-III",
       "shortName": "E10 RON95",
-      "currentPrice": 21150,
-      "previousPrice": 23230,
-      "period29OctPrice": 25730,
+      "currentPrice": 19840,
+      "previousPrice": 21150,
       "unit": "đồng/lít",
-      "changeAmount": -2080,
-      "changePercent": -8.95,
+      "changeAmount": -1310,
+      "changePercent": -6.19,
       "trend": "down",
       "highlight": true
     },
@@ -39,12 +38,11 @@
       "id": "e5_ron92",
       "name": "Xăng E5 RON 92",
       "shortName": "E5 RON92",
-      "currentPrice": 20890,
-      "previousPrice": 23200,
-      "period29OctPrice": 26020,
+      "currentPrice": 19740,
+      "previousPrice": 21240,
       "unit": "đồng/lít",
-      "changeAmount": -2310,
-      "changePercent": -9.96,
+      "changeAmount": -1500,
+      "changePercent": -7.06,
       "trend": "down",
       "highlight": false
     },
@@ -52,12 +50,11 @@
       "id": "diesel_do",
       "name": "Dầu Diesel (DO 0.05S)",
       "shortName": "Dầu DO",
-      "currentPrice": 28690,
-      "previousPrice": 28870,
-      "period29OctPrice": 30240,
+      "currentPrice": 26820,
+      "previousPrice": 28690,
       "unit": "đồng/lít",
-      "changeAmount": -180,
-      "changePercent": -0.62,
+      "changeAmount": -1870,
+      "changePercent": -6.52,
       "trend": "down",
       "highlight": false
     },
@@ -65,41 +62,14 @@
       "id": "mazut",
       "name": "Dầu Mazut 180CST",
       "shortName": "Dầu Mazut",
-      "currentPrice": 22000,
-      "previousPrice": 23970,
-      "period29OctPrice": 23590,
+      "currentPrice": 19740,
+      "previousPrice": 22000,
       "unit": "đồng/kg",
-      "changeAmount": -1970,
-      "changePercent": -8.22,
+      "changeAmount": -2260,
+      "changePercent": -10.27,
       "trend": "down",
       "highlight": false
     }
   ],
-  "history": [
-    {
-      "date": "05/11/2026",
-      "e10": 21150,
-      "e5": 20890,
-      "do": 28690,
-      "mazut": 22000,
-      "note": "Giảm 180 - 2.310 đ"
-    },
-    {
-      "date": "03/11/2026",
-      "e10": 23230,
-      "e5": 23200,
-      "do": 28870,
-      "mazut": 23970,
-      "note": "Giảm 920 - 1.020 đ"
-    },
-    {
-      "date": "29/10/2026",
-      "e10": 25730,
-      "e5": 26020,
-      "do": 30240,
-      "mazut": 23590,
-      "note": "Tăng 520 - 690 đ"
-    }
-  ],
-  "updatedAt": "2026-11-05 18:16:58"
+  "updatedAt": "2026-11-13 09:56:11"
 }
